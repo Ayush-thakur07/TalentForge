@@ -1,0 +1,21 @@
+import SidebarNavigation from "./SidebarNavigation";
+import UpgradeCard from "./UpgradeCard";
+import UserMiniProfile from "./UserMiniProfile";
+import "./Sidebar.css";
+
+function Sidebar({ sidebarOpen })
+{
+    return(
+        <aside className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+
+            <SidebarNavigation />
+
+            <UpgradeCard />
+
+            <UserMiniProfile />
+
+        </aside>
+    );
+}
+
+export default Sidebar;
