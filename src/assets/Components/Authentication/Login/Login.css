@@ -6,10 +6,11 @@
     min-height: 100vh;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 100px;
-    padding: 40px 24px;
+    gap: 60px;
+    padding: 40px 80px;
     background: #f7f7fb;
     font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -344,4 +345,78 @@
     margin: 0;
     accent-color: #5b2be0;
     cursor: pointer;
+}
+.card {
+    width: 100%;
+    max-width: 460px;
+    height: 650px;
+    border-radius: 20px;
+    background-color: #241E68;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+}
+
+.card img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+}
+.card-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.card h1 {
+    margin: 0;
+    color: white;
+    font-size: clamp(26px, 3.2vw, 38px);
+    line-height: 1.1;
+}
+.card-description {
+    margin-top: 18px;
+}
+
+.card-description p {
+    margin: 3px 0;
+    font-size: 14px;
+}
+.feature {
+    margin-top: 18px;
+}
+
+.feature-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-title i {
+    font-size: 18px;
+}
+
+.feature-title span {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.feature p {
+    margin: 5px 0 0 28px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.card p {
+    color: white;
+}
+.login-box {
+    width: 100%;
+    max-width: 460px;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 30px;
 }
