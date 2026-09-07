@@ -4,6 +4,7 @@ import {browserLocalPersistence, browserSessionPersistence} from "firebase/auth"
 import "./Login.css";
 import {useState}from "react";
 import {auth} from "../../../../config/firebase";
+import background from "../../../Background_image.png";
 function Login(){
     const [show,setshow]=useState(false);
     const a = new GoogleAuthProvider();
@@ -68,39 +69,71 @@ function Login(){
     }
     return(
         <div className="data">
-            <div className="head">
-                <h1>Welcome Back!</h1>
-                <p><b>Login to continue to TalentForge</b></p>
-            </div>
-            <div className="input">
-                <form className="form-sign" onSubmit={handleSubmit}>
-                    <label>Email Address</label>
-                    <i className="bi bi-envelope"></i><input name="email" type = "email" placeholder="Enter your college email" required pattern="[A-Za-z0-9._%+-]+@chitkara\.edu\.in"/>
-                    <div>
-                        <label>Password</label>
-                        <i className="bi bi-lock"></i><input name="password" type = {show? "text":"password"} placeholder="Enter your password" required/>
-                        <button type="button" onClick={() => setshow(!show)}><i className={ show ? "bi bi-eye" : "bi bi-eye-slash"}></i></button>
+            <div className="card">
+                <img src={background} alt="" />
+                <div className="card-content">
+                    <h1>Your Campus.</h1>
+                    <h1>Your People.</h1>
+                    <h1>Your Opportunities.</h1>
+                    <div className="card-description">
+                        <p><i>Connect, collaborate and create</i></p>
+                        <p><i>amazing things together.</i></p>
                     </div>
-                    <div>
-                        <label className="remember">Remember me
-                            <input type="checkbox" className="checkbox" checked = {check} onChange={() => setcheck(!check)}/>
-                        </label>
+                    <div className="feature">
+                        <div className="feature-title">
+                            <i className="bi bi-people-fill"></i>
+                            <span>Connect with students</span>
+                        </div>
                     </div>
-                    <button type="button">Forgot Password?</button>
-                    <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
-                    <div className="divider">
-                        <span>or continue with</span>
+                    <div className="feature">
+                        <div className="feature-title">
+                            <i className="bi bi-suitcase-lg-fill"></i>
+                            <span>Build & share projects</span>
+                        </div>
                     </div>
-                    <button
-                    type="button"
-                    className="google"
-                    onClick={google}
-                    disabled={loading}>
-                    <i className="bi bi-google"></i>
-                    {loading ? "Signing in..." : "Continue with Google"}
-                    </button>
-                    <p className="signup">Don't have an account? <button type="button">Sign up</button></p>
-                </form>
+                    <div className="feature">
+                        <div className="feature-title">
+                            <i className="bi bi-search"></i>
+                            <span>Explore Opportunities</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div className="login-box">
+                <div className="head">
+                    <h1>Welcome Back!</h1>
+                    <p><b>Login to continue to TalentForge</b></p>
+                </div>
+                <div className="input">
+                    <form className="form-sign" onSubmit={handleSubmit}>
+                        <label>Email Address</label>
+                        <i className="bi bi-envelope"></i><input name="email" type = "email" placeholder="Enter your college email" required pattern="[A-Za-z0-9._%+-]+@chitkara\.edu\.in"/>
+                        <div>
+                            <label>Password</label>
+                            <i className="bi bi-lock"></i><input name="password" type = {show? "text":"password"} placeholder="Enter your password" required/>
+                            <button type="button" onClick={() => setshow(!show)}><i className={ show ? "bi bi-eye" : "bi bi-eye-slash"}></i></button>
+                        </div>
+                        <div>
+                            <label className="remember">Remember me
+                                <input type="checkbox" className="checkbox" checked = {check} onChange={() => setcheck(!check)}/>
+                            </label>
+                        </div>
+                        <button type="button">Forgot Password?</button>
+                        <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+                        <div className="divider">
+                            <span>or continue with</span>
+                        </div>
+                        <button
+                        type="button"
+                        className="google"
+                        onClick={google}
+                        disabled={loading}>
+                        <i className="bi bi-google"></i>
+                        {loading ? "Signing in..." : "Continue with Google"}
+                        </button>
+                        <p className="signup">Don't have an account? <button type="button">Sign up</button></p>
+                    </form>
+                </div>
             </div>
         </div>
     );
