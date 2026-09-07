@@ -25,7 +25,6 @@ function Dashboard()
                 </main>
 
             </div>
-
         </div>
     );
 }
