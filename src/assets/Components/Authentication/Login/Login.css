@@ -328,7 +328,7 @@
         font-size: 12px;
     }
 }
-.remember {
+.form-sign > div > label.remember {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -339,12 +339,13 @@
     cursor: pointer;
 }
 
-.checkbox {
+.form-sign > div > label.remember .checkbox {
     width: 17px;
     height: 17px;
     margin: 0;
     accent-color: #5b2be0;
     cursor: pointer;
+    order: -1;
 }
 .card {
     width: 100%;
