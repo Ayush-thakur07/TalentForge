@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header/Header";
 import Hero from "./Hero/hero";
+import SignupBrandPanel from "../Authentication/Signup/SignupBrand";
 
 function Dashboard()
 {
@@ -22,10 +23,10 @@ function Dashboard()
 
                 <main className="dashboard_main">
                     <Hero />
+                    
                 </main>
-
+                <SignupBrandPanel/>
             </div>
-
         </div>
     );
 }
