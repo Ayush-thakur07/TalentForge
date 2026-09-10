@@ -1,14 +1,46 @@
+* {
+    box-sizing: border-box;
+}
 .signup-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    background: #f7f7fb;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .signup-form-area {
-  width: 100%;
-  max-width: 460px;
-  padding: 32px 24px 48px;
-  box-sizing: border-box;
+    width: 50%;
+    height: calc(100vh - 60px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 80px;
+    background: #ffffff;
+    border: 1px solid gray;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.signup-page .main {
+    width: 50%;
+    height: calc(100vh - 60px);
+    flex-shrink: 0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.signup-form,
+.college-selector {
+    width: 100%;
+    max-width: 460px;
 }
 
 .signup-form {
@@ -101,19 +133,32 @@
 }
 
 .college-selector {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .college-selector label {
-  font-size: 13px;
-  font-weight: 650;
-  color: #25254b;
-  display: block;
-  margin-bottom: 6px;
+    display: block;
+    margin-bottom: 18px;
+    color: #15153d;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
 }
 
-@media (max-width: 600px) {
-  .signup-form-area {
-    padding: 24px 16px 40px;
-  }
+@media (max-width: 700px) {
+    .signup-page {
+        flex-direction: column;
+    }
+
+    .signup-page .main {
+        width: 100%;
+        height: 45vh;
+        min-height: 400px;
+    }
+
+    .signup-form-area {
+        width: 100%;
+        min-height: auto;
+        padding: 40px 20px 50px;
+    }
 }
