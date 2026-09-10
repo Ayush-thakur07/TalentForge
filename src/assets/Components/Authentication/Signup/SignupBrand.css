@@ -1,6 +1,4 @@
-/* ==============================
-   MAIN BRAND PANEL
-============================== */
+/*MAIN BRAND PANEL*/
 
 .main {
     position: relative;
@@ -10,9 +8,7 @@
 }
 
 
-/* ==============================
-   IMAGE LAYER
-============================== */
+/*IMAGE LAYER*/
 
 .bg_image {
     position: absolute;
@@ -35,9 +31,7 @@
 }
 
 
-/* ==============================
-   LOGO LAYER
-============================== */
+/*LOGO LAYER*/
 
 .header_logo {
     position: absolute;
@@ -67,20 +61,15 @@
 }
 
 
-/* ==============================
-   TEXT ON TOP OF IMAGE
-============================== */
+/*TEXT ON TOP OF IMAGE*/
 
 .bg_text {
     position: absolute;
-
     z-index: 3;
-
     left: 8%;
-    bottom: 18%;
-
+    top: 50%;
+    transform: translateY(-50%);
     width: 80%;
-
     color: white;
 }
 
@@ -109,9 +98,7 @@
 }
 
 
-/* ==============================
-   TABLET
-============================== */
+/*TABLET*/
 
 @media (max-width: 900px) {
 
@@ -122,7 +109,7 @@
 
     .bg_text {
         left: 7%;
-        bottom: 12%;
+        top: 50%;
     }
 
     .bg_text h1 {
@@ -135,9 +122,7 @@
 }
 
 
-/* ==============================
-   MOBILE
-============================== */
+/*MOBILE */
 
 @media (max-width: 600px) {
 
@@ -166,8 +151,7 @@
 
     .bg_text {
         left: 7%;
-        bottom: 8%;
-
+        top: 50%;
         width: 86%;
     }
 
