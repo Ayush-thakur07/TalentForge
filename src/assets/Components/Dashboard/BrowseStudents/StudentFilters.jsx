@@ -59,6 +59,7 @@ function StudentFilters({ students, onFilterChange }) {
     return (
         <div className="student-filters">
             <div className="filter-group">
+                <label htmlFor="skill-filter">Skills</label>
                 <select
                     id="skill-filter"
                     value={selectedSkill}
@@ -74,6 +75,7 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
+                <label htmlFor="field-filter">Field</label>
                 <select
                     id="field-filter"
                     value={selectedField}
@@ -89,6 +91,7 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
+                <label htmlFor="year-filter">Year</label>
                 <select
                     id="year-filter"
                     value={selectedYear}
@@ -104,6 +107,7 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
+                <label htmlFor="availability-filter">Availability</label>
                 <select
                     id="availability-filter"
                     value={selectedAvailability}

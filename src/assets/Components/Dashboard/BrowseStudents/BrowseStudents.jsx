@@ -9,8 +9,8 @@ import StudentSort from "./StudentSort";
 const CURRENT_USER_ID = "stu_001";
 
 function matchesSearch(student, search) {
-    if (!search) return true;
-    const term = search.toLowerCase();
+    const term = (search || "").trim().toLowerCase();
+    if (!term) return true;
     const searchable = [
         student.name,
         student.college,
@@ -23,7 +23,7 @@ function matchesSearch(student, search) {
         ...student.projects.map((project) => project.title),
         ...student.projects.map((project) => project.stack)
     ];
-    return searchable.some((value) => value.toLowerCase().includes(term));
+    return searchable.some((value) => String(value || "").toLowerCase().includes(term));
 }
 
 function sortStudents(students, sort) {
@@ -91,13 +91,13 @@ function BrowseStudents() {
                     <p>Find your next teammate today.</p>
                 </div>
                 <div className="banner-illustration">
-                    <i className="bi bi-people banner-icon"></i>
+                    <img src="/signup-image.png" alt="Collaboration" />
                 </div>
             </div>
 
             <div className="browse-students-controls">
-                <StudentSearch search={filters.search} onSearchChange={(search) => handleFilterChange({ ...filters, search })} />
                 <div className="controls-row">
+                    <StudentSearch search={filters.search} onSearchChange={(search) => handleFilterChange({ ...filters, search })} />
                     <StudentFilters
                         students={allStudents}
                         onFilterChange={handleFilterChange}

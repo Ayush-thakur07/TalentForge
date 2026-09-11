@@ -7,6 +7,7 @@ const sortOptions = [
 function StudentSort({ sort, onSortChange }) {
     return (
         <div className="student-sort">
+            <label htmlFor="sort-select">Sort</label>
             <select
                 id="sort-select"
                 value={sort}
