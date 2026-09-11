@@ -1,5 +1,5 @@
 import DashboardLayout from "./DashboardLayout/DashboardLayout";
-import Hero from "./Hero/hero";
+import Hero from "./Hero/Hero";
 import SignupBrandPanel from "../Authentication/Signup/SignupBrand";
 
 function Dashboard() {
