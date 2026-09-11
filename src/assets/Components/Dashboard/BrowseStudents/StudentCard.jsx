@@ -1,7 +1,15 @@
 import "./BrowseStudents.css";
 
+function getMatchColor(score) {
+    if (score >= 90) return { background: "#dcfce7", color: "#166534" };
+    if (score >= 80) return { background: "#dbeafe", color: "#1e40af" };
+    if (score >= 70) return { background: "#fef3c7", color: "#92400e" };
+    return { background: "#fee2e2", color: "#991b1b" };
+}
+
 function StudentCard({ student, matchScore }) {
     const formattedScore = typeof matchScore === "number" ? `${matchScore}% Match` : null;
+    const matchColor = typeof matchScore === "number" ? getMatchColor(matchScore) : null;
 
     return (
         <div className="student-card">
@@ -14,9 +22,6 @@ function StudentCard({ student, matchScore }) {
                 <div className="student-header-info">
                     <div className="student-name-row">
                         <h3 className="student-name">{student.name}</h3>
-                        {formattedScore && (
-                            <span className="match-badge">{formattedScore}</span>
-                        )}
                         <span className="verified-badge">
                             <i className="bi bi-check-circle-fill"></i>
                         </span>
@@ -26,12 +31,23 @@ function StudentCard({ student, matchScore }) {
                         {student.major} • {student.year}
                     </p>
                 </div>
-                <span className={`availability-badge ${student.availability}`}>
-                    {student.availability.replace(/_/g, " ")}
-                </span>
+                {formattedScore && matchColor && (
+                    <span
+                        className="match-badge"
+                        style={{ background: matchColor.background, color: matchColor.color }}
+                    >
+                        {formattedScore}
+                    </span>
+                )}
             </div>
 
             <div className="student-card-body">
+                <div className="student-section">
+                    <span className={`availability-badge ${student.availability}`}>
+                        {student.availability.replace(/_/g, " ")}
+                    </span>
+                </div>
+
                 <div className="student-section">
                     <div className="tags">
                         {student.skills.map((skill) => (
