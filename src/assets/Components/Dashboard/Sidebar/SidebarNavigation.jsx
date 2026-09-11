@@ -4,9 +4,12 @@ import { useNotifications } from "../../../../context/NotificationContext";
 
 function SidebarNavigation() {
     const location = useLocation();
-    const { unreadCount } = useNotifications();
+    const { notifications, unreadCount } = useNotifications();
 
     const currentPath = location.pathname;
+
+    const connectionsUnread = notifications.filter(n => n.type === 'connections' && !n.read).length;
+    const applicationsUnread = notifications.filter(n => n.type === 'applications' && !n.read).length;
 
     return (
         <nav>
@@ -22,6 +25,7 @@ function SidebarNavigation() {
                 href="/students"
                 icon="bi bi-search"
                 active={currentPath === "/students"}
+                badge={applicationsUnread}
             />
 
             <SidebarItem
@@ -43,6 +47,7 @@ function SidebarNavigation() {
                 href="/connections"
                 icon="bi bi-people"
                 active={currentPath === "/connections"}
+                badge={connectionsUnread}
             />
 
             <SidebarItem
