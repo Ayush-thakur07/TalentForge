@@ -14,8 +14,8 @@ function NotificationsPage() {
         return {
             all: notifications.length,
             unread: notifications.filter(n => !n.read).length,
-            applications: notifications.filter(n => n.type === 'applications').length,
-            connections: notifications.filter(n => n.type === 'connections').length,
+            applications: notifications.filter(n => n.type === 'applications' && !n.read).length,
+            connections: notifications.filter(n => n.type === 'connections' && !n.read).length,
         };
     }, [notifications]);
 
