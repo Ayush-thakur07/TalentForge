@@ -691,11 +691,11 @@
         font-size: 11px;
     }
 }
-.dashboard-body {
+.dashboard_body {
     display: flex;
     align-items: flex-start;
 }
-.dashboard-main {
+.dashboard_main {
     flex: 1;
     min-width: 0;
 }
