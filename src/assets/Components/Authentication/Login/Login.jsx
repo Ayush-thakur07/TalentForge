@@ -71,29 +71,49 @@ function Login() {
         if (loading) {
             return;
         }
-
+        
         try {
             setLoading(true);
-
             await applyPersistence();
-
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
+            await signInWithEmailAndPassword(auth, email, password);
+            if (check) {
+                localStorage.setItem("isLoggedIn", "true");
+            } else {
+                sessionStorage.setItem("isLoggedIn", "true");
+            }
             window.alert("Successfully logged in");
+            navigate("/dashboard");
         }
         catch (error) {
-            const code = error?.code || "";
-            if (code.includes("operation-not-allowed")) {
-              window.alert("Email/password sign-in is disabled in Firebase. Enable it in Firebase Console > Authentication.");
-            } else if (code.includes("user-not-found") || code.includes("wrong-password") || code.includes("invalid-credential")) {
-              window.alert("Invalid email or password.");
+            const savedUser = JSON.parse(
+                localStorage.getItem("localUser")
+            );
+            if (
+                savedUser &&
+                savedUser.email === email &&
+                savedUser.password === password
+            ) {
+                if (check) {
+                    localStorage.setItem("isLoggedIn", "true");
+                } else {
+                    sessionStorage.setItem("isLoggedIn", "true");
+                }
+                window.alert("Logged in successfully");
+                navigate("/dashboard");
             } else {
-              console.log(error);
-              window.alert(error.message);
+                const code = error?.code || "";
+                if (
+                    code.includes("user-not-found") ||
+                    code.includes("wrong-password") ||
+                    code.includes("invalid-credential")
+                ) {
+                    window.alert("Invalid email or password.");
+                } else if (code.includes("operation-not-allowed")) {
+                    window.alert("Firebase login is disabled and no local account was found.");
+                } else {
+                    console.log(error);
+                    window.alert(error.message);
+                }
             }
         }
         finally {
