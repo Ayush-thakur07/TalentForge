@@ -3,16 +3,11 @@
 ======================================== */
 
 .sidebar {
-    width: 230px;
-    min-width: 230px;
-
     min-height: calc(100vh - 72px);
 
     background: #ffffff;
 
     border-right: 1px solid #e8e7ef;
-
-    padding: 20px 12px;
 
     box-sizing: border-box;
 
@@ -21,7 +16,33 @@
 
     transition:
         width 0.25s ease,
-        min-width 0.25s ease;
+        min-width 0.25s ease,
+        padding 0.25s ease;
+}
+
+.sidebar.open {
+    width: 230px;
+    min-width: 230px;
+    padding: 20px 12px;
+}
+
+.sidebar.closed {
+    width: 72px;
+    min-width: 72px;
+    padding: 20px 8px;
+}
+
+.sidebar.closed .sidebar-item {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar.closed .sidebar-item span {
+    display: none;
+}
+
+.sidebar.closed .sidebar-item i {
+    margin: 0;
 }
 
 
