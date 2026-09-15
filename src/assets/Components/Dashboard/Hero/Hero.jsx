@@ -1,6 +1,8 @@
 import heroImage from "../../../hero.png"
 import { studentData } from "../BrowseStudents/studentData";
 import { useNavigate } from "react-router-dom";
+import PostModal from "./PostModal";
+import { useState } from "react";
 import "./Hero.css"
    function getGreeting(current_hour)
 {
@@ -23,6 +25,7 @@ import "./Hero.css"
 function Hero()
 {
     const navigate = useNavigate();
+    const [postModalOpen, setPostModalOpen] = useState(false);
     let current_hours= new Date().getHours();
     const currentUser = studentData[0];
     const connections = currentUser?.connections?.length || 0;
@@ -85,11 +88,13 @@ function Hero()
         <i className="bi bi-arrow-right"></i>
     </button>
 
-    <button className="post_project">
+    <button className="post_project" onClick={()=>setPostModalOpen(true)}>
         <i className="bi bi-plus-lg"></i>
         Post a Project
     </button>
-
+   {postModalOpen === true && (
+    <PostModal onClose={() => setPostModalOpen(false)} />
+)}
 </div>
             </div>
             

@@ -378,3 +378,1201 @@
         opacity: 0.1;
     }
 }
+.post-modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 90px 24px 24px;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    box-sizing: border-box;
+
+    animation: postOverlayIn 0.2s ease-out;
+}
+.post-modal {
+    position: relative;
+
+    width: min(880px, 100%);
+    max-height: 88vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e7e5ef;
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.20),
+        0 8px 24px rgba(15, 23, 42, 0.10);
+
+    box-sizing: border-box;
+
+    animation: postModalIn 0.25s ease-out;
+}
+.post-modal-header {
+    position: relative;
+
+    flex-shrink: 0;
+
+    padding: 28px 76px 22px 32px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #eeeef3;
+
+    box-sizing: border-box;
+}
+.post-modal-content {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+}
+
+.post-modal .Heading {
+    margin: 0;
+    padding: 0;
+}
+.post-modal .Heading h1 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    letter-spacing: -0.3px;
+}
+
+.post-modal .Heading p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* ================================
+   TABS CONTAINER
+================================ */
+
+.post-modal .tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+
+    padding: 20px 32px;
+
+    background: #fafaff;
+    border-bottom: 1px solid #eeeef3;
+}
+
+
+/* ================================
+   INDIVIDUAL TAB
+================================ */
+
+.post-modal .tabs > div {
+    position: relative;
+
+    min-height: 125px;
+
+    padding: 18px 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border: 1px solid #e7e5ef;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* hover */
+
+.post-modal .tabs > div:hover {
+    transform: translateY(-2px);
+
+    border-color: #c8bdf5;
+
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.08);
+}
+
+
+/* icon */
+
+.post-modal .tabs > div > i {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 9px;
+
+    border-radius: 10px;
+
+    background: #f1efff;
+
+    color: #6251d6;
+
+    font-size: 18px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* heading */
+
+.post-modal .tabs > div h1 {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    color: #374151;
+}
+
+
+/* description */
+
+.post-modal .tabs > div p {
+    margin: 5px 0 0;
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    color: #8b8f98;
+}
+
+
+/* ================================
+   ACTIVE TAB
+================================ */
+
+.post-modal .tabs > div.active {
+    background: #f7f5ff;
+
+    border-color: #7565e8;
+
+    box-shadow:
+        0 0 0 1px rgba(117, 101, 232, 0.08),
+        0 8px 20px rgba(79, 70, 229, 0.08);
+}
+
+
+.post-modal .tabs > div.active > i {
+    background: #7565e8;
+
+    color: #ffffff;
+}
+
+
+.post-modal .tabs > div.active h1 {
+    color: #4f46b5;
+}
+
+
+/* little active indicator */
+
+.post-modal .tabs > div.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 20%;
+    right: 20%;
+    bottom: -1px;
+
+    height: 3px;
+
+    border-radius: 10px 10px 0 0;
+
+    background: #7565e8;
+}
+
+
+/* ================================
+   FORM AREA
+================================ */
+
+.post-form {
+    padding: 28px 32px 32px;
+}
+
+
+/* ================================
+   FORM
+================================ */
+
+.post-form form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* ================================
+   LABELS
+================================ */
+
+.post-form label {
+    margin-top: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+
+    color: #4b5563;
+}
+
+
+/* ================================
+   TEXTAREAS
+================================ */
+
+.post-form textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #dddbe7;
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    padding: 13px 15px;
+
+    outline: none;
+
+    resize: vertical;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* title */
+
+.post-form .titles {
+    min-height: 75px;
+    max-height: 150px;
+}
+
+
+/* description */
+
+.post-form .desc {
+    min-height: 150px;
+    max-height: 300px;
+}
+
+
+/* placeholder */
+
+.post-form textarea::placeholder {
+    color: #a1a1aa;
+}
+
+
+/* focus */
+
+.post-form textarea:focus {
+    border-color: #7565e8;
+
+    box-shadow:
+        0 0 0 3px rgba(117, 101, 232, 0.10);
+
+    background: #fdfcff;
+}
+
+
+/* ================================
+   WORD COUNTERS
+================================ */
+
+.post-form textarea + div {
+    min-height: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 11px;
+
+    color: #8b8f98;
+}
+
+
+/* validation message */
+
+.post-form textarea + div span[style] {
+    font-weight: 600;
+}
+
+
+/* ================================
+   SUBMIT BUTTON
+================================ */
+
+.post-form button[type="submit"] {
+    align-self: flex-end;
+
+    min-width: 145px;
+
+    margin-top: 14px;
+
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #6251d6;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 14px rgba(98, 81, 214, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.post-form button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    background: #5142c3;
+
+    box-shadow:
+        0 7px 18px rgba(98, 81, 214, 0.28);
+}
+
+
+.post-form button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+.post-form button[type="submit"]:disabled {
+    background: #d8d5e6;
+
+    color: #9491a3;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* ================================
+   MODAL SCROLLBAR
+================================ */
+
+.post-modal::-webkit-scrollbar {
+    width: 7px;
+}
+
+.post-modal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.post-modal::-webkit-scrollbar-thumb {
+    background: #d8d5e6;
+    border-radius: 10px;
+}
+
+.post-modal::-webkit-scrollbar-thumb:hover {
+    background: #bbb7d0;
+}
+
+
+/* ================================
+   ANIMATIONS
+================================ */
+
+@keyframes modalOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 800px) {
+
+    .post-modal-overlay {
+        padding: 16px;
+    }
+
+    .post-modal {
+        max-height: 94vh;
+
+        border-radius: 18px;
+    }
+
+    .post-modal .Heading {
+        padding: 24px 22px 18px;
+    }
+
+    .post-modal .tabs {
+        grid-template-columns: repeat(2, 1fr);
+
+        padding: 16px 22px;
+    }
+
+    .post-form {
+        padding: 22px;
+    }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 500px) {
+
+    .post-modal-overlay {
+        align-items: flex-start;
+
+        padding: 10px;
+    }
+
+    .post-modal {
+        width: 100%;
+        max-height: calc(100vh - 20px);
+
+        border-radius: 16px;
+    }
+
+    .post-modal .Heading {
+        padding: 20px 18px 16px;
+    }
+
+    .post-modal .Heading h1 {
+        font-size: 19px;
+    }
+
+    .post-modal .Heading p {
+        font-size: 12px;
+    }
+
+    .post-modal .tabs {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+
+        padding: 14px 18px;
+    }
+
+    .post-modal .tabs > div {
+        min-height: 105px;
+
+        padding: 12px 8px;
+    }
+
+    .post-modal .tabs > div > i {
+        width: 34px;
+        height: 34px;
+
+        font-size: 16px;
+    }
+
+    .post-modal .tabs > div h1 {
+        font-size: 12px;
+    }
+
+    .post-modal .tabs > div p {
+        font-size: 10px;
+    }
+
+    .post-form {
+        padding: 18px;
+    }
+
+    .post-form button[type="submit"] {
+        width: 100%;
+    }
+}
+
+
+.post-modal-close:hover {
+    background: #f5f3ff !important;
+
+    border-color: #c9c2f5 !important;
+
+    color: #5b4bd5 !important;
+
+    transform: rotate(90deg);
+}
+
+.post-modal-close:active {
+    transform: rotate(90deg) scale(0.94);
+}
+
+
+/* =========================================================
+   SCROLLABLE CONTENT
+========================================================= */
+
+.post-modal-content {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    box-sizing: border-box;
+}
+
+
+/* scrollbar */
+
+.post-modal-content::-webkit-scrollbar {
+    width: 7px;
+}
+
+.post-modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.post-modal-content::-webkit-scrollbar-thumb {
+    background: #d7d4e2;
+
+    border-radius: 20px;
+}
+
+.post-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #b9b5ca;
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.post-modal .tabs {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+
+    padding: 20px 28px;
+
+    background: #fafaff;
+
+    border-bottom: 1px solid #eeeef3;
+
+    box-sizing: border-box;
+}
+
+
+/* ---------- Individual Tab ---------- */
+
+.post-modal .tabs > div {
+    position: relative;
+
+    min-height: 125px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 16px 12px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e3ec;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* ---------- Tab Hover ---------- */
+
+.post-modal .tabs > div:hover {
+    transform: translateY(-2px);
+
+    border-color: #c9c2f5;
+
+    box-shadow:
+        0 7px 18px rgba(79, 70, 229, 0.08);
+}
+
+
+/* ---------- Tab Icon ---------- */
+
+.post-modal .tabs > div > i {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 9px;
+
+    border-radius: 11px;
+
+    background: #f0edff;
+
+    color: #6251d6;
+
+    font-size: 18px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* ---------- Tab Heading ---------- */
+
+.post-modal .tabs > div h1 {
+    margin: 0;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+
+/* ---------- Tab Description ---------- */
+
+.post-modal .tabs > div p {
+    margin: 5px 0 0;
+
+    color: #8b8f98;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   ACTIVE TAB
+========================================================= */
+
+.post-modal .tabs > div.active {
+    background: #f7f5ff;
+
+    border-color: #7565e8;
+
+    box-shadow:
+        0 0 0 1px rgba(117, 101, 232, 0.06),
+        0 8px 20px rgba(79, 70, 229, 0.08);
+}
+
+.post-modal .tabs > div.active > i {
+    background: #7565e8;
+
+    color: #ffffff;
+}
+
+.post-modal .tabs > div.active h1 {
+    color: #4f46b5;
+}
+
+
+/* active indicator */
+
+.post-modal .tabs > div.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+
+    bottom: -1px;
+
+    height: 3px;
+
+    border-radius: 10px 10px 0 0;
+
+    background: #7565e8;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.post-form {
+    padding: 28px 28px 32px;
+
+    box-sizing: border-box;
+}
+
+.post-form form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* ---------- Labels ---------- */
+
+.post-form label {
+    margin-top: 8px;
+
+    color: #4b5563;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+}
+
+
+/* ---------- Textareas ---------- */
+
+.post-form textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    border: 1px solid #dddbe7;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    resize: vertical;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+/* title */
+
+.post-form .titles {
+    min-height: 76px;
+
+    max-height: 150px;
+}
+
+
+/* description */
+
+.post-form .desc {
+    min-height: 150px;
+
+    max-height: 300px;
+}
+
+
+/* placeholder */
+
+.post-form textarea::placeholder {
+    color: #a1a1aa;
+}
+
+
+/* focus */
+
+.post-form textarea:focus {
+    border-color: #7565e8;
+
+    background: #fdfcff;
+
+    box-shadow:
+        0 0 0 3px rgba(117, 101, 232, 0.10);
+}
+
+
+/* ---------- Word Counter ---------- */
+
+.post-form textarea + div {
+    min-height: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: #8b8f98;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.post-form button[type="submit"] {
+    align-self: flex-end;
+
+    min-width: 145px;
+
+    margin-top: 14px;
+
+    padding: 11px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #6251d6;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 14px rgba(98, 81, 214, 0.20);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.post-form button[type="submit"]:hover:not(:disabled) {
+    background: #5142c3;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(98, 81, 214, 0.28);
+}
+
+.post-form button[type="submit"]:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.post-form button[type="submit"]:disabled {
+    background: #d8d5e6;
+
+    color: #9491a3;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes postOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes postModalIn {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(12px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .post-modal-overlay {
+        padding: 16px;
+    }
+
+    .post-modal {
+        width: 100%;
+
+        max-height: 92vh;
+
+        border-radius: 18px;
+    }
+
+    .post-modal-header {
+        padding: 24px 65px 20px 22px;
+    }
+
+    .post-modal .tabs {
+        grid-template-columns: repeat(2, 1fr);
+
+        padding: 18px 22px;
+    }
+
+    .post-form {
+        padding: 22px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .post-modal-overlay {
+        align-items: flex-start;
+
+        padding: 10px;
+    }
+
+    .post-modal {
+        max-height: calc(100vh - 20px);
+
+        border-radius: 16px;
+    }
+
+    .post-modal-header {
+        padding: 20px 58px 17px 18px;
+    }
+
+    .post-modal .Heading h1 {
+        font-size: 19px;
+    }
+
+    .post-modal .Heading p {
+        font-size: 12px;
+    }
+
+    .post-modal-close {
+        top: 17px;
+
+        right: 17px;
+
+        width: 36px !important;
+        height: 36px !important;
+
+        font-size: 22px !important;
+    }
+
+    .post-modal .tabs {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        padding: 14px 18px;
+    }
+
+    .post-modal .tabs > div {
+        min-height: 105px;
+
+        padding: 12px 8px;
+    }
+
+    .post-modal .tabs > div > i {
+        width: 34px;
+        height: 34px;
+
+        font-size: 16px;
+    }
+
+    .post-modal .tabs > div h1 {
+        font-size: 12px;
+    }
+
+    .post-modal .tabs > div p {
+        font-size: 10px;
+    }
+
+    .post-form {
+        padding: 18px;
+    }
+
+    .post-form button[type="submit"] {
+        width: 100%;
+    }
+}
+/* =========================================
+   POST MODAL CLOSE BUTTON
+========================================= */
+
+.post-modal-header > .post-modal-close {
+    position: absolute !important;
+
+    top: 20px !important;
+    right: 22px !important;
+
+    width: 40px !important;
+    height: 40px !important;
+
+    min-width: 40px !important;
+    min-height: 40px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: 1px solid #e5e7eb !important;
+    border-radius: 10px !important;
+
+    background: #ffffff !important;
+
+    color: #374151 !important;
+
+    font-family: Arial, sans-serif !important;
+    font-size: 26px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
+
+    text-align: center !important;
+
+    cursor: pointer !important;
+
+    z-index: 9999 !important;
+
+    box-sizing: border-box !important;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease !important;
+}
+
+.post-modal-header > .post-modal-close:hover {
+    background: #f3f0ff !important;
+
+    border-color: #7565e8 !important;
+
+    color: #5b4bd5 !important;
+
+    transform: rotate(90deg) !important;
+}
