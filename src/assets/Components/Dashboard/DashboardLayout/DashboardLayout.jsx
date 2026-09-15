@@ -4,7 +4,7 @@ import Header from "../Header/Header";
 
 function DashboardLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(true);
-
+    //useState it will toggle between opening an closing the sodebar
     function toggleSidebar() {
         setSidebarOpen(!sidebarOpen);
     }
