@@ -60,6 +60,7 @@ function Login({ setuser }) {
 );
 
 console.log(user);
+navigate("/dashboard", { replace: true });
             console.log(user);
             window.alert("Successfully entered mail");
             navigate("/dashboard");
@@ -102,7 +103,7 @@ console.log(user);
     })
 );
             window.alert("Successfully logged in");
-            navigate("/dashboard");
+            navigate("/dashboard", { replace: true });
         }
         catch (error) {
             const code = error?.code || "";
