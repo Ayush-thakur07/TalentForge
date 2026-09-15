@@ -2,7 +2,7 @@ export const studentData = [
   {
     id: "stu_001",
     name: "Misthi Rawal",
-    email: "misthi@example.com",
+    email: "misthirawal@gmail.com",
     avatar: "https://img.magnific.com/premium-photo/memoji-emoji-handsome-smiling-man-white-background_826801-6987.jpg?semt=ais_hybrid&w=740&q=80",
     college: "IIT Hyderabad",
     major: "Computer Science",

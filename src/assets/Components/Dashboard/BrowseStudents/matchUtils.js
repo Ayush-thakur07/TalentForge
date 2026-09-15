@@ -1,14 +1,18 @@
-function toSet(values) {
+//if the user has not entered their skills then values will be undefined an dundefined.map()=>error therefore i used an empty array to help sort this error
+function toSet(values) 
+{
     return new Set((values || []).map((value) => String(value).toLowerCase()));
 }
-
+//example set A = react, java, python,B = react, python, figma
 function jaccardScore(setA, setB) {
     if (setA.size === 0 && setB.size === 0) {
         return 0;
     }
     const intersection = new Set([...setA].filter((item) => setB.has(item)));
+    //intersection set->{react,python}=>size=2
     const union = new Set([...setA, ...setB]);
-    return union.size === 0 ? 0 : (intersection.size / union.size) * 100;
+    //union set->{react,python,java,figma}=>size=4
+    return union.size === 0 ? 0 : (intersection.size / union.size) * 100; //output=2/4*100=50%
 }
 
 function getSkillsScore(studentA, studentB) {
