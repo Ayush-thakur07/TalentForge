@@ -18,7 +18,7 @@ import "./Login.css";
 import { auth } from "../../../../config/firebase";
 import background from "../../../Background_image.png";
 
-function Login() {
+function Login({ setuser }) {
 
     const navigate = useNavigate();
 
@@ -48,8 +48,11 @@ function Login() {
             const pop = await signInWithPopup(auth, a);
             const user = pop.user;
 
+            setuser(user);
+
             console.log(user);
             window.alert("Successfully entered mail");
+            navigate("/dashboard");
         }
         catch (error) {
             console.log(error);
@@ -75,46 +78,32 @@ function Login() {
         try {
             setLoading(true);
             await applyPersistence();
-            await signInWithEmailAndPassword(auth, email, password);
-            if (check) {
-                localStorage.setItem("isLoggedIn", "true");
-            } else {
-                sessionStorage.setItem("isLoggedIn", "true");
-            }
+            const result = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            setuser(result.user);
+
             window.alert("Successfully logged in");
             navigate("/dashboard");
         }
         catch (error) {
-            const savedUser = JSON.parse(
-                localStorage.getItem("localUser")
-            );
-            if (
-                savedUser &&
-                savedUser.email === email &&
-                savedUser.password === password
-            ) {
-                if (check) {
-                    localStorage.setItem("isLoggedIn", "true");
-                } else {
-                    sessionStorage.setItem("isLoggedIn", "true");
-                }
-                window.alert("Logged in successfully");
-                navigate("/dashboard");
-            } else {
-                const code = error?.code || "";
-                if (
-                    code.includes("user-not-found") ||
-                    code.includes("wrong-password") ||
-                    code.includes("invalid-credential")
-                ) {
-                    window.alert("Invalid email or password.");
-                } else if (code.includes("operation-not-allowed")) {
-                    window.alert("Firebase login is disabled and no local account was found.");
-                } else {
-                    console.log(error);
-                    window.alert(error.message);
-                }
-            }
+            const code = error?.code || "";
+
+        if (
+            code.includes("user-not-found") ||
+            code.includes("wrong-password") ||
+            code.includes("invalid-credential")
+        ) {
+            window.alert("Invalid email or password.");
+        } else if (code.includes("operation-not-allowed")) {
+            window.alert("Firebase login is disabled.");
+        } else {
+            console.log(error);
+            window.alert(error.message);
+        }
         }
         finally {
             setLoading(false);
