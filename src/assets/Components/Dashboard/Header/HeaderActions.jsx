@@ -1,16 +1,44 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNotifications } from "../../../../context/NotificationContext";
 import NotificationDropdown from "./NotificationDropdown";
-
+import { auth } from "../../../../config/firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 function HeaderActions() {
+    const[user,setUserName]=useState(null);
+    const[profileOpen,setProfileOpen]=useState(false);
+    const navigate=useNavigate();
+    function toggleProfile()
+    {
+        setProfileOpen(!profileOpen);
+    }
+    //we are using useEffect here because components are generating side effects outside their component renders
+    useEffect(()=>
+{
+   const storeduser=localStorage.getItem("user");
+   if(storeduser)
+    {
+        setUserName(JSON.parse(storeduser));
+    } 
+},[]);
+
+console.log(user);
     const { unreadCount } = useNotifications();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [messageCount, setMessageCount] = useState(3);
-
+ 
     function toggleDropdown() {
         setDropdownOpen(!dropdownOpen);
-    }
+    } 
+    //to logout user from local storage,firebase
+    async function UserLogout()
+    {
+        await signOut(auth);
+        localStorage.removeItem("user");
+        
+        navigate("/login");
 
+    }
     function msgcount() {
         setMessageCount(0);
     }
@@ -39,12 +67,40 @@ function HeaderActions() {
                     <span id="four">{messageCount >= 100 ? "99+" : messageCount}</span>
                 )}
             </button>
-
-            <i className="bi bi-person-circle" style={{ fontSize: '28px', color: '#4f46e5' }}></i>
-            <span className="user_name">Misthi</span>
+            <div className="profile-wrapper">
+            <button onClick={toggleProfile} className="profile-trigger">
+                {user?.avatar ? (
+        <img
+            src={user.avatar}
+            alt={user.name || "Profile"}
+            className="header-avatar"
+        />
+    ) : (
+        <i className="bi bi-person-circle"></i>
+    )}
+            <span className="user_name">{user?.name}</span>
             <i className="bi bi-chevron-compact-down"></i>
+            </button>
+            {profileOpen && (<div className="profile-dropdown">
+                <div className="head">
+                    <img src={user?.avatar} alt="Profile"/>
+                    <h1>{user?.name}</h1>
+                    <p>{user?.email}</p>
+                </div>
+                    <div className="buttons_profile">
+                        <button><i className="bi bi-person"></i>View Profile</button>
+                        <button><i className="bi bi-pencil"></i>Edit Profile</button>
+                        <button><i className="bi bi-gear"></i>Account Settings</button>
+                    </div>
+                    <div className="Logout">
+                        <button onClick={UserLogout}><i className="bi bi-box-arrow-left"></i>Logout</button>
+                        <p>Sign out from TalentForge</p>
+                    </div>
+            </div>)}
+        </div>
         </div>
     );
+    
 }
 
 export default HeaderActions;

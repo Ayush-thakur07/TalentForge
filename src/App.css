@@ -173,8 +173,7 @@
     align-items: center;
     gap: 8px;
 }
-
-.Headeractions button {
+.Headeractions > button:not(.profile-trigger) {
     position: relative;
 
     width: 40px;
@@ -200,11 +199,17 @@
         transform 0.15s ease;
 }
 
-.Headeractions button:hover {
-    background: #f3f4f6;
+.Headeractions > button:not(.profile-trigger):hover {
+    background: #f3f0ff;
     color: #4f46e5;
 }
+.Headeractions > button:not(.profile-trigger):focus {
+    outline: none;
+}
 
+.Headeractions > button:not(.profile-trigger):active {
+    transform: scale(0.94);
+}
 .Headeractions button:active {
     transform: scale(0.94);
 }
@@ -212,6 +217,42 @@
 .Headeractions button:focus-visible {
     outline: 2px solid #6366f1;
     outline-offset: 2px;
+}
+.notification-wrapper > button {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #374151;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notification-wrapper > button:hover {
+    background: #f3f0ff;
+    color: #4f46e5;
+}
+
+.notification-wrapper > button:focus {
+    outline: none;
+    background: transparent;
+}
+
+.notification-wrapper > button:active {
+    background: #f3f0ff;
 }
 
 
@@ -448,6 +489,19 @@
         font-size: 17px;
     }
 }
+.header-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+}
+.header-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* =========================================
    HERO SECTION
    ========================================= */
@@ -583,11 +637,6 @@
     outline-offset: 3px;
 }
 
-
-/* =========================================
-   TABLET
-   ========================================= */
-
 @media (max-width: 900px) {
 
     .hero_part {
@@ -617,11 +666,6 @@
         font-size: 15px;
     }
 }
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
 
 @media (max-width: 700px) {
 
@@ -655,12 +699,6 @@
         font-size: 13px;
     }
 }
-
-
-/* =========================================
-   SMALL MOBILE
-   ========================================= */
-
 @media (max-width: 420px) {
 
     .hero_part {
@@ -698,4 +736,189 @@
 .dashboard_main {
     flex: 1;
     min-width: 0;
+}
+.profile-wrapper {
+    position: relative;
+}
+
+.profile-dropdown {
+    position: absolute;
+}
+/* Profile trigger */
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    height: auto;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 10px;
+     color: #374151;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.profile-trigger:hover {
+    background: #f3f0ff;
+}
+
+.profile-trigger .user_name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+.profile-dropdown {
+    position: absolute;
+
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 300px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e5ef;
+    border-radius: 14px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+    z-index: 1000;
+
+    padding: 16px;
+}
+.profile-dropdown .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    padding: 8px 4px 16px;
+}
+
+.profile-dropdown .head img {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    margin-bottom: 10px;
+}
+
+.profile-dropdown .head h1 {
+    font-size: 17px;
+    margin: 0 0 4px;
+    font-weight: 600;
+}
+
+.profile-dropdown .head p {
+    font-size: 13px;
+    color: #777;
+    margin: 0;
+}
+.buttons_profile {
+    border-top: 1px solid #eeeeee;
+
+    padding-top: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.buttons_profile button {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 12px;
+
+    padding: 11px 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #374151;
+
+    font-size: 14px;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.buttons_profile button:hover {
+    background: #f5f2ff;
+    color: #4f46e5;
+}
+
+.buttons_profile button i {
+    width: 20px;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+.Logout {
+    border-top: 1px solid #eeeeee;
+
+    margin-top: 8px;
+    padding-top: 12px;
+}
+
+.Logout button {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 12px;
+
+    padding: 11px 10px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #374151;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    text-align: left;
+}
+
+.Logout button:hover {
+    background: #fff1f1;
+    color: #dc2626;
+}
+
+.Logout button i {
+    width: 20px;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+.Logout p {
+    margin: 2px 10px 4px 42px;
+
+    font-size: 11px;
+    color: #888;
+}
+.Headeractions > button {
+    flex-shrink: 0;
 }

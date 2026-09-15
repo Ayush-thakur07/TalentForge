@@ -49,7 +49,17 @@ function Login({ setuser }) {
             const user = pop.user;
 
             setuser(user);
+            localStorage.setItem(
+    "user",
+    JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        avatar: user.photoURL
+    })
+);
 
+console.log(user);
             console.log(user);
             window.alert("Successfully entered mail");
             navigate("/dashboard");
@@ -83,9 +93,14 @@ function Login({ setuser }) {
                 email,
                 password
             );
-
+            const user = result.user;
             setuser(result.user);
-
+            localStorage.setItem("user",JSON.stringify({uid: user.uid,
+        email: user.email,
+        name: user.displayName,
+        avatar: user.photoURL
+    })
+);
             window.alert("Successfully logged in");
             navigate("/dashboard");
         }
