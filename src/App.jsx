@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Dashboard from './assets/Components/Dashboard/Dashboard'
 import './App.css'
 import BrowseStudents from './assets/Components/Dashboard/BrowseStudents/BrowseStudents'
@@ -8,11 +9,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import DashboardLayout from './assets/Components/Dashboard/DashboardLayout/DashboardLayout'
 import { NotificationProvider } from './context/NotificationContext'
 
-function ProtectedRoute({ children }) {
-    const localLogin = localStorage.getItem("isLoggedIn");
-    const sessionLogin = sessionStorage.getItem("isLoggedIn");
-
-    if (localLogin === "true" || sessionLogin === "true") {
+function ProtectedRoute({ user, children }) {
+    if (user) {
         return children;
     }
 
@@ -20,22 +18,26 @@ function ProtectedRoute({ children }) {
 }
 
 function App() {
+  const [user, setuser] = useState(null);
   return (
     <NotificationProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Login user={user} setuser={setuser} />} />
+          <Route path="/login" element={<Login user={user} setuser={setuser} />} />
+          <Route
+          path="/signup"
+          element={<Signup user={user} setuser={setuser} />}
+          />
 
           <Route path="/dashboard" element={
-            <ProtectedRoute>
+            <ProtectedRoute user={user}>
               <Dashboard />
             </ProtectedRoute>
           }/>
 
           <Route path="/students" element={
-            <ProtectedRoute>
+            <ProtectedRoute user={user}>
               <DashboardLayout>
                 <BrowseStudents />
               </DashboardLayout>
@@ -43,7 +45,7 @@ function App() {
           }/>
 
           <Route path="/notifications" element={
-            <ProtectedRoute>
+            <ProtectedRoute user={user}>
               <DashboardLayout>
                 <NotificationsPage />
               </DashboardLayout>
