@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../config/firebase";
 import "./Signup.css";
 
-function SignupForm() {
+function SignupForm({ setuser }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -41,17 +41,13 @@ function SignupForm() {
     try {
       setLoading(true);
 
-      await createUserWithEmailAndPassword(auth, email, password);
-
-      localStorage.setItem(
-        "localUser",
-        JSON.stringify({
-          email: email,
-          password: password
-        })
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        cleanEmail,
+        password
       );
 
-      sessionStorage.setItem("isLoggedIn", "true");
+      setuser(result.user);
 
       navigate("/dashboard", { replace: true });
     } catch (err) {
@@ -63,25 +59,9 @@ function SignupForm() {
       } else if (code.includes("weak-password")) {
         setError("Password is too weak. Use at least 6 characters.");
       } else if (code.includes("operation-not-allowed")) {
-        localStorage.setItem(
-          "localUser",
-          JSON.stringify({
-            email: email,
-            password: password
-          })
-        );
-        sessionStorage.setItem("isLoggedIn", "true");
-        navigate("/dashboard", { replace: true });
+        setError("Firebase signup is disabled.");
       } else if (code.includes("network-request-failed")) {
-        localStorage.setItem(
-          "localUser",
-          JSON.stringify({
-            email: email,
-            password: password
-          })
-        );
-        sessionStorage.setItem("isLoggedIn", "true");
-        navigate("/dashboard", { replace: true });
+        setError("Network error. Please check your internet connection.");
       } else {
         setError(err?.message || "Signup failed. Please try again.");
       }

@@ -2,12 +2,12 @@ import SignupBrandPanel from "./SignupBrand";
 import SignupForm from "./SignupForm";
 import "./Signup.css";
 
-function Signup() {
+function Signup({ setuser }) {
   return (
     <div className="signup-page">
       <SignupBrandPanel />
       <div className="signup-form-area">
-        <SignupForm />
+        <SignupForm setuser={setuser} />
       </div>
     </div>
   );
