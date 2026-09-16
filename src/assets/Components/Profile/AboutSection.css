@@ -1,0 +1,120 @@
+.about-section {
+    width: 100%;
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.about-card {
+    width: 100%;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #eeeaf5;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+}
+
+.about-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.about-card-header h2 {
+    margin: 0 0 5px;
+    color: #2d283c;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.about-card-header p {
+    margin: 0;
+    color: #8a8495;
+    font-size: 12px;
+}
+
+.about-card-header > i {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #f1edff;
+    color: #7658d7;
+    font-size: 16px;
+}
+
+.about-content p {
+    margin: 0;
+    color: #696273;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.empty-profile-content {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 15px;
+    border: 1px dashed #ddd6ee;
+    border-radius: 10px;
+    background: #faf9fd;
+    text-align: center;
+}
+
+.empty-profile-content i {
+    color: #8a72d3;
+    font-size: 20px;
+}
+
+.empty-profile-content p {
+    margin: 0;
+    color: #938d9e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.profile-content-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.about-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.about-list > span {
+    padding: 8px 13px;
+    border-radius: 20px;
+    background: #f2eeff;
+    border: 1px solid #e4dcfa;
+    color: #7055c6;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.about-list .empty-profile-content {
+    width: 100%;
+}
+
+@media (max-width: 700px) {
+    .profile-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card {
+        padding: 20px;
+    }
+}
