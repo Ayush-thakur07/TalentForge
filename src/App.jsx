@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Profile from './assets/Components/Profile/Profile'
 import Dashboard from './assets/Components/Dashboard/Dashboard'
 import './App.css'
 import BrowseStudents from './assets/Components/Dashboard/BrowseStudents/BrowseStudents'
@@ -43,6 +44,14 @@ function App() {
               </DashboardLayout>
             </ProtectedRoute>
           }/>
+          <Route path="/profile" element={
+            <ProtectedRoute user={user}>
+            <DashboardLayout>
+                <Profile />
+            </DashboardLayout>
+            </ProtectedRoute>
+    }
+/>
 
           <Route path="/notifications" element={
             <ProtectedRoute user={user}>
