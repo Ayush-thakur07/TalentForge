@@ -9,6 +9,7 @@ import Signup from './assets/Components/Authentication/Signup/Signup'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import DashboardLayout from './assets/Components/Dashboard/DashboardLayout/DashboardLayout'
 import { NotificationProvider } from './context/NotificationContext'
+import SearchPage from './assets/Components/Dashboard/Search/SearchPage'
 
 function ProtectedRoute({ user, children }) {
     if (user) {
@@ -57,6 +58,13 @@ function App() {
             <ProtectedRoute user={user}>
               <DashboardLayout>
                 <NotificationsPage />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }/>
+          <Route path="/search" element={
+            <ProtectedRoute user={user}>
+              <DashboardLayout>
+                <SearchPage />
               </DashboardLayout>
             </ProtectedRoute>
           }/>

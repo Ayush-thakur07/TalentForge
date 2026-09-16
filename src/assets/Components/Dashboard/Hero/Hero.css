@@ -1,12 +1,13 @@
 .hero_part {
     position: relative;
     width: 100%;
+    box-sizing: border-box;
     min-height: 420px;
     padding: 28px 36px;
     margin-bottom: 24px;
     display: flex;
     align-items: center;
-    overflow: visible;
+    overflow: hidden;
     background:
         radial-gradient(
             circle at 85% 18%,
@@ -161,6 +162,7 @@
     z-index: 4;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 11px;
 }
 
@@ -236,14 +238,15 @@
     position: absolute;
     z-index: 1;
     right: 2%;
-    bottom: 30px;
+    top: 10px;
     width: 43%;
-    height: auto;
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     pointer-events: none;
-    overflow: visible;
+    overflow: hidden;
 }
 .hero_image::before {
     content: "";
@@ -258,9 +261,9 @@
 }
 .hero_image img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: contain;
-    object-position: center bottom;
+    object-position: center;
     filter: drop-shadow(0 14px 22px rgba(60, 47, 150, 0.10));
     animation: heroFloat 5s ease-in-out infinite;
 }
@@ -288,8 +291,8 @@
     .hero_image {
         width: 43%;
         right: 1%;
-        bottom: 0;
-        height: auto;
+        top: 10px;
+        height: calc(100% - 20px);
     }
 
     .hero_stats {
@@ -315,7 +318,8 @@
     .hero_image {
         width: 43%;
         right: 0;
-        bottom: 0;
+        top: 10px;
+        height: calc(100% - 20px);
     }
 
     .hero_stats {
@@ -344,9 +348,8 @@
         height: 50%;
         right: 0;
         top: 8px;
-        bottom: auto;
         opacity: 0.16;
-        overflow: visible;
+        overflow: hidden;
     }
 
     .hero_image img {
@@ -437,7 +440,7 @@
     .hero_image {
         width: 50%;
         height: 52%;
-        right: -3%;
+        right: 0;
         top: 20px;
         opacity: 0.13;
     }
@@ -510,7 +513,7 @@
     .hero_image {
         width: 58%;
         height: 45%;
-        right: -5%;
+        right: 0;
         top: 22px;
         opacity: 0.10;
     }
@@ -539,14 +542,13 @@
     }
 
     .hero_actions {
-        flex-direction: column;
-        align-items: stretch;
+        align-items: center;
     }
 
     .explore_matches,
     .post_project {
-        width: 100%;
-        flex: none;
+        flex: 1 1 140px;
+        width: auto;
     }
 }
 @media (max-width: 380px) {
@@ -573,20 +575,19 @@
     }
 
     .hero_actions {
-        flex-direction: column;
-        align-items: stretch;
+        align-items: center;
     }
 
     .explore_matches,
     .post_project {
-        width: 100%;
-        flex: none;
+        flex: 1 1 140px;
+        width: auto;
     }
 
     .hero_image {
         width: 62%;
         height: 40%;
-        right: -8%;
+        right: 0;
         top: 25px;
     }
 }

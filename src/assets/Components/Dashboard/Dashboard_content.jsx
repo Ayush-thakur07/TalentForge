@@ -1,16 +1,10 @@
 import { studentData } from "./BrowseStudents/studentData";
-import { calculateMatchScore } from "./BrowseStudents/matchUtils";
+import { getRecommendedStudents, getTrendingSkills, normalizePosts } from "./recommendationUtils";
 import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./Dashboard_content.css";
 
-const trendingSkills = [
-  { name: "React", icon: "bi bi-code-slash", status: "High Demand" },
-  { name: "Python", icon: "bi bi-filetype-py", status: "Growing" },
-  { name: "UI/UX Design", icon: "bi bi-palette", status: "High Demand" },
-  { name: "Machine Learning", icon: "bi bi-cpu", status: "Growing" }
-];
 function DashboardContent() {
     const navigate = useNavigate();
     const currentUser = studentData[0];
@@ -18,14 +12,12 @@ function DashboardContent() {
     const [postToDelete, setPostToDelete] = useState(null);
     useEffect(() => {
     const loadPosts = () => {
-    const storedPosts =
-        JSON.parse(localStorage.getItem("talentforge_posts")) || [];
-
-    const sortedPosts = [...storedPosts].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    );
-
-    setPosts(sortedPosts);
+    try {
+        const storedPosts = JSON.parse(localStorage.getItem("talentforge_posts") || "[]");
+        setPosts(normalizePosts(storedPosts));
+    } catch {
+        setPosts([]);
+    }
 };
     loadPosts();
     window.addEventListener("postsUpdated", loadPosts);
@@ -109,14 +101,14 @@ function DashboardContent() {
     const cancelDelete = () => {
         setPostToDelete(null);
     };
-    const recommendedStudents = studentData
-      .slice(1)
-      .map((student) => ({
-        ...student,
-        matchPercentage: calculateMatchScore(currentUser, student),
-      }))
-      .sort((a, b) => b.matchPercentage - a.matchPercentage)
-      .slice(0, 3);
+    const recommendedStudents = useMemo(
+        () => getRecommendedStudents(studentData, posts, currentUser),
+        [posts, currentUser]
+    );
+    const trendingSkills = useMemo(
+        () => getTrendingSkills(posts, studentData),
+        [posts]
+    );
 
     return (
         <section className="dashboard-content">
@@ -240,6 +232,8 @@ function DashboardContent() {
                         )}
                     </div>
 
+                    <p className="recommendation-reason">{student.recommendationReason}</p>
+
                 </div>
 
                 <div className="student-match">
@@ -279,7 +273,7 @@ function DashboardContent() {
       </div>
 
       <div className="skills-list">
-        {trendingSkills.map((skill) => (
+                {trendingSkills.length > 0 ? trendingSkills.map((skill) => (
           <div
             key={skill.name}
             className="trending-skill"
@@ -295,7 +289,12 @@ function DashboardContent() {
               <span>{skill.status}</span>
             </div>
           </div>
-        ))}
+                )) : (
+                    <div className="trending-empty">
+                        <i className="bi bi-graph-up"></i>
+                        <span>Create a post to start tracking requested skills.</span>
+                    </div>
+                )}
       </div>
 
     </div>

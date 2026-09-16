@@ -496,6 +496,26 @@ transform: translateY(-1px);
     flex-direction: column;
 }
 
+.recommendation-reason {
+    margin-top: 8px;
+    color: #817c91;
+    font-size: 11px;
+}
+
+.trending-empty {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 4px;
+    color: #817c91;
+    font-size: 13px;
+}
+
+.trending-empty i {
+    color: #8065dc;
+    font-size: 18px;
+}
+
 .dashboard-main-grid {
     display: grid;
     grid-template-columns: 0.62fr 0.38fr;

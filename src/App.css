@@ -127,6 +127,43 @@
         background-color 0.2s ease;
 }
 
+.global-search-form { position: relative; flex: 1 1 520px; min-width: 0; }
+.global-search-form .search_icons { flex: none; }
+.global-search-submit {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+}
+.global-search-submit i { color: inherit; }
+.global-search-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 1100;
+    width: min(520px, calc(100vw - 32px));
+    max-height: min(560px, calc(100vh - 100px));
+    overflow-y: auto;
+    padding: 14px;
+    border: 1px solid #e6e1f2;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(44, 42, 110, 0.14);
+}
+.global-search-view-all {
+    width: 100%;
+    margin-top: 14px;
+    padding: 11px 8px 2px;
+    border: 0;
+    border-top: 1px solid #eeeaf5;
+    background: transparent;
+    color: #7357d9;
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+
 .main-header .search_icons i {
     flex: 0 0 auto;
 

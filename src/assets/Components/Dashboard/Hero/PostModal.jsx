@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { extractRequiredSkills } from "../recommendationUtils";
 import "./PostModal.css";
 
 function PostModal({ onClose }) {
@@ -96,6 +97,7 @@ function PostModal({ onClose }) {
             id: Date.now(),
 
             ...postData,
+            detectedSkills: extractRequiredSkills(postData),
 
             author: {
                 name: currentUser.name || "TalentForge User",
