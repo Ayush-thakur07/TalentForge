@@ -732,10 +732,19 @@
 .dashboard_body {
     display: flex;
     align-items: flex-start;
+    gap: 24px;
+    padding: 28px;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 .dashboard_main {
     flex: 1;
     min-width: 0;
+    padding: 0 16px;
+}
+.dashboard {
+    background: #faf8ff;
+    min-height: calc(100vh - 72px);
 }
 .profile-wrapper {
     position: relative;

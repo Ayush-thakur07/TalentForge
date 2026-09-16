@@ -1,6 +1,5 @@
 import SidebarNavigation from "./SidebarNavigation";
 import UpgradeCard from "./UpgradeCard";
-import UserMiniProfile from "./UserMiniProfile";
 import "./Sidebar.css";
 
 function Sidebar({ sidebarOpen })
@@ -12,7 +11,6 @@ function Sidebar({ sidebarOpen })
 
             <UpgradeCard />
 
-            <UserMiniProfile />
 
         </aside>
     );
