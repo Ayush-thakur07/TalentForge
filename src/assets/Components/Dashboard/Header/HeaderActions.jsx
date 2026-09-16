@@ -88,8 +88,8 @@ console.log(user);
                     <p>{user?.email}</p>
                 </div>
                     <div className="buttons_profile">
-                        <button><i className="bi bi-person"></i>View Profile</button>
-                        <button><i className="bi bi-pencil"></i>Edit Profile</button>
+                        <button onClick={() => navigate("/profile")}><i className="bi bi-person"></i>View Profile</button>
+                        <button onClick={() =>navigate("/profile", {state: { openEdit: true }})}><i className="bi bi-pencil"></i>Edit Profile</button>
                         <button><i className="bi bi-gear"></i>Account Settings</button>
                     </div>
                     <div className="Logout">
