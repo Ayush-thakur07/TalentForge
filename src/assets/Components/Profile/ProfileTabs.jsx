@@ -1,9 +1,7 @@
 import { useState } from "react";
 import "./ProfileTabs.css";
 
-function ProfileTabs() {
-    const [activeTab, setActiveTab] = useState("Overview");
-
+function ProfileTabs({activeTab,onTabChange}) {
     const tabs = [
         {
             label: "Overview",
@@ -44,7 +42,7 @@ function ProfileTabs() {
                         className={`profile-tab ${
                             activeTab === tab.label ? "active" : ""
                         }`}
-                        onClick={() => setActiveTab(tab.label)}
+                        onClick={() => onTabChange(tab.label)}
                     >
                         <i className={tab.icon}></i>
                         <span>{tab.label}</span>
