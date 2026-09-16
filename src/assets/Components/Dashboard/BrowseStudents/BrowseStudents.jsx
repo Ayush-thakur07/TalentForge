@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { getAllStudents } from "./studentUtils";
 import { calculateMatchScore } from "./matchUtils";
 import StudentList from "./StudentList";
 import StudentFilters from "./StudentFilters";
 import StudentSearch from "./StudentSearch";
 import StudentSort from "./StudentSort";
+import { useLocation } from "react-router-dom";
 
 const CURRENT_USER_ID = "stu_001";
 
@@ -37,10 +38,17 @@ function sortStudents(students, sort) {
 }
 
 function BrowseStudents() {
+    const location = useLocation();
     const allStudents = getAllStudents();
     const currentUser = allStudents.find((student) => student.id === CURRENT_USER_ID) || allStudents[0];
-    const [filters, setFilters] = useState({ search: "", skill: "", field: "", year: "", availability: "" });
+    const [filters, setFilters] = useState({ search: location.state?.search || "", skill: "", field: "", year: "", availability: "" });
     const [sort, setSort] = useState("default");
+
+    useEffect(() => {
+        if (location.state?.search) {
+            setFilters((currentFilters) => ({ ...currentFilters, search: location.state.search }));
+        }
+    }, [location.state]);
 
     const filteredStudents = useMemo(() => {
         return allStudents.filter((student) => {
