@@ -1,0 +1,44 @@
+.profile-quote {
+    width: 100%;
+    margin-top: 18px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #ffffff;
+    border: 1px solid #eeeaf5;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+}
+
+.profile-quote-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: #f1edff;
+    color: #7658d7;
+    font-size: 19px;
+}
+
+.profile-quote p {
+    margin: 0;
+    color: #625b70;
+    font-size: 14px;
+    line-height: 1.7;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .profile-quote {
+        padding: 18px;
+        align-items: flex-start;
+    }
+
+    .profile-quote p {
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,135 @@
+/* =========================================
+   PROFILE STATS
+   ========================================= */
+
+.profile-stats {
+    width: 100%;
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+
+/* =========================================
+   STAT CARD
+   ========================================= */
+
+.profile-stat {
+    min-height: 88px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    background: #ffffff;
+    border: 1px solid #eeeaf5;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 22px rgba(74, 58, 120, 0.10);
+}
+
+
+/* =========================================
+   ICON
+   ========================================= */
+
+.profile-stat-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f1edff;
+    color: #7658d7;
+
+    font-size: 19px;
+}
+
+.profile-stat-icon i {
+    line-height: 1;
+}
+
+
+/* =========================================
+   CONTENT
+   ========================================= */
+
+.profile-stat-content h3 {
+    margin: 0 0 3px;
+
+    color: #2d283c;
+
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.profile-stat-content p {
+    margin: 0;
+
+    color: #817a8d;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 800px) {
+
+    .profile-stats {
+        gap: 12px;
+    }
+
+    .profile-stat {
+        padding: 15px;
+        gap: 11px;
+    }
+
+    .profile-stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .profile-stat-content h3 {
+        font-size: 19px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-stat {
+        min-height: 70px;
+    }
+
+}
