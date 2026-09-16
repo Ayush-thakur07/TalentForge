@@ -1,0 +1,145 @@
+.posts-section {
+    width: 100%;
+    margin-top: 18px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #eeeaf5;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+}
+
+.posts-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.posts-header h2 {
+    margin: 0 0 5px;
+    color: #2d283c;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.posts-header p {
+    margin: 0;
+    color: #8a8495;
+    font-size: 12px;
+}
+
+.posts-header > i {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #f1edff;
+    color: #7658d7;
+    font-size: 16px;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-card {
+    padding: 17px;
+    border: 1px solid #eeeaf5;
+    border-radius: 11px;
+    background: #ffffff;
+}
+
+.post-author {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 14px;
+}
+
+.post-avatar {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1edff;
+    color: #8066d9;
+}
+
+.post-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-author h3 {
+    margin: 0 0 3px;
+    color: #342f42;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.post-author span {
+    color: #97919f;
+    font-size: 10px;
+}
+
+.post-content p {
+    margin: 0;
+    color: #6f6979;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.posts-empty {
+    min-height: 210px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px dashed #ddd6ee;
+    border-radius: 12px;
+    background: #faf9fd;
+}
+
+.posts-empty-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #f0ebff;
+    color: #7658d7;
+    font-size: 21px;
+}
+
+.posts-empty h3 {
+    margin: 0 0 6px;
+    color: #393347;
+    font-size: 15px;
+}
+
+.posts-empty p {
+    max-width: 350px;
+    margin: 0;
+    color: #8c8697;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .posts-section {
+        padding: 20px;
+    }
+}
