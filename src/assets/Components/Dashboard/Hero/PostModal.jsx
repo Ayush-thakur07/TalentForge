@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Hero.css";
+import "./PostModal.css";
 
 function PostModal({ onClose }) {
     const [selecteddiv, setSeleectedDiv] = useState("shareProject");
@@ -25,21 +25,17 @@ function PostModal({ onClose }) {
         urgency: "",
         helpFormat: ""
     });
-    const projectTitleWords = projectTitle
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean);
+    const projectTitleCharacters = projectTitle.trim().length;
 
     const projectDescriptionWords = projectDescription
         .trim()
         .split(/\s+/)
         .filter(Boolean);
 
-    const titleWordLength = projectTitleWords.length;
     const descriptionWordLength = projectDescriptionWords.length;
 
     const titleInvalid =
-        titleWordLength < 10 || titleWordLength > 50;
+        projectTitleCharacters < 10 || projectTitleCharacters > 100;
 
     const descriptionInvalid =
         descriptionWordLength < 50 || descriptionWordLength > 500;
@@ -131,7 +127,7 @@ function PostModal({ onClose }) {
         e.preventDefault();
 
         if (titleInvalid) {
-            alert("Project title must contain between 10 and 50 words.");
+            alert("Project title must contain between 10 and 100 characters.");
             return;
         }
 
@@ -355,16 +351,16 @@ function PostModal({ onClose }) {
 
                                 <div>
                                     <span>
-                                        Words: {titleWordLength}
+                                        Characters: {projectTitleCharacters}
                                     </span>
 
                                     {projectTitle && titleInvalid && (
 
                                         <span style={{ color: "red" }}>
 
-                                            {titleWordLength < 10
-                                                ? " Too short (min 10)"
-                                                : " Too long (max 50)"}
+                                            {projectTitleCharacters < 10
+                                                ? " Too short (min 10 characters)"
+                                                : " Too long (max 100 characters)"}
 
                                         </span>
                                     )}
