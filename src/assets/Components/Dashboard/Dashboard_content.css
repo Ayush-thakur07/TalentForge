@@ -601,38 +601,34 @@
         0 5px 18px rgba(44, 42, 110, 0.04);
 }
 
-.student-card {
+.recommended-list .student-card {
     display: flex;
-    align-items: center;
-
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    min-height: 120px;
-
-    gap: 16px;
-
-    padding: 16px 18px;
-
+    min-height: 0;
+    height: auto;
+    gap: 0;
+    padding: 12px 14px;
     background: #ffffff;
-
-    border: none;
-    border-bottom: 1px solid #eeeeF5;
-
-    border-radius: 10px;
-
-    box-shadow: none;
-
+    border: 1px solid rgba(206, 203, 230, 0.4);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44, 42, 110, 0.03);
     transition:
+        border-color 0.2s ease,
         background 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.student-card:last-child {
-    border-bottom: none;
+.recommended-list .student-card:last-child {
+    border-bottom: 1px solid rgba(206, 203, 230, 0.4);
 }
 
-.student-card:hover {
+.recommended-list .student-card:hover {
     background: #faf9ff;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(44, 42, 110, 0.05);
 }
 .trending-skills {
     width: 100%;
@@ -796,26 +792,8 @@
 }
 
 .talentforge-post:hover::before {
-    opacity: 1;
-    transform: scaleY(1);
-}
-.post-author-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: linear-gradient(
-        135deg,
-        #eeeaff,
-        #ddd6ff
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    border: 2px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(81, 56, 238, 0.14);
-    transition: transform 0.3s ease;
+    opacity: 0;
+    transform: scaleY(0.5);
 }
 
 .post-author {
@@ -823,6 +801,7 @@
     align-items: center;
     gap: 12px;
     margin-bottom: 8px;
+    position: relative;
 }
 
 .post-author-avatar {
@@ -960,7 +939,7 @@
     padding-top: 10px;
 }
 
-.post-actions button {
+.post-action-btn {
     border: none;
     background: transparent;
     color: #77738b;
@@ -976,13 +955,155 @@
         transform 0.2s ease;
 }
 
-.post-actions button i {
+.post-action-btn i {
     font-size: 13px;
 }
 
-.post-actions button:hover {
+.post-action-btn:hover {
     color: #5540dc;
     transform: translateY(-1px);
+}
+
+.post-upvote.post-liked {
+    color: #ec4899;
+}
+
+.post-upvote.post-liked i {
+    color: #ec4899;
+}
+
+.post-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-top: -4px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #9496b3;
+    font-size: 16px;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.post-menu-button:hover {
+    background: #f3f0ff;
+    color: #5138ee;
+}
+
+.post-menu-dropdown {
+    position: absolute;
+    top: 38px;
+    right: 0;
+    z-index: 50;
+    min-width: 140px;
+    background: #ffffff;
+    border: 1px solid rgba(206, 203, 230, 0.6);
+    border-radius: 10px;
+    box-shadow:
+        0 8px 24px rgba(44, 42, 110, 0.12);
+    overflow: hidden;
+}
+
+.post-menu-item {
+    width: 100%;
+    padding: 8px 14px;
+    border: none;
+    background: transparent;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.post-menu-item:hover {
+    background: #faf9ff;
+}
+
+.post-menu-delete {
+    color: #ef4444;
+}
+
+.post-menu-delete:hover {
+    background: #fef2f2;
+}
+
+.delete-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(6px);
+}
+
+.delete-confirm-modal {
+    max-width: 400px;
+    width: 100%;
+    padding: 28px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+}
+
+.delete-confirm-title {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #17194a;
+}
+
+.delete-confirm-text {
+    margin: 0 0 20px;
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.delete-confirm-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.delete-confirm-btn {
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.delete-confirm-btn.cancel {
+    border: 1px solid rgba(150, 150, 170, 0.5);
+    background: #f8fafc;
+    color: #475569;
+}
+
+.delete-confirm-btn.cancel:hover {
+    background: #f1f5f9;
+}
+
+.delete-confirm-btn.delete {
+    border: none;
+    background: #ec4899;
+    color: #ffffff;
+}
+
+.delete-confirm-btn.delete:hover {
+    background: #db2777;
 }
 .post-type.shareProject {
     background: linear-gradient(
@@ -1018,4 +1139,259 @@
         #ffebe5
     );
     color: #c65a3d;
+}
+
+/* ================================
+   RECOMMENDED SECTION COMPACT STYLES
+   ================================ */
+
+.recommended-section .dashboard-section-header {
+    margin-bottom: 12px;
+}
+
+.recommended-section .dashboard-section-header h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #17194a;
+}
+
+.recommended-section .dashboard-section-header p {
+    font-size: 12px;
+    color: #74799a;
+    margin-top: 2px;
+}
+
+.recommended-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.recommended-list .student-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    gap: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid rgba(206, 203, 230, 0.4);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(44, 42, 110, 0.03);
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recommended-list .student-card:hover {
+    background: #faf9ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(44, 42, 110, 0.05);
+    border-color: rgba(206, 203, 230, 0.6);
+}
+
+.recommended-list .student-card:last-child {
+    border-bottom: 1px solid rgba(206, 203, 230, 0.4);
+}
+
+.recommended-list .student-card:last-child:hover {
+    border-bottom-color: rgba(206, 203, 230, 0.6);
+}
+
+.recommended-list .student-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eeeaff;
+    color: #5138ee;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.recommended-list .student-card {
+    flex-direction: column;
+}
+
+.recommended-list .student-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-left: 0;
+}
+
+.recommended-list .student-info h3 {
+    margin: 0 0 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #17194a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recommended-list .student-name-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.recommended-list .student-meta {
+    margin: 0 0 8px;
+    color: #74799a;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recommended-list .student-university {
+    display: none;
+}
+
+.recommended-list .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.recommended-list .skill-tags span {
+    padding: 3px 7px;
+    border-radius: 5px;
+    background: #f0edff;
+    color: #5138ee;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.recommended-list .match-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #e8f9ef;
+    color: #16834b;
+    font-size: 10px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.recommended-list .match-badge i {
+    font-size: 9px;
+}
+
+.recommended-list .connect-button {
+    align-self: flex-end;
+    min-width: 84px;
+    height: 30px;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #5b43f4, #4930df);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.recommended-list .connect-button:hover {
+    background: linear-gradient(135deg, #4f3ae0, #3e29c8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(81, 56, 238, 0.18);
+}
+
+.recommended-list .connect-button i {
+    font-size: 11px;
+}
+
+.recommended-list .student-match {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+.recommended-list .student-match span {
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #e8f9ef;
+    color: #16834b;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.recommended-list .student-match button {
+    min-width: 84px;
+    height: 30px;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #5b43f4, #4930df);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recommended-list .student-match button:hover {
+    background: linear-gradient(135deg, #4f3ae0, #3e29c8);
+    transform: translateY(-1px);
+}
+
+.recommended-list .student-menu {
+    align-self: flex-end;
+    border: none;
+    background: transparent;
+    color: #8b8eaa;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 2px;
+    margin-top: 0;
+    transition: color 0.2s ease;
+}
+
+.recommended-list .student-menu:hover {
+    color: #5138ee;
+}
+
+.recommended-list .online-dot {
+    display: none;
 }

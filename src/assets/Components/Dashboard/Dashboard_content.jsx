@@ -1,5 +1,6 @@
 import { studentData } from "./BrowseStudents/studentData";
 import { calculateMatchScore } from "./BrowseStudents/matchUtils";
+import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Dashboard_content.css";
@@ -10,68 +11,11 @@ const trendingSkills = [
   { name: "UI/UX Design", icon: "bi bi-palette", status: "High Demand" },
   { name: "Machine Learning", icon: "bi bi-cpu", status: "Growing" }
 ];
-function getPostTypeName(type) {
-
-    switch (type) {
-
-        case "shareProject":
-            return "Share a Project";
-
-        case "findCollaborators":
-            return "Find Collaborators";
-
-        case "availableToHelp":
-            return "Available to Help";
-
-        case "needHelp":
-            return "Need Help";
-
-        default:
-            return "Community Post";
-    }
-}
-function formatPostDate(date) {
-
-    if (!date) {
-        return "Just now";
-    }
-
-    const postDate = new Date(date);
-
-    const now = new Date();
-
-    const difference =
-        Math.floor((now - postDate) / 1000);
-
-    if (difference < 60) {
-        return "Just now";
-    }
-
-    if (difference < 3600) {
-
-        const minutes =
-            Math.floor(difference / 60);
-
-        return `${minutes} min ago`;
-    }
-
-    if (difference < 86400) {
-
-        const hours =
-            Math.floor(difference / 3600);
-
-        return `${hours} hr ago`;
-    }
-
-    const days =
-        Math.floor(difference / 86400);
-
-    return `${days} day${days !== 1 ? "s" : ""} ago`;
-}
 function DashboardContent() {
     const navigate = useNavigate();
     const currentUser = studentData[0];
     const [posts, setPosts] = useState([]);
+    const [postToDelete, setPostToDelete] = useState(null);
     useEffect(() => {
     const loadPosts = () => {
     const storedPosts =
@@ -91,6 +35,80 @@ function DashboardContent() {
         window.removeEventListener("storage", loadPosts);
     };
 }, []);
+
+    const [upvoteCounts, setUpvoteCounts] = useState(() => {
+        const stored = localStorage.getItem("talentforge_upvotes");
+        try {
+            return stored ? JSON.parse(stored) : {};
+        } catch {
+            return {};
+        }
+    });
+    const [likedPosts, setLikedPosts] = useState(() => {
+        const stored = localStorage.getItem("talentforge_liked");
+        try {
+            return new Set(stored ? JSON.parse(stored) : []);
+        } catch {
+            return new Set();
+        }
+    });
+
+    const saveUpvotes = (counts, liked) => {
+        localStorage.setItem("talentforge_upvotes", JSON.stringify(counts));
+        localStorage.setItem("talentforge_liked", JSON.stringify([...liked]));
+    };
+
+    const handleToggleUpvote = (postId) => {
+        let isCurrentlyLiked;
+
+        setLikedPosts((prevLiked) => {
+            isCurrentlyLiked = prevLiked.has(postId);
+            const newLiked = new Set(prevLiked);
+            if (isCurrentlyLiked) {
+                newLiked.delete(postId);
+            } else {
+                newLiked.add(postId);
+            }
+            return newLiked;
+        });
+
+        setUpvoteCounts((prevCounts) => {
+            const currentCount = prevCounts[postId] || 0;
+            const newCount = isCurrentlyLiked
+                ? Math.max(0, currentCount - 1)
+                : currentCount + 1;
+            return { ...prevCounts, [postId]: newCount };
+        });
+    };
+
+    useEffect(() => {
+        saveUpvotes(upvoteCounts, likedPosts);
+    }, [upvoteCounts, likedPosts]);
+
+    const handleDeleteRequest = (postId) => {
+        setPostToDelete(postId);
+    };
+
+    const confirmDelete = () => {
+        const postId = postToDelete;
+        if (postId === null) return;
+
+        const updatedPosts = posts.filter((p) => p.id !== postId);
+        setPosts(updatedPosts);
+        localStorage.setItem("talentforge_posts", JSON.stringify(updatedPosts));
+
+        const updatedCounts = { ...upvoteCounts };
+        delete updatedCounts[postId];
+        setUpvoteCounts(updatedCounts);
+        saveUpvotes(updatedCounts, likedPosts);
+
+        window.dispatchEvent(new Event("postsUpdated"));
+        setPostToDelete(null);
+    };
+
+    const cancelDelete = () => {
+        setPostToDelete(null);
+    };
     const recommendedStudents = studentData
       .slice(1)
       .map((student) => ({
@@ -138,221 +156,39 @@ function DashboardContent() {
         ) : (
 
             posts.map((post) => (
-
-                <div
-                    className="talentforge-post"
+                <PostCard
                     key={post.id}
-                >
-
-                    {/* ====================== */}
-                    {/* POST HEADER */}
-                    {/* ====================== */}
-
-                    <div className="post-author">
-
-                        <div className="post-author-avatar">
-
-                            {post.author?.avatar ? (
-
-                                <img
-                                    src={post.author.avatar}
-                                    alt={post.author.name}
-                                />
-
-                            ) : (
-
-                                <i className="bi bi-person"></i>
-
-                            )}
-
-                        </div>
-
-
-                        <div className="post-author-info">
-
-                            <div className="post-author-name">
-
-                                <strong>
-                                    {post.author?.name || "TalentForge User"}
-                                </strong>
-
-                                <i className="bi bi-patch-check-fill"></i>
-
-                            </div>
-
-                            <span>
-                                {formatPostDate(post.createdAt)}
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    {/* ====================== */}
-                    {/* POST TYPE */}
-                    {/* ====================== */}
-
-                    <div className={`post-type ${post.type}`}>
-
-                        <i
-                            className={
-                                post.type === "shareProject"
-                                    ? "bi bi-pc-display-horizontal"
-                                    : post.type === "findCollaborators"
-                                    ? "bi bi-people-fill"
-                                    : post.type === "availableToHelp"
-                                    ? "bi bi-calendar-day-fill"
-                                    : "bi bi-person-fill"
-                            }
-                        ></i>
-
-                        <span>
-                            {getPostTypeName(post.type)}
-                        </span>
-
-                    </div>
-
-
-                    {/* ====================== */}
-                    {/* POST CONTENT */}
-                    {/* ====================== */}
-
-                    <h3 className="post-title">
-                        {post.title}
-                    </h3>
-
-                    <p className="post-description">
-                        {post.description}
-                    </p>
-
-
-                    {/* ====================== */}
-                    {/* EXTRA INFORMATION */}
-                    {/* ====================== */}
-
-                    {post.skillsNeeded && (
-
-                        <div className="post-detail">
-
-                            <strong>Skills needed:</strong>
-
-                            <span>
-                                {post.skillsNeeded}
-                            </span>
-
-                        </div>
-
-                    )}
-
-
-                    {post.skills && (
-
-                        <div className="post-detail">
-
-                            <strong>Skills:</strong>
-
-                            <span>
-                                {post.skills}
-                            </span>
-
-                        </div>
-
-                    )}
-
-
-                    {post.helpNeeded && (
-
-                        <div className="post-detail">
-
-                            <strong>Help needed:</strong>
-
-                            <span>
-                                {post.helpNeeded}
-                            </span>
-
-                        </div>
-
-                    )}
-
-
-                    {/* ====================== */}
-                    {/* NEED HELP INFORMATION */}
-                    {/* ====================== */}
-
-                    {post.urgency && (
-
-                        <span className={`post-badge ${post.urgency}`}>
-
-                            {post.urgency === "high"
-                                ? "Urgent"
-                                : post.urgency === "medium"
-                                ? "Needed Soon"
-                                : "Not Urgent"}
-
-                        </span>
-
-                    )}
-
-
-                    {post.helpFormat && (
-
-                        <span className="post-badge">
-
-                            {post.helpFormat === "chat"
-                                ? "Chat / Discussion"
-                                : post.helpFormat === "call"
-                                ? "Call / Meeting"
-                                : post.helpFormat === "collaboration"
-                                ? "Work Together"
-                                : "Review / Feedback"}
-
-                        </span>
-
-                    )}
-
-
-                    {/* ====================== */}
-                    {/* FOOTER */}
-                    {/* ====================== */}
-
-                    <div className="post-actions">
-
-                        <button type="button">
-
-                            <i className="bi bi-chat"></i>
-
-                            Comment
-
-                        </button>
-
-
-                        <button type="button">
-
-                            <i className="bi bi-bookmark"></i>
-
-                            Save
-
-                        </button>
-
-
-                        <button type="button">
-
-                            <i className="bi bi-share"></i>
-
-                            Share
-
-                        </button>
-
-                    </div>
-
-                </div>
-
+                    post={post}
+                    currentUser={currentUser}
+                    upvoteCount={upvoteCounts[post.id] || 0}
+                    hasUpvoted={likedPosts.has(post.id)}
+                    onToggleUpvote={() => handleToggleUpvote(post.id)}
+                    onDelete={handleDeleteRequest}
+                />
             ))
 
         )}
 
     </div>
+
+    {postToDelete !== null && (
+        <div className="delete-confirm-overlay" onClick={cancelDelete}>
+            <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+                <h3 className="delete-confirm-title">Delete this post?</h3>
+                <p className="delete-confirm-text">
+                    Are you sure you want to delete this post? This action cannot be undone.
+                </p>
+                <div className="delete-confirm-buttons">
+                    <button type="button" className="delete-confirm-btn cancel" onClick={cancelDelete}>
+                        Cancel
+                    </button>
+                    <button type="button" className="delete-confirm-btn delete" onClick={confirmDelete}>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    )}
 
 </div>
         <div className="recommended-section">
