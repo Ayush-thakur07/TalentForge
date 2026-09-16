@@ -452,3 +452,33 @@
 .profile-cover-edit input {
     display: none;
 }
+.profile-header {
+    border: 1px solid rgba(115, 87, 217, 0.14);
+    box-shadow:
+        0 2px 4px rgba(40, 30, 70, 0.03),
+        0 14px 40px rgba(91, 70, 160, 0.08);
+}
+
+.profile-main {
+    border-top: 1px solid rgba(115, 87, 217, 0.06);
+}
+
+.profile-image {
+    box-shadow:
+        0 8px 24px rgba(35, 25, 65, 0.18),
+        0 0 0 5px #ffffff;
+}
+
+.profile-action-button {
+    transition: all 0.2s ease;
+}
+
+.profile-action-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(105, 75, 201, 0.22);
+}
+
+.profile-action-button.secondary:hover {
+    border-color: #cfc5ee;
+    background: #faf8ff;
+}

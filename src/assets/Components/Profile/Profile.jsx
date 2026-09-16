@@ -10,7 +10,7 @@ import ExperienceSection from "./ExperienceSection";
 import ConnectionsSection from "./ConnectionsSection";
 import PostsSection from "./PostsSection";
 import EditProfileModal from "./EditProfileModal";
-
+import "./Profile.css";
 function Profile() {
     const [user, setUser] = useState(null);
     const [activeTab, setActiveTab] = useState("Overview");
