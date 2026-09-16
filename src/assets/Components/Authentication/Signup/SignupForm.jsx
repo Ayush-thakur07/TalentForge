@@ -14,7 +14,7 @@ function SignupForm({ setuser }) {
   const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+[0-9]{2}@chitkara\.edu\.in$/i;
+  const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+[0-9]{2}@chitkara\.edu\.in$/;
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
