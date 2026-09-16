@@ -25,7 +25,6 @@
     box-shadow:
         0 12px 35px rgba(81, 56, 238, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    isolation: isolate;
 }
 .hero_part::before {
     content: "";
@@ -614,18 +613,15 @@
     position: fixed;
     inset: 0;
 
-    z-index: 2000;
+    z-index: 9999;
 
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
 
     padding: 90px 24px 24px;
 
-    background: rgba(15, 23, 42, 0.55);
-
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.48);
 
     box-sizing: border-box;
 
@@ -1137,7 +1133,7 @@
 @media (max-width: 500px) {
 
     .post-modal-overlay {
-        align-items: flex-start;
+        align-items: center;
 
         padding: 10px;
     }
@@ -1678,7 +1674,7 @@
 @media (max-width: 500px) {
 
     .post-modal-overlay {
-        align-items: flex-start;
+        align-items: center;
 
         padding: 10px;
     }
