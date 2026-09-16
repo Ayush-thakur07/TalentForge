@@ -1,4 +1,4 @@
-.connections-section {
+.education-section {
     width: 100%;
     background: #ffffff;
     border: 1px solid #e8e5f2;
@@ -7,27 +7,27 @@
     box-shadow: 0 4px 18px rgba(55, 45, 95, 0.05);
 }
 
-.connections-header {
+.education-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
 }
 
-.connections-header h2 {
+.education-header h2 {
     margin: 0;
     color: #242133;
     font-size: 24px;
     font-weight: 700;
 }
 
-.connections-header p {
+.education-header p {
     margin: 6px 0 0;
     color: #817c91;
     font-size: 14px;
 }
 
-.connections-header-icon {
+.education-header-icon {
     width: 44px;
     height: 44px;
     display: flex;
@@ -39,7 +39,7 @@
     font-size: 20px;
 }
 
-.connections-form {
+.education-form {
     padding: 22px;
     margin-bottom: 28px;
     border: 1px solid #ebe7f3;
@@ -47,29 +47,28 @@
     background: #faf9fd;
 }
 
-.connections-form-row {
+.education-form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 18px;
-}
-
-.connections-field {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
     margin-bottom: 18px;
 }
 
-.connections-field label {
+.education-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.education-field label {
     color: #373143;
     font-size: 13px;
     font-weight: 600;
 }
 
-.connections-field input {
+.education-field input {
     width: 100%;
     height: 44px;
-    box-sizing: border-box;
     padding: 0 14px;
     border: 1px solid #ddd9e9;
     border-radius: 9px;
@@ -77,14 +76,15 @@
     background: #ffffff;
     color: #29243a;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
-.connections-field input:focus {
+.education-field input:focus {
     border-color: #8065dc;
     box-shadow: 0 0 0 3px rgba(128, 101, 220, 0.1);
 }
 
-.connections-add-button {
+.education-add-button {
     height: 44px;
     padding: 0 18px;
     border: none;
@@ -99,66 +99,65 @@
     gap: 8px;
 }
 
-.connections-add-button:hover {
+.education-add-button:hover {
     background: #6247c7;
 }
 
-.connections-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.education-list {
+    display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
-.connection-card {
+.education-card {
     display: flex;
-    gap: 14px;
-    padding: 18px;
+    gap: 16px;
+    padding: 20px;
     border: 1px solid #ebe7f3;
     border-radius: 14px;
     background: #ffffff;
 }
 
-.connection-avatar {
+.education-icon {
     width: 46px;
     height: 46px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    background: #7357d9;
-    color: #ffffff;
-    font-size: 18px;
-    font-weight: 700;
+    border-radius: 12px;
+    background: #f0ebff;
+    color: #7357d9;
+    font-size: 19px;
 }
 
-.connection-content {
+.education-content {
     flex: 1;
     min-width: 0;
 }
 
-.connection-top {
+.education-card-top {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
 }
 
-.connection-top h3 {
+.education-card-top h3 {
     margin: 0;
     color: #29243a;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
 }
 
-.connection-top p {
-    margin: 4px 0 0;
+.education-card-top p {
+    margin: 5px 0 0;
     color: #756f84;
-    font-size: 13px;
+    font-size: 14px;
 }
 
-.connection-delete {
-    width: 32px;
-    height: 32px;
+.education-delete {
+    width: 34px;
+    height: 34px;
     border: none;
     border-radius: 8px;
     background: transparent;
@@ -166,67 +165,72 @@
     cursor: pointer;
 }
 
-.connection-delete:hover {
+.education-delete:hover {
     background: #fff0f2;
     color: #d34f67;
 }
 
-.connection-email {
-    display: block;
-    margin-top: 10px;
-    color: #817b90;
+.education-field-name {
+    display: inline-block;
+    margin-top: 13px;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: #f4f1ff;
+    color: #624fb1;
     font-size: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-weight: 600;
 }
 
-.connection-email i {
+.education-duration {
+    display: block;
+    margin-top: 12px;
+    color: #817b90;
+    font-size: 13px;
+}
+
+.education-duration i {
     margin-right: 6px;
 }
 
-.connections-empty {
-    grid-column: 1 / -1;
+.education-empty {
     padding: 45px 20px;
     text-align: center;
     border: 1px dashed #dcd7e9;
     border-radius: 14px;
 }
 
-.connections-empty i {
+.education-empty i {
     font-size: 34px;
     color: #8065dc;
 }
 
-.connections-empty h3 {
+.education-empty h3 {
     margin: 12px 0 6px;
     color: #302b40;
     font-size: 17px;
 }
 
-.connections-empty p {
+.education-empty p {
     margin: 0;
     color: #898397;
     font-size: 14px;
 }
 
-@media (max-width: 750px) {
-    .connections-list {
-        grid-template-columns: 1fr;
-    }
-
-    .connections-form-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 500px) {
-    .connections-section {
+@media (max-width: 650px) {
+    .education-section {
         padding: 20px;
     }
 
-    .connections-add-button {
+    .education-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .education-add-button {
         width: 100%;
         justify-content: center;
+    }
+
+    .education-card {
+        padding: 16px;
     }
 }

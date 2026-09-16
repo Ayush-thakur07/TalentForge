@@ -1,58 +1,122 @@
+import { useState } from "react";
 import "./PostsSection.css";
 
-function PostsSection({ posts = [] }) {
+function PostsSection({ posts, onAdd, onDelete }) {
+    const [postText, setPostText] = useState("");
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        const text = postText.trim();
+
+        if (!text) {
+            return;
+        }
+
+        onAdd({
+            id: Date.now(),
+            text,
+            createdAt: new Date().toLocaleString()
+        });
+
+        setPostText("");
+    }
+
     return (
         <section className="posts-section">
             <div className="posts-header">
                 <div>
                     <h2>Activity</h2>
-                    <p>Recent activity and posts</p>
+                    <p>Share your thoughts, updates and achievements</p>
                 </div>
 
-                <i className="bi bi-activity"></i>
+                <div className="posts-header-icon">
+                    <i className="bi bi-activity"></i>
+                </div>
             </div>
 
-            {posts.length > 0 ? (
-                <div className="posts-list">
-                    {posts.map((post, index) => (
-                        <article className="post-card" key={post.id || index}>
-                            <div className="post-author">
-                                <div className="post-avatar">
-                                    {post.avatar ? (
-                                        <img
-                                            src={post.avatar}
-                                            alt={post.name}
-                                        />
-                                    ) : (
-                                        <i className="bi bi-person"></i>
-                                    )}
-                                </div>
+            <form className="post-form" onSubmit={handleSubmit}>
+                <textarea
+                    value={postText}
+                    placeholder="Share something with the TalentForge community..."
+                    rows="4"
+                    onChange={(e) => setPostText(e.target.value)}
+                />
 
-                                <div>
-                                    <h3>{post.name}</h3>
-                                    <span>{post.date}</span>
-                                </div>
-                            </div>
+                <div className="post-form-footer">
+                    <span>
+                        <i className="bi bi-pencil-square"></i>
+                        Create a post
+                    </span>
 
-                            <div className="post-content">
-                                <p>{post.content}</p>
-                            </div>
-                        </article>
-                    ))}
+                    <button type="submit">
+                        <i className="bi bi-send"></i>
+                        Post
+                    </button>
                 </div>
-            ) : (
-                <div className="posts-empty">
-                    <div className="posts-empty-icon">
-                        <i className="bi bi-chat-square-text"></i>
+            </form>
+
+            <div className="posts-list">
+                {posts.length > 0 ? (
+                    posts
+                        .slice()
+                        .reverse()
+                        .map(post => (
+                            <article
+                                className="post-card"
+                                key={post.id}
+                            >
+                                <div className="post-card-header">
+                                    <div className="post-author-avatar">
+                                        <i className="bi bi-person-fill"></i>
+                                    </div>
+
+                                    <div className="post-author-info">
+                                        <h3>You</h3>
+                                        <span>{post.createdAt}</span>
+                                    </div>
+
+                                    <button
+                                        className="post-delete"
+                                        onClick={() => onDelete(post.id)}
+                                    >
+                                        <i className="bi bi-trash3"></i>
+                                    </button>
+                                </div>
+
+                                <div className="post-content">
+                                    <p>{post.text}</p>
+                                </div>
+
+                                <div className="post-actions">
+                                    <button>
+                                        <i className="bi bi-heart"></i>
+                                        Like
+                                    </button>
+
+                                    <button>
+                                        <i className="bi bi-chat"></i>
+                                        Comment
+                                    </button>
+
+                                    <button>
+                                        <i className="bi bi-share"></i>
+                                        Share
+                                    </button>
+                                </div>
+                            </article>
+                        ))
+                ) : (
+                    <div className="posts-empty">
+                        <i className="bi bi-activity"></i>
+                        <h3>No activity yet</h3>
+                        <p>
+                            Create your first post and share something
+                            with the TalentForge community.
+                        </p>
                     </div>
-
-                    <h3>No activity yet</h3>
-
-                    <p>
-                        Your posts and recent activity will appear here.
-                    </p>
-                </div>
-            )}
+                )}
+            </div>
         </section>
     );
 }

@@ -422,3 +422,33 @@
     }
 
 }
+.profile-cover {
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-cover-edit {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: rgba(35, 30, 50, 0.78);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: 0.2s ease;
+}
+
+.profile-cover-edit:hover {
+    background: rgba(35, 30, 50, 0.92);
+}
+
+.profile-cover-edit input {
+    display: none;
+}
