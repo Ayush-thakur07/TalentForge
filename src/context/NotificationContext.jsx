@@ -5,12 +5,21 @@ const NotificationContext = createContext();
 
 const LOCAL_STORAGE_KEY = 'talentforge_notifications_v1';
 
+function normalizeNotifications(value) {
+    if (!Array.isArray(value)) return initialNotifications;
+    return value.map((notification) => (
+        notification.id === 'n1' && !notification.applicationId
+            ? { ...notification, applicationId: 'app_001', actionUrl: undefined }
+            : notification
+    ));
+}
+
 export function NotificationProvider({ children }) {
     const [notifications, setNotifications] = useState(() => {
         try {
             const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
             if (saved) {
-                return JSON.parse(saved);
+                return normalizeNotifications(JSON.parse(saved));
             }
         } catch (error) {
             console.error('Failed to parse notifications from localStorage:', error);
@@ -56,6 +65,13 @@ export function NotificationProvider({ children }) {
         setNotifications(initialNotifications);
     };
 
+    const addNotification = (notification) => {
+        setNotifications((previous) => {
+            if (previous.some((item) => item.id === notification.id)) return previous;
+            return [notification, ...previous];
+        });
+    };
+
     return (
         <NotificationContext.Provider
             value={{
@@ -66,7 +82,8 @@ export function NotificationProvider({ children }) {
                 markAllAsRead,
                 deleteNotification,
                 clearReadNotifications,
-                resetNotifications
+                resetNotifications,
+                addNotification
             }}
         >
             {children}

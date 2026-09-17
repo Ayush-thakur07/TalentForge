@@ -9,6 +9,7 @@ import Signup from './assets/Components/Authentication/Signup/Signup'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import DashboardLayout from './assets/Components/Dashboard/DashboardLayout/DashboardLayout'
 import { NotificationProvider } from './context/NotificationContext'
+import { ApplicationProvider } from './context/ApplicationContext'
 import SearchPage from './assets/Components/Dashboard/Search/SearchPage'
 
 function ProtectedRoute({ user, children }) {
@@ -24,6 +25,7 @@ function App() {
   return (
     <NotificationProvider>
       <BrowserRouter>
+        <ApplicationProvider>
         <Routes>
           <Route path="/" element={<Login user={user} setuser={setuser} />} />
           <Route path="/login" element={<Login user={user} setuser={setuser} />} />
@@ -69,6 +71,7 @@ function App() {
             </ProtectedRoute>
           }/>
         </Routes>
+        </ApplicationProvider>
       </BrowserRouter>
     </NotificationProvider>
   )

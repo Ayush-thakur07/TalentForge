@@ -6,7 +6,7 @@ export const initialNotifications = [
     type: 'applications',
     timestamp: '10 minutes ago',
     read: false,
-    actionUrl: '/students',
+    applicationId: 'app_001',
     user: {
       name: 'Alex Johnson',
       role: 'Computer Science, Senior'

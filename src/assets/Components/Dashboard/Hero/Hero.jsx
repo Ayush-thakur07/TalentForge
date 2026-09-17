@@ -26,20 +26,31 @@ function Hero()
 {
     const navigate = useNavigate();
     const [postModalOpen, setPostModalOpen] = useState(false);
+    const [currentUser] = useState(() => {
+        try {
+            const storedUser = localStorage.getItem("user");
+            return storedUser ? JSON.parse(storedUser) : null;
+        } catch {
+            return null;
+        }
+    });
     let current_hours= new Date().getHours();
-    const currentUser = studentData[0];
-    const connections = currentUser?.connections?.length || 0;
-    const saved = currentUser?.saved?.length || 0;
-    const ongoingProjects = currentUser?.ongoingProjects?.length || 0;
-    const newMessages = currentUser?.unreadMessages || 0;
+    const dashboardUser = studentData[0];
+    const connections = dashboardUser?.connections?.length || 0;
+    const saved = dashboardUser?.saved?.length || 0;
+    const ongoingProjects = dashboardUser?.ongoingProjects?.length || 0;
+    const newMessages = dashboardUser?.unreadMessages || 0;
     const greetings=getGreeting(current_hours);
+    const userName = typeof currentUser?.name === "string" ? currentUser.name.trim() : "";
     return(
         <div className="hero_part">
             <div className="hero_image">
                 <img src={heroImage} alt="hero image illustrating a boy and girl learning together"/>
             </div>
             <div className="hero_text">
-                <h1 className="greetings">{greetings}, Misthi!</h1>
+                <h1 className="greetings">
+                    {greetings}{userName && <>, <span className="greeting-name">{userName}</span></>}!
+                </h1>
                 <p>Find the right people,Build amazing things together</p>
                 <div className="hero_stats">
                     <div className="hero_stat_card">

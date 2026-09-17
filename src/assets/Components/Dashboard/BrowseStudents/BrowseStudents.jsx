@@ -6,6 +6,7 @@ import StudentFilters from "./StudentFilters";
 import StudentSearch from "./StudentSearch";
 import StudentSort from "./StudentSort";
 import { useLocation } from "react-router-dom";
+import heroImage from "../../../hero.png";
 
 const CURRENT_USER_ID = "stu_001";
 
@@ -94,12 +95,12 @@ function BrowseStudents() {
             </div>
 
             <div className="browse-students-banner">
+                <div className="banner-illustration">
+                    <img src={heroImage} alt="Students collaborating" />
+                </div>
                 <div className="banner-content">
                     <h2>Great ideas grow faster together</h2>
                     <p>Find your next teammate today.</p>
-                </div>
-                <div className="banner-illustration">
-                    <img src="/signup-image.png" alt="Collaboration" />
                 </div>
             </div>
 

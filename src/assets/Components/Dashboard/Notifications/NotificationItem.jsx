@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../../../context/NotificationContext';
+import { useApplications } from '../../../../context/ApplicationContext';
 
 function NotificationItem({ notification }) {
     const { toggleReadStatus, deleteNotification, markAsRead } = useNotifications();
+    const { openApplication } = useApplications();
     const navigate = useNavigate();
 
     const getTypeDetails = (type) => {
@@ -29,7 +31,9 @@ function NotificationItem({ notification }) {
         if (!notification.read) {
             markAsRead(notification.id);
         }
-        if (notification.actionUrl) {
+        if (notification.applicationId) {
+            openApplication(notification.applicationId);
+        } else if (notification.actionUrl) {
             navigate(notification.actionUrl);
         }
     };
@@ -61,7 +65,7 @@ function NotificationItem({ notification }) {
             </div>
 
             <div className="card-right">
-                {notification.actionUrl && (
+                {(notification.actionUrl || notification.applicationId) && (
                     <button className="btn-action" onClick={handleActionClick}>
                         View Details <i className="bi bi-arrow-right-short"></i>
                     </button>
