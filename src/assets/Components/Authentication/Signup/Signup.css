@@ -110,8 +110,7 @@ box-shadow:
     overflow: hidden;
 }
 
-.signup-form,
-.college-selector {
+.signup-form {
     width: 100%;
     max-width: 460px;
 
@@ -216,19 +215,6 @@ box-shadow:
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-}
-
-.college-selector {
-  margin-bottom: 8px;
-}
-
-.college-selector label {
-    display: block;
-    margin-bottom: 18px;
-    color: #15153d;
-    font-size: 26px;
-    font-weight: 700;
-    text-align: center;
 }
 
 @media (max-width: 700px) {
