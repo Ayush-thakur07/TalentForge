@@ -170,9 +170,10 @@
     gap: 11px;
 }
 
-.explore_matches,
-.post_project {
+.hero_actions .explore_matches,
+.hero_actions .post_project {
     height: 43px;
+    margin: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;

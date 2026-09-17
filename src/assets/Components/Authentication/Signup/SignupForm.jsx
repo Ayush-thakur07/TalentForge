@@ -14,7 +14,10 @@ function SignupForm({ setuser }) {
   const [emailError, setEmailError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  /* this was the previous line which i changed so that the exsisting year mail id can only be accepted
   const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+[0-9]{2}@chitkara\.edu\.in$/;
+*/
+  const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+(23|24|25|26)@chitkara\.edu\.in$/;
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
