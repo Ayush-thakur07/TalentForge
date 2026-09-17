@@ -22,6 +22,8 @@ function ProtectedRoute({ user, children }) {
 
 function App() {
   const [user, setuser] = useState(null);
+// user and setuser is used to take the value of mail id from the login and signup page and then pass it to the dashboard ;-) 
+// Don't chnage the name as for it as it will impact the authentication
   return (
     <NotificationProvider>
       <BrowserRouter>

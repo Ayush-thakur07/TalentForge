@@ -225,10 +225,6 @@ function PostModal({ onClose }) {
                 </div>
                 <div className="post-modal-content">
 
-
-                    {/* ============================= */}
-                    {/* TABS */}
-                    {/* ============================= */}
                     <div className="tabs">
                         <div
                             className={
@@ -321,16 +317,11 @@ function PostModal({ onClose }) {
                     </div>
 
 
-                    {/* ============================= */}
-                    {/* FORMS */}
-                    {/* ============================= */}
 
                     <div className="post-form">
 
 
-                        {/* ================================================= */}
                         {/* SHARE PROJECT */}
-                        {/* ================================================= */}
 
                         {selecteddiv === "shareProject" && (
 
@@ -423,9 +414,7 @@ function PostModal({ onClose }) {
                         )}
 
 
-                        {/* ================================================= */}
                         {/* FIND COLLABORATORS */}
-                        {/* ================================================= */}
 
                         {selecteddiv === "findcollaborators" && (
 
@@ -542,9 +531,7 @@ function PostModal({ onClose }) {
                         )}
 
 
-                        {/* ================================================= */}
                         {/* AVAILABLE TO HELP */}
-                        {/* ================================================= */}
 
                         {selecteddiv === "AvailableToHelp" && (
 
