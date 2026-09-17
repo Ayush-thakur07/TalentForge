@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../../../context/NotificationContext';
+import { useApplications } from '../../../../context/ApplicationContext';
 
 function NotificationDropdown({ isOpen, onClose }) {
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+    const { openApplication } = useApplications();
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
 
@@ -36,8 +38,10 @@ function NotificationDropdown({ isOpen, onClose }) {
         if (!notification.read) {
             markAsRead(notification.id);
         }
-        if (notification.actionUrl) {
-            onClose();
+        onClose();
+        if (notification.applicationId) {
+            openApplication(notification.applicationId);
+        } else if (notification.actionUrl) {
             navigate(notification.actionUrl);
         }
     };

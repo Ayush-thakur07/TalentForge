@@ -1,19 +1,19 @@
 .browse-students {
     padding: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
     background: #f3f4f6;
     min-height: 100vh;
 }
 
 .browse-students-header {
-    margin-bottom: 24px;
+    margin-bottom: 26px;
 }
 
 .browse-students-header h1 {
-    margin: 0 0 8px;
-    font-size: 36px;
-    font-weight: 700;
+    margin: 0 0 9px;
+    font-size: clamp(30px, 3vw, 36px);
+    font-weight: 750;
+    line-height: 1.16;
+    letter-spacing: -0.7px;
     color: #111827;
 }
 
@@ -24,49 +24,75 @@
 .browse-students-header p {
     margin: 0;
     color: #6b7280;
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 .browse-students-banner {
+    position: relative;
     margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 24px;
-    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
-    border-radius: 16px;
-    border: 1px solid #e0e7ff;
+    isolation: isolate;
+    min-height: 290px;
+    overflow: hidden;
+    padding: 28px 36px;
+    background:
+        radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.25) 22%, transparent 40%),
+        linear-gradient(135deg, #efedff 0%, #f8f7ff 48%, #e9e5ff 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(218, 212, 250, 0.9);
+    box-shadow: 0 10px 28px rgba(81, 56, 238, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.browse-students-banner::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(239, 237, 255, 0.96) 0%, rgba(248, 247, 255, 0.86) 43%, rgba(233, 229, 255, 0.2) 74%, rgba(233, 229, 255, 0.04) 100%);
+    pointer-events: none;
+}
+
+.banner-content {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 36px;
+    width: min(46%, 500px);
+    transform: translateY(-50%);
 }
 
 .banner-content h2 {
-    margin: 0 0 8px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #111827;
+    margin: 0 0 10px;
+    color: #0f172a;
+    max-width: 390px;
+    font-size: clamp(23px, 2.3vw, 29px);
+    font-weight: 750;
+    line-height: 1.16;
+    letter-spacing: -0.45px;
+    text-wrap: balance;
 }
 
 .banner-content p {
     margin: 0;
-    color: #4b5563;
-    font-size: 14px;
+    color: #686d91;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.55;
 }
 
 .banner-illustration {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 220px;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 .banner-illustration img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
 }
 
 .browse-students-controls {
@@ -430,4 +456,34 @@
 .student-sort select option {
     color: #111827;
     background: #ffffff;
+}
+
+@media (max-width: 1200px) {
+    .browse-students-banner {
+        min-height: 280px;
+        padding: 30px;
+    }
+
+    .banner-content { left: 30px; width: min(50%, 500px); }
+}
+
+@media (max-width: 850px) {
+    .browse-students-banner {
+        min-height: 270px;
+        padding: 28px;
+    }
+
+    .browse-students-banner::before { background: linear-gradient(90deg, rgba(239, 237, 255, 0.96) 0%, rgba(248, 247, 255, 0.83) 56%, rgba(233, 229, 255, 0.32) 100%); }
+    .banner-content { left: 28px; width: min(66%, 500px); }
+}
+
+@media (max-width: 640px) {
+    .browse-students { padding: 24px 18px; }
+    .browse-students-header { margin-bottom: 20px; }
+    .browse-students-banner { min-height: 230px; padding: 0; border-radius: 16px; }
+    .browse-students-banner::before { background: linear-gradient(90deg, rgba(239, 237, 255, 0.97) 0%, rgba(248, 247, 255, 0.88) 68%, rgba(233, 229, 255, 0.45) 100%); }
+    .banner-content { top: 50%; left: 20px; width: min(67%, 260px); max-width: none; }
+    .banner-content h2 { font-size: 23px; }
+    .banner-content p { max-width: 245px; font-size: 14px; }
+    .banner-illustration img { object-position: 63% center; }
 }

@@ -83,5 +83,25 @@ export const studentData = [
       { title: "CampusNotes", stack: "Flutter + Firebase" },
       { title: "EventFlow", stack: "Flutter + REST" }
     ]
+  },
+  {
+    id: "stu_006",
+    name: "Alex Johnson",
+    email: "alex.johnson@example.com",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=160&q=80",
+    college: "Stanford University",
+    major: "Computer Science",
+    year: "Senior",
+    skills: ["React", "JavaScript", "Node.js", "CSS", "Git", "HTML"],
+    interests: ["Frontend Engineering", "Hackathons", "Open Source"],
+    lookingFor: "Frontend roles on ambitious student teams",
+    availability: "open_to_collaborate",
+    github: "https://github.com/alexjohnson",
+    linkedin: "https://linkedin.com/in/alexjohnson",
+    portfolio: "https://alexjohnson.dev",
+    projects: [
+      { title: "Design System Kit", stack: "React + TypeScript" },
+      { title: "Campus Events", stack: "Node.js + CSS" }
+    ]
   }
 ]
