@@ -3,16 +3,18 @@ import { getRecommendedStudents, getTrendingSkills, normalizePosts } from "./rec
 import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { useUser } from "../../../context/UserContext";
 import "./Dashboard_content.css";
 
 function DashboardContent() {
     const navigate = useNavigate();
-    const currentUser = studentData[0];
+    const { currentUser } = useUser();
     const [posts, setPosts] = useState([]);
     const [postToDelete, setPostToDelete] = useState(null);
     useEffect(() => {
     const loadPosts = () => {
     try {
+
         const storedPosts = JSON.parse(localStorage.getItem("talentforge_posts") || "[]");
         setPosts(normalizePosts(storedPosts));
     } catch {
@@ -68,7 +70,7 @@ function DashboardContent() {
             const currentCount = prevCounts[postId] || 0;
             const newCount = isCurrentlyLiked
                 ? Math.max(0, currentCount - 1)
-                : currentCount + 1;
+                : currentCount+1;
             return { ...prevCounts, [postId]: newCount };
         });
     };
@@ -162,6 +164,7 @@ function DashboardContent() {
         )}
 
     </div>
+    
 
     {postToDelete !== null && (
         <div className="delete-confirm-overlay" onClick={cancelDelete}>
@@ -217,7 +220,7 @@ function DashboardContent() {
 
                     <p className="student-university">
                         <i className="bi bi-geo-alt"></i>
-                        Chitkara University
+                        {student.college || student.university}
                     </p>
 
                     <div className="skill-tags">
@@ -240,7 +243,7 @@ function DashboardContent() {
 
                     <span className="match-badge">
                         <i className="bi bi-star-fill"></i>
-                        {student.matchPercentage}% Match
+                        {student.matchPercentage}% Recommendation Match
                     </span>
 
                     <button className="connect-button">

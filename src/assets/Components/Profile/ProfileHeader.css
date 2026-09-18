@@ -482,3 +482,34 @@
     border-color: #cfc5ee;
     background: #faf8ff;
 }
+
+.profile-image-clickable {
+    cursor: pointer;
+    position: relative;
+}
+
+.profile-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(35, 30, 50, 0.68);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 50%;
+}
+
+.profile-avatar-overlay i {
+    font-size: 22px;
+}
+
+.profile-image-clickable:hover .profile-avatar-overlay,
+.profile-image-clickable:focus-within .profile-avatar-overlay {
+    opacity: 1;
+}

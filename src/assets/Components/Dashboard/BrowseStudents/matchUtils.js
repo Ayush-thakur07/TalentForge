@@ -1,7 +1,7 @@
 //if the user has not entered their skills then values will be undefined an dundefined.map()=>error therefore i used an empty array to help sort this error
 function toSet(values) 
 {
-    return new Set((Array.isArray(values) ? values : []).map((value) => String(value || "").toLowerCase()).filter(Boolean));
+    return new Set((Array.isArray(values) ? values : []).map((value) => String(value || "").trim().toLowerCase()).filter(Boolean));
 }
 //example set A = react, java, python,B = react, python, figma
 function jaccardScore(setA, setB) {
@@ -93,12 +93,12 @@ function clamp(value, min, max) {
 
 export function calculateRecommendationScore(student, context) {
     const requiredSkills = [...context.requiredSkillWeights.values()];
-    const studentSkills = new Set((Array.isArray(student.skills) ? student.skills : []).map((skill) => String(skill || "").toLowerCase()).filter(Boolean));
+    const studentSkills = toSet(student.skills);
     const requirementTotal = requiredSkills.reduce((total, skill) => total + skill.weight, 0);
     const requirementMatch = requirementTotal === 0
         ? 0
         : requiredSkills.reduce((total, skill) => (
-            studentSkills.has(skill.name.toLowerCase()) ? total + skill.weight : total
+            studentSkills.has(String(skill.name || "").trim().toLowerCase()) ? total + skill.weight : total
         ), 0) / requirementTotal * 100;
     const profileSkills = jaccardScore(toSet(student.skills), toSet(context.profile.skills));
     const interestMatch = jaccardScore(toSet(student.interests), toSet(context.profile.interests));

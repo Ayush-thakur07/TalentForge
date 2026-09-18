@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStudentById } from "../BrowseStudents/studentUtils";
 import { useApplications } from "../../../../context/ApplicationContext";
+import { useUser } from "../../../../context/UserContext";
+import { calculateMatchScore } from "../BrowseStudents/matchUtils";
 import "./ApplicationDetailsModal.css";
 
 function formatAvailability(value) {
@@ -11,11 +13,13 @@ function formatAvailability(value) {
 function ApplicationDetailsModal({ applicationId, onClose }) {
     const navigate = useNavigate();
     const { applications, projects, acceptApplication, declineApplication } = useApplications();
+    const { currentUser } = useUser();
     const [outcome, setOutcome] = useState(null);
     const [showTeam, setShowTeam] = useState(false);
     const application = applications.find((item) => item.id === applicationId);
     const applicant = getStudentById(application?.applicantId);
     const project = projects.find((item) => item.id === application?.projectId);
+    const profileMatch = applicant ? calculateMatchScore(currentUser || {}, applicant) : 0;
 
     useEffect(() => {
         const handleEscape = (event) => {
@@ -92,11 +96,11 @@ function ApplicationDetailsModal({ applicationId, onClose }) {
                     <div className="applicant-summary">
                         <img src={applicant.avatar} alt="" />
                         <div><h3>{applicant.name} <i className="bi bi-patch-check-fill" /></h3><p>{applicant.year} · {applicant.major}</p><p>{applicant.college}</p></div>
-                        <span className="application-match"><i className="bi bi-stars" /> 92% Match</span>
+                        <span className="application-match"><i className="bi bi-stars" /> {profileMatch}% Profile Match</span>
                     </div>
                     <div className="application-info-grid">
                         <Info label="Applied For" value={application.role} />
-                        <Info label="Project" value={project.name} />
+                        <Info label="Project" value={project?.name || "Project not found"} />
                         <Info label="Status" value={<span className="application-status pending">{application.status}</span>} />
                         <Info label="Applied" value="10 minutes ago" />
                     </div>
@@ -114,6 +118,9 @@ function ApplicationDetailsModal({ applicationId, onClose }) {
 function Info({ label, value }) { return <div><span>{label}</span><strong>{value}</strong></div>; }
 
 function ProjectTeam({ project, onBack }) {
+    if (!project) {
+        return <div className="project-team-panel"><p>Project details are no longer available.</p></div>;
+    }
     return <div className="project-team-panel"><div className="project-team-header"><div><p>PROJECT TEAM</p><h3>{project.name}</h3></div><button onClick={onBack} aria-label="Back"><i className="bi bi-arrow-left" /></button></div>{project.team.map((member) => { const student = getStudentById(member.applicantId); return <div className="team-member" key={member.applicantId}>{student?.avatar ? <img src={student.avatar} alt="" /> : <i className="bi bi-person-circle" />}<div><strong>{student?.name || "Team member"}</strong><span>{member.role}</span></div><em>{member.status}</em></div>; })}</div>;
 }
 

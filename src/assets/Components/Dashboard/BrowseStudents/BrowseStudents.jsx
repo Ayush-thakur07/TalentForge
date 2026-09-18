@@ -7,8 +7,7 @@ import StudentSearch from "./StudentSearch";
 import StudentSort from "./StudentSort";
 import { useLocation } from "react-router-dom";
 import heroImage from "../../../hero.png";
-
-const CURRENT_USER_ID = "stu_001";
+import { useUser } from "../../../../context/UserContext";
 
 function matchesSearch(student, search) {
     const term = (search || "").trim().toLowerCase();
@@ -20,10 +19,10 @@ function matchesSearch(student, search) {
         student.year,
         student.lookingFor,
         student.bio,
-        ...student.skills,
-        ...student.interests,
-        ...student.projects.map((project) => project.title),
-        ...student.projects.map((project) => project.stack)
+        ...(student.skills || []),
+        ...(student.interests || []),
+        ...(student.projects || []).map((project) => project.title),
+        ...(student.projects || []).map((project) => project.stack)
     ];
     return searchable.some((value) => String(value || "").toLowerCase().includes(term));
 }
@@ -31,17 +30,17 @@ function matchesSearch(student, search) {
 function sortStudents(students, sort) {
     const list = [...students];
     if (sort === "name_asc") {
-        list.sort((a, b) => a.name.localeCompare(b.name));
+        list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
     } else if (sort === "name_desc") {
-        list.sort((a, b) => b.name.localeCompare(a.name));
+        list.sort((a, b) => (b.name || "").localeCompare(a.name || ""));
     }
     return list;
 }
 
 function BrowseStudents() {
     const location = useLocation();
+    const { currentUser } = useUser();
     const allStudents = getAllStudents();
-    const currentUser = allStudents.find((student) => student.id === CURRENT_USER_ID) || allStudents[0];
     const [filters, setFilters] = useState({ search: location.state?.search || "", skill: "", field: "", year: "", availability: "" });
     const [sort, setSort] = useState("default");
 
@@ -53,11 +52,13 @@ function BrowseStudents() {
 
     const filteredStudents = useMemo(() => {
         return allStudents.filter((student) => {
+            const isCurrentUser = student.id === currentUser?.id || student.id === currentUser?.uid || student.email === currentUser?.email;
+            if (isCurrentUser) return false;
             const matchesSearchTerm = matchesSearch(student, filters.search);
 
             const matchesSkill =
                 !filters.skill ||
-                student.skills.some((skill) => skill === filters.skill);
+                (student.skills || []).some((skill) => skill === filters.skill);
 
             const matchesField =
                 !filters.field || student.major === filters.field;
@@ -70,7 +71,7 @@ function BrowseStudents() {
 
             return matchesSearchTerm && matchesSkill && matchesField && matchesYear && matchesAvailability;
         });
-    }, [allStudents, filters]);
+    }, [allStudents, filters, currentUser?.email, currentUser?.id, currentUser?.uid]);
 
     const sortedStudents = useMemo(() => sortStudents(filteredStudents, sort), [filteredStudents, sort]);
 

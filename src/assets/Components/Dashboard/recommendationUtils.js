@@ -89,19 +89,8 @@ export function getTrendingSkills(posts, students = studentData) {
         }));
 }
 
-function getStoredProfile() {
-    try {
-        const user = JSON.parse(localStorage.getItem("user") || "null");
-        const userKey = user?.uid || user?.email || "guest";
-        const profile = JSON.parse(localStorage.getItem(`talentforge_profile_${userKey}`) || "{}");
-        return profile && typeof profile === "object" ? profile : {};
-    } catch {
-        return {};
-    }
-}
-
-export function getRecommendationContext(posts, currentUser = studentData[0]) {
-    const profile = getStoredProfile();
+export function getRecommendationContext(posts, currentUser = {}) {
+    const profile = currentUser || {};
     const recentPosts = normalizePosts(posts);
     const requiredSkillWeights = new Map();
 
@@ -128,7 +117,7 @@ export function getRecommendationContext(posts, currentUser = studentData[0]) {
     };
 }
 
-export function getRecommendedStudents(students, posts, currentUser = studentData[0]) {
+export function getRecommendedStudents(students, posts, currentUser = {}) {
     const context = getRecommendationContext(posts, currentUser);
     return asArray(students)
         .filter((student) => student?.id && student.id !== currentUser?.id)

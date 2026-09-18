@@ -1,31 +1,22 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { useNotifications } from "../../../../context/NotificationContext";
 import NotificationDropdown from "./NotificationDropdown";
 import { auth } from "../../../../config/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../../../context/UserContext";
+import { useMessages } from "../../../../context/MessageContext";
 function HeaderActions() {
-    const[user,setUserName]=useState(null);
+    const { currentUser: user, setCurrentUser } = useUser();
     const[profileOpen,setProfileOpen]=useState(false);
     const navigate=useNavigate();
     function toggleProfile()
     {
         setProfileOpen(!profileOpen);
     }
-    //we are using useEffect here because components are generating side effects outside their component renders
-    useEffect(()=>
-{
-   const storeduser=localStorage.getItem("user");
-   if(storeduser)
-    {
-        setUserName(JSON.parse(storeduser));
-    } 
-},[]);
-
-console.log(user);
     const { unreadCount } = useNotifications();
+    const { unreadCount: unreadMessageCount, markAllAsRead } = useMessages();
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [messageCount, setMessageCount] = useState(3);
  
     function toggleDropdown() {
         setDropdownOpen(!dropdownOpen);
@@ -34,13 +25,13 @@ console.log(user);
     async function UserLogout()
     {
         await signOut(auth);
-        localStorage.removeItem("user");
+        setCurrentUser(null);
         
         navigate("/login");
 
     }
     function msgcount() {
-        setMessageCount(0);
+        markAllAsRead();
     }
 
     return (
@@ -63,8 +54,8 @@ console.log(user);
 
             <button aria-label="Messages" onClick={msgcount}>
                 <i className="bi bi-chat-dots-fill" id="three"></i>
-                {messageCount > 0 && (
-                    <span id="four">{messageCount >= 100 ? "99+" : messageCount}</span>
+                {unreadMessageCount > 0 && (
+                    <span id="four">{unreadMessageCount >= 100 ? "99+" : unreadMessageCount}</span>
                 )}
             </button>
             <div className="profile-wrapper">
@@ -72,19 +63,19 @@ console.log(user);
                 {user?.avatar ? (
         <img
             src={user.avatar}
-            alt={user.name || "Profile"}
+            alt={user?.name || "Profile"}
             className="header-avatar"
         />
     ) : (
         <i className="bi bi-person-circle"></i>
     )}
-            <span className="user_name">{user?.name}</span>
+            <span className="user_name">{user?.name || "User"}</span>
             <i className="bi bi-chevron-compact-down"></i>
             </button>
             {profileOpen && (<div className="profile-dropdown">
                 <div className="head">
-                    <img src={user?.avatar} alt="Profile"/>
-                    <h1>{user?.name}</h1>
+                    {user?.avatar ? <img src={user.avatar} alt="Profile"/> : <i className="bi bi-person-circle"></i>}
+                    <h1>{user?.name || "User"}</h1>
                     <p>{user?.email}</p>
                 </div>
                     <div className="buttons_profile">

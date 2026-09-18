@@ -26,9 +26,10 @@ function NotificationsPage() {
 
             if (searchQuery.trim()) {
                 const query = searchQuery.toLowerCase();
-                const titleMatch = item.title.toLowerCase().includes(query);
-                const messageMatch = item.message.toLowerCase().includes(query);
-                const userMatch = item.user?.name.toLowerCase().includes(query);
+                const titleMatch = typeof item.title === 'string' ? item.title.toLowerCase().includes(query) : false;
+                const messageMatch = typeof item.message === 'string' ? item.message.toLowerCase().includes(query) : false;
+                const userName = typeof item.user?.name === 'string' ? item.user.name : '';
+                const userMatch = userName.toLowerCase().includes(query);
                 return titleMatch || messageMatch || userMatch;
             }
 

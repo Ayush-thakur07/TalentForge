@@ -33,7 +33,7 @@ function NotificationItem({ notification }) {
         }
         if (notification.applicationId) {
             openApplication(notification.applicationId);
-        } else if (notification.actionUrl) {
+        } else if (notification.actionUrl && typeof notification.actionUrl === 'string' && notification.actionUrl.startsWith('/') && !notification.actionUrl.includes('://')) {
             navigate(notification.actionUrl);
         }
     };
@@ -54,12 +54,12 @@ function NotificationItem({ notification }) {
                     <span className="card-time">{notification.timestamp}</span>
                 </div>
 
-                <h3 className="card-title">{notification.title}</h3>
-                <p className="card-message">{notification.message}</p>
+                <h3 className="card-title">{notification?.title || "Notification"}</h3>
+                <p className="card-message">{notification?.message || ""}</p>
 
-                {notification.user && (
+                {notification?.user && (
                     <div className="user-subtitle">
-                        <i className="bi bi-person"></i> {notification.user.name} • {notification.user.role}
+                        <i className="bi bi-person"></i> {notification.user.name || "User"} • {notification.user.role || ""}
                     </div>
                 )}
             </div>

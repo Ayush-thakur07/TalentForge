@@ -1,6 +1,6 @@
 import "./ProfileHeader.css";
 
-function ProfileHeader({ user, profile, edit, isEditing, onCoverChange }) {
+function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatarChange }) {
     function handleCoverChange(e) {
         const file = e.target.files[0];
 
@@ -8,17 +8,125 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange }) {
             return;
         }
 
-        const reader = new FileReader();reader.onload = () => {onCoverChange(reader.result);
-};
+        if (!file.type.startsWith("image/")) {
+            window.alert("Please select a valid image file (JPG, PNG, WEBP).");
+            e.target.value = "";
+            return;
+        }
 
-reader.readAsDataURL(file);
+        if (file.size > 5 * 1024 * 1024) {
+            window.alert("Cover image size exceeds 5 MB. Please choose a smaller image.");
+            e.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                const MAX_WIDTH = 1200;
+                const MAX_HEIGHT = 450;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > MAX_WIDTH) {
+                    height = Math.round((height * MAX_WIDTH) / width);
+                    width = MAX_WIDTH;
+                }
+                if (height > MAX_HEIGHT) {
+                    width = Math.round((width * MAX_HEIGHT) / height);
+                    height = MAX_HEIGHT;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+
+                const compressedUrl = canvas.toDataURL("image/jpeg", 0.75);
+                onCoverChange(compressedUrl);
+            };
+            img.onerror = () => {
+                onCoverChange(event.target.result);
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+        e.target.value = "";
     }
+
+    function handleAvatarChange(e) {
+        const file = e.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            window.alert("Please select a valid image file (JPG, PNG, WEBP).");
+            e.target.value = "";
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            window.alert("Profile picture size exceeds 5 MB. Please choose a smaller image.");
+            e.target.value = "";
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                const SIZE = 300;
+                canvas.width = SIZE;
+                canvas.height = SIZE;
+
+                const ctx = canvas.getContext("2d");
+
+                // Crop and center image in 1:1 ratio
+                let srcX = 0;
+                let srcY = 0;
+                let srcWidth = img.width;
+                let srcHeight = img.height;
+
+                if (img.width > img.height) {
+                    srcWidth = img.height;
+                    srcX = (img.width - img.height) / 2;
+                } else if (img.height > img.width) {
+                    srcHeight = img.width;
+                    srcY = (img.height - img.width) / 2;
+                }
+
+                ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, 0, 0, SIZE, SIZE);
+
+                const compressedUrl = canvas.toDataURL("image/jpeg", 0.85);
+                if (typeof onAvatarChange === "function") {
+                    onAvatarChange(compressedUrl);
+                }
+            };
+            img.onerror = () => {
+                if (typeof onAvatarChange === "function") {
+                    onAvatarChange(event.target.result);
+                }
+            };
+            img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+        e.target.value = "";
+    }
+
+    const currentCover = profile?.coverImage || user?.coverImage;
+    const currentAvatar = profile?.avatar || user?.avatar || profile?.profileImage || user?.profileImage;
 
     return (
         <section className="profile-header">
             <div className="profile-cover">
-                {profile.coverImage ? (
-                    <img src={profile.coverImage} alt="Profile cover" />
+                {currentCover ? (
+                    <img src={currentCover} alt="Profile cover" />
                 ) : (
                     <div className="profile-cover-placeholder"></div>
                 )}
@@ -35,15 +143,25 @@ reader.readAsDataURL(file);
             </div>
 
             <div className="profile-main">
-                <div className="profile-image">
-                    {user?.avatar ? (
-                        <img src={user.avatar} alt="Profile" />
+                <label className="profile-image profile-image-clickable" title="Click to upload profile picture">
+                    {currentAvatar ? (
+                        <img src={currentAvatar} alt={user?.name || "Profile"} />
                     ) : (
                         <div className="profile-image-placeholder">
                             <i className="bi bi-person"></i>
                         </div>
                     )}
-                </div>
+                    <div className="profile-avatar-overlay">
+                        <i className="bi bi-camera-fill"></i>
+                        <span>Edit</span>
+                    </div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarChange}
+                        style={{ display: "none" }}
+                    />
+                </label>
 
                 <div className="profile-information">
                     <div className="profile-name">

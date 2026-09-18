@@ -1,7 +1,40 @@
-.application-modal-overlay { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; padding: 20px; background: rgba(15, 23, 42, .52); backdrop-filter: blur(3px); }
-.application-modal { width: min(640px, 100%); max-height: calc(100vh - 40px); overflow: auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; box-shadow: 0 24px 64px rgba(15, 23, 42, .28); animation: application-modal-in .2s ease-out; }
-.application-modal-header { display: flex; justify-content: space-between; gap: 20px; padding: 25px 28px 20px; border-bottom: 1px solid #edf0f5; }
-.application-modal-header p, .project-team-header p { margin: 0 0 4px; color: #6366f1; font-size: 11px; font-weight: 800; letter-spacing: .09em; }.application-modal h2 { margin: 0; color: #172033; font-size: 24px; }.application-close { width: 36px; height: 36px; border: 0; border-radius: 9px; background: #f3f4f6; color: #475569; cursor: pointer; }.application-close:hover { background: #e0e7ff; color: #4f46e5; }
+.application-modal-overlay 
+{ position: fixed; 
+inset: 0; 
+z-index: 2000;
+display: grid;
+place-items: center;
+padding: 20px;
+background: rgba(15, 23, 42, .52);
+backdrop-filter: blur(3px); 
+}
+.application-modal
+ {
+     width: min(640px, 100%);
+      max-height: calc(100vh - 40px); 
+      overflow: auto; background: #fff; 
+      border: 1px solid #e5e7eb; 
+      border-radius: 20px; 
+      box-shadow: 0 24px 64px rgba(15, 23, 42, .28);
+       animation: application-modal-in .2s ease-out; 
+}
+.application-modal-header 
+{ 
+    display: flex; 
+    justify-content: space-between;
+    gap: 20px;
+    padding: 25px 28px 20px;
+    border-bottom: 1px solid #edf0f5; 
+}
+.application-modal-header p, .project-team-header p 
+{ 
+    margin: 0 0 4px;
+    color: #6366f1;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .09em; 
+}
+.application-modal h2 { margin: 0; color: #172033; font-size: 24px; }.application-close { width: 36px; height: 36px; border: 0; border-radius: 9px; background: #f3f4f6; color: #475569; cursor: pointer; }.application-close:hover { background: #e0e7ff; color: #4f46e5; }
 .application-modal-body { padding: 24px 28px; }.applicant-summary { display: flex; align-items: center; gap: 14px; padding: 16px; background: #f8faff; border: 1px solid #e7ecff; border-radius: 14px; }.applicant-summary img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; }.applicant-summary h3 { margin: 0 0 4px; font-size: 17px; color: #172033; }.applicant-summary h3 i { color: #6366f1; font-size: 14px; }.applicant-summary p { margin: 2px 0; color: #64748b; font-size: 13px; }.application-match { margin-left: auto; align-self: flex-start; color: #4338ca; background: #e0e7ff; border-radius: 999px; padding: 6px 9px; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .application-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid #edf0f5; }.application-info-grid div { display: grid; gap: 5px; }.application-info-grid span { color: #64748b; font-size: 12px; }.application-info-grid strong { color: #1e293b; font-size: 14px; }.application-status { text-transform: capitalize; width: fit-content; padding: 3px 9px; border-radius: 999px; background: #fff7ed; color: #c2410c; font-size: 12px; font-weight: 700; }
 .application-section { padding-top: 20px; }.application-section h4 { margin: 0 0 10px; color: #334155; font-size: 13px; }.application-skills { display: flex; flex-wrap: wrap; gap: 8px; }.application-skills span { padding: 6px 10px; border: 1px solid #c7d2fe; border-radius: 999px; color: #4338ca; background: #eef2ff; font-size: 12px; font-weight: 600; }.application-message { margin: 0; padding: 14px; color: #475569; line-height: 1.55; background: #f8fafc; border-left: 3px solid #818cf8; border-radius: 5px; }.application-availability span { color: #475569; font-size: 14px; text-transform: capitalize; }.application-availability i { color: #6366f1; margin-right: 5px; }.application-links { display: flex; flex-wrap: wrap; gap: 10px; }.application-links a { color: #4f46e5; font-size: 13px; font-weight: 700; text-decoration: none; }.application-links a:hover { text-decoration: underline; }
