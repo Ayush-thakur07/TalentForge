@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Profile from './assets/Components/Profile/Profile'
 import Dashboard from './assets/Components/Dashboard/Dashboard'
 import './App.css'
@@ -11,60 +10,75 @@ import DashboardLayout from './assets/Components/Dashboard/DashboardLayout/Dashb
 import { NotificationProvider } from './context/NotificationContext'
 import { ApplicationProvider } from './context/ApplicationContext'
 import SearchPage from './assets/Components/Dashboard/Search/SearchPage'
+import Saved from './assets/Components/Saved/Saved'
+import { UserProvider, useUser } from './context/UserContext'
+import { MessageProvider } from './context/MessageContext'
 
-function ProtectedRoute({ user, children }) {
-    if (user) {
-        return children;
+function ProtectedRoute({ children }) {
+    const { currentUser, loading } = useUser();
+//if loading ===true 
+    if (loading) {
+        return (
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+                <div style={{ fontSize: "1.2rem", color: "#4f46e5" }}>Loading TalentForge...</div>
+            </div>
+        );
+    }
+    //currentUser = null that's falsy.
+    if (currentUser) {
+        return children;  //protected route children->dashboard
     }
 
     return <Navigate to="/login" replace />;
 }
 
-function App() {
-  const [user, setuser] = useState(null);
+function AppRoutes() {
   return (
-    <NotificationProvider>
       <BrowserRouter>
         <ApplicationProvider>
         <Routes>
-          <Route path="/" element={<Login user={user} setuser={setuser} />} />
-          <Route path="/login" element={<Login user={user} setuser={setuser} />} />
-          <Route
-          path="/signup"
-          element={<Signup user={user} setuser={setuser} />}
-          />
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
           <Route path="/dashboard" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           }/>
 
           <Route path="/students" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute>
               <DashboardLayout>
                 <BrowseStudents />
               </DashboardLayout>
             </ProtectedRoute>
           }/>
           <Route path="/profile" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute>
             <DashboardLayout>
                 <Profile />
             </DashboardLayout>
             </ProtectedRoute>
-    }
-/>
+          }/>
+
+          <Route path="/saved" element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Saved />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }/>
 
           <Route path="/notifications" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute>
               <DashboardLayout>
                 <NotificationsPage />
               </DashboardLayout>
             </ProtectedRoute>
           }/>
           <Route path="/search" element={
-            <ProtectedRoute user={user}>
+            <ProtectedRoute>
               <DashboardLayout>
                 <SearchPage />
               </DashboardLayout>
@@ -73,7 +87,18 @@ function App() {
         </Routes>
         </ApplicationProvider>
       </BrowserRouter>
-    </NotificationProvider>
+  )
+}
+
+function App() {
+  return (
+    <UserProvider>
+      <NotificationProvider>
+        <MessageProvider>
+        <AppRoutes />
+        </MessageProvider>
+      </NotificationProvider>
+    </UserProvider>
   )
 }
 

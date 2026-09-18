@@ -8,7 +8,7 @@ function getMatchColor(score) {
 }
 
 function StudentCard({ student, matchScore }) {
-    const formattedScore = typeof matchScore === "number" ? `${matchScore}% Match` : null;
+    const formattedScore = typeof matchScore === "number" ? `${matchScore}% Profile Match` : null;
     const matchColor = typeof matchScore === "number" ? getMatchColor(matchScore) : null;
 
     return (
@@ -50,7 +50,7 @@ function StudentCard({ student, matchScore }) {
 
                 <div className="student-section">
                     <div className="tags">
-                        {student.skills.map((skill) => (
+                        {(student.skills || []).map((skill) => (
                             <span key={skill} className="tag skill-tag">
                                 {skill}
                             </span>
@@ -60,7 +60,7 @@ function StudentCard({ student, matchScore }) {
 
                 <div className="student-section">
                     <p className="interests-text">
-                        <strong>Interests:</strong> {student.interests.join(", ")}
+                        <strong>Interests:</strong> {(student.interests || []).join(", ")}
                     </p>
                 </div>
 

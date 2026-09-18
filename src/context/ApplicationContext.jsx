@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getStudentById } from "../assets/Components/Dashboard/BrowseStudents/studentUtils";
 import { useNotifications } from "./NotificationContext";
+import { useUser } from "./UserContext";
 import ApplicationDetailsModal from "../assets/Components/Dashboard/Applications/ApplicationDetailsModal";
 
 const ApplicationContext = createContext();
-const APPLICATIONS_KEY = "talentforge_applications_v1";
-const PROJECTS_KEY = "talentforge_application_projects_v1";
+const STORAGE_PREFIX_APPS = "talentforge_applications_v1";
+const STORAGE_PREFIX_PROJECTS = "talentforge_application_projects_v1";
 
 const initialApplications = [{
     id: "app_001",
@@ -25,6 +26,10 @@ const initialProjects = [{
     team: [{ applicantId: "stu_001", role: "Project Owner", status: "active" }]
 }];
 
+function getUserKey(user) {
+    return user?.uid || user?.id || user?.email || "guest";
+}
+
 function readStored(key, fallback) {
     try {
         const value = JSON.parse(localStorage.getItem(key));
@@ -34,19 +39,27 @@ function readStored(key, fallback) {
     }
 }
 
-export function ApplicationProvider({ children }) {
+function ApplicationStore({ appsKey, projectsKey, children }) {
     const { addNotification } = useNotifications();
-    const [applications, setApplications] = useState(() => readStored(APPLICATIONS_KEY, initialApplications));
-    const [projects, setProjects] = useState(() => readStored(PROJECTS_KEY, initialProjects));
+    const [applications, setApplications] = useState(() => readStored(appsKey, initialApplications));
+    const [projects, setProjects] = useState(() => readStored(projectsKey, initialProjects));
     const [selectedApplicationId, setSelectedApplicationId] = useState(null);
 
     useEffect(() => {
-        localStorage.setItem(APPLICATIONS_KEY, JSON.stringify(applications));
-    }, [applications]);
+        try {
+            localStorage.setItem(appsKey, JSON.stringify(applications));
+        } catch (e) {
+            console.error("Failed to save applications to localStorage:", e);
+        }
+    }, [applications, appsKey]);
 
     useEffect(() => {
-        localStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
-    }, [projects]);
+        try {
+            localStorage.setItem(projectsKey, JSON.stringify(projects));
+        } catch (e) {
+            console.error("Failed to save projects to localStorage:", e);
+        }
+    }, [projects, projectsKey]);
 
     const openApplication = (applicationId) => setSelectedApplicationId(applicationId || null);
     const closeApplication = () => setSelectedApplicationId(null);
@@ -105,6 +118,19 @@ export function ApplicationProvider({ children }) {
             {children}
             {selectedApplicationId && <ApplicationDetailsModal applicationId={selectedApplicationId} onClose={closeApplication} />}
         </ApplicationContext.Provider>
+    );
+}
+
+export function ApplicationProvider({ children }) {
+    const { currentUser } = useUser();
+    const userKey = getUserKey(currentUser);
+    const appsKey = `${STORAGE_PREFIX_APPS}_${userKey}`;
+    const projectsKey = `${STORAGE_PREFIX_PROJECTS}_${userKey}`;
+
+    return (
+        <ApplicationStore key={userKey} appsKey={appsKey} projectsKey={projectsKey}>
+            {children}
+        </ApplicationStore>
     );
 }
 

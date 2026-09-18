@@ -45,8 +45,8 @@ function AboutSection({ profile }) {
 
                     <div className="about-list">
 
-                        {profile.skills.length > 0 ? (
-                            profile.skills.map((skill, index) => (
+                        {(profile.skills || []).length > 0 ? (
+                            (profile.skills || []).map((skill, index) => (
                                 <span key={index}>
                                     {skill}
                                 </span>
@@ -75,8 +75,8 @@ function AboutSection({ profile }) {
 
                     <div className="about-list">
 
-                        {profile.interests.length > 0 ? (
-                            profile.interests.map((interest, index) => (
+                        {(profile.interests || []).length > 0 ? (
+                            (profile.interests || []).map((interest, index) => (
                                 <span key={index}>
                                     {interest}
                                 </span>

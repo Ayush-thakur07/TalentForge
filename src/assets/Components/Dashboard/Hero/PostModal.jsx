@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { extractRequiredSkills } from "../recommendationUtils";
 import "./PostModal.css";
+import { useUser } from "../../../../context/UserContext";
 
 function PostModal({ onClose }) {
+    const { currentUser } = useUser();
     const [selecteddiv, setSeleectedDiv] = useState("shareProject");
     const [projectTitle, setProjectTitle] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
@@ -40,8 +42,28 @@ function PostModal({ onClose }) {
 
     const descriptionInvalid =
         descriptionWordLength < 50 || descriptionWordLength > 500;
-    const handleCollaboratorChange = (e) => {
 
+    const handleProjectSubmit = (e) => {
+        e.preventDefault();
+
+        if (titleInvalid) {
+            alert("Project title must contain between 10 and 100 characters.");
+            return;
+        }
+
+        if (descriptionInvalid) {
+            alert("Description must contain between 50 and 500 words.");
+            return;
+        }
+
+        savePost({
+            type: "shareProject",
+            title: projectTitle,
+            description: projectDescription
+        });
+    };
+
+    const handleCollaboratorChange = (e) => {
         const { id, value } = e.target;
 
         setCollaboratorData((previous) => ({
@@ -59,52 +81,26 @@ function PostModal({ onClose }) {
         }));
     };
     const handleNeedHelpChange = (e) => {
-
         const { id, value } = e.target;
-
         setNeedHelpData((previous) => ({
             ...previous,
             [id]: value
         }));
     };
-    const getCurrentUser = () => {
-
-        const storedUser = localStorage.getItem("user");
-
-        if (storedUser) {
-
-            try {
-                return JSON.parse(storedUser);
-            } catch (error) {
-                console.log("Could not read user:", error);
-            }
-        }
-
-        return {
-            name: "TalentForge User",
-            email: ""
-        };
-    };
     const savePost = (postData) => {
-
         const existingPosts =
             JSON.parse(localStorage.getItem("talentforge_posts")) || [];
 
-        const currentUser = getCurrentUser();
-
         const newPost = {
-
             id: Date.now(),
-
             ...postData,
             detectedSkills: extractRequiredSkills(postData),
-
             author: {
-                name: currentUser.name || "TalentForge User",
-                email: currentUser.email || "",
-                avatar: currentUser.avatar || ""
+                id: currentUser?.id || currentUser?.uid || "",
+                name: currentUser?.name || "TalentForge User",
+                email: currentUser?.email || "",
+                avatar: currentUser?.avatar || ""
             },
-
             createdAt: new Date().toISOString()
         };
 
@@ -124,32 +120,15 @@ function PostModal({ onClose }) {
 
         onClose();
     };
-    const handleProjectSubmit = (e) => {
 
-        e.preventDefault();
-
-        if (titleInvalid) {
-            alert("Project title must contain between 10 and 100 characters.");
-            return;
-        }
-
-        if (descriptionInvalid) {
-            alert("Description must contain between 50 and 500 words.");
-            return;
-        }
-
-        savePost({
-
-            type: "shareProject",
-
-            title: projectTitle,
-
-            description: projectDescription
-        });
-    };
     const handleCollaboratorSubmit = (e) => {
-
         e.preventDefault();
+        const parsedTeamSize = parseInt(collaboratorData.teamSize, 10);
+
+        if (!collaboratorData.teamSize || Number.isNaN(parsedTeamSize) || parsedTeamSize < 1) {
+            alert("Please enter a valid number of people needed (minimum 1).");
+            return;
+        }
 
         savePost({
 
@@ -161,7 +140,7 @@ function PostModal({ onClose }) {
 
             skillsNeeded: collaboratorData.skillsNeeded,
 
-            teamSize: Number(collaboratorData.teamSize),
+            teamSize: parsedTeamSize,
 
             collaborationType:
                 collaboratorData.collaborationType

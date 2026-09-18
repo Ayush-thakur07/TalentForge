@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 
 function formatPostDate(date) {
     if (!date) {
-        return "Just now";
+        return "Just now";  //for safety reasons
     }
 
-    const postDate = new Date(date);
-    const now = new Date();
+    const postDate = new Date(date);  //posted date
+    const now = new Date();  //date and time when code executed
     const difference =
-        Math.floor((now - postDate) / 1000);
+        Math.floor((now - postDate) / 1000);  //floor to round doen to nearest integers
 
     if (difference < 60) {
         return "Just now";
@@ -17,7 +17,7 @@ function formatPostDate(date) {
     if (difference < 3600) {
         const minutes =
             Math.floor(difference / 60);
-        return `${minutes} min ago`;
+        return `${minutes} min ago`;  //template literals
     }
 
     if (difference < 86400) {
@@ -28,7 +28,7 @@ function formatPostDate(date) {
 
     const days =
         Math.floor(difference / 86400);
-    return `${days} day${days !== 1 ? "s" : ""} ago`;
+    return `${days} day${days !== 1 ? "s" : ""} ago`;  //for grammer of day and days nothing complicated
 }
 
 function getPostTypeName(type) {
@@ -54,12 +54,22 @@ function PostCard({
     onToggleUpvote,
     onDelete,
 }) {
-    const isOwner =
-        currentUser?.name && post.author?.name &&
-        currentUser.name === post.author.name;
+    const isOwner = Boolean(
+        currentUser && post.author &&
+        (post.author.id === currentUser.id || post.author.id === currentUser.uid || post.author.email === currentUser.email)
+    );
 
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const[saved,setSaved]=useState(()=>
+    {
+        try{
+            const stored=localStorage.getItem("talentforge_saved_posts");
+            return new Set(JSON.parse(stored||"[]"));
+        }
+        catch{
+            return new Set();
+        }
+    });
     useEffect(() => {
         if (!menuOpen) return;
 
@@ -73,9 +83,9 @@ function PostCard({
         document.addEventListener("mousedown", handleOutsideClick);
         return () => document.removeEventListener("mousedown", handleOutsideClick);
     }, [menuOpen]);
-
+ //e is the event object=>e=event
     const handleMenuToggle = (e) => {
-        e.stopPropagation();
+        e.stopPropagation();  //I clicked the three-dots menu. Handle the menu click, but don't treat it as a click on the entire post.
         setMenuOpen((prev) => !prev);
     };
 
@@ -88,6 +98,23 @@ function PostCard({
     const handleUpvoteClick = (e) => {
         e.stopPropagation();
         onToggleUpvote(post.id);
+    };
+    const handleSave=()=>{
+        setSaved(prev=>
+        {
+            const updated=new Set(prev);
+            if(updated.has(post.id))
+            {
+                updated.delete(post.id);
+            }
+            else{
+                updated.add(post.id);
+            }
+            localStorage.setItem("talentforge_saved_posts",JSON.stringify([...updated])
+        );
+        return updated;
+        }
+        );
     };
 
     return (
@@ -112,10 +139,10 @@ function PostCard({
                         <i className="bi bi-patch-check-fill"></i>
                     </div>
                     <span>
-                        {formatPostDate(post.createdAt)}
+                        {formatPostDate(post.createdAt)}  
                     </span>
                 </div>
-
+                <div className="post-menu-wrapper">
                 <button
                     type="button"
                     className="post-menu-button"
@@ -127,17 +154,20 @@ function PostCard({
 
                 {menuOpen && (
                     <div className="post-menu-dropdown">
-                        {isOwner && (
+                        {isOwner ?(
                             <button
                                 type="button"
                                 className="post-menu-item post-menu-delete"
                                 onClick={handleDeleteClick}
                             >
-                                Delete Post
+                                 <i className="bi bi-trash3"></i>
+                                <span>Delete Post</span>
                             </button>
-                        )}
+                        ):
+                        ( <p className="post-menu-message">You are not the owner of this post.<br />You can't delete it.</p>)}
                     </div>
                 )}
+                </div>
             </div>
 
             <div className={`post-type ${post.type}`}>
@@ -238,10 +268,9 @@ function PostCard({
                     {upvoteCount || 0}
                 </button>
 
-                <button type="button" className="post-action-btn">
-                    <i className="bi bi-bookmark"></i>
-                    Save
-                </button>
+                <button type="button" className={`post-action-btn ${saved.has(post.id) ? "saved" : ""}`}onClick={handleSave}>
+                    <i className={saved.has(post.id)? "bi bi-bookmark-fill": "bi bi-bookmark" }></i>
+                    {saved.has(post.id) ? "Saved" : "Save"}</button>
 
                 <button type="button" className="post-action-btn">
                     <i className="bi bi-share"></i>

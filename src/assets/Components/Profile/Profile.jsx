@@ -11,26 +11,12 @@ import ConnectionsSection from "./ConnectionsSection";
 import PostsSection from "./PostsSection";
 import EditProfileModal from "./EditProfileModal";
 import "./Profile.css";
+import { useUser } from "../../../context/UserContext";
 function Profile() {
-    const [user, setUser] = useState(null);
+    const { currentUser: user, updateCurrentUser } = useUser();
     const [activeTab, setActiveTab] = useState("Overview");
 
-    const getStoredUser = () => {
-        const storedUser = localStorage.getItem("user");
-
-        if (!storedUser) {
-            return null;
-        }
-
-        try {
-            return JSON.parse(storedUser);
-        } catch (error) {
-            return null;
-        }
-    };
-
-    const initialUser = getStoredUser();
-    const userKey = initialUser?.uid || initialUser?.email || "guest";
+    const userKey = user?.uid || user?.id || user?.email || "guest";
 
     const profileStorageKey = `talentforge_profile_${userKey}`;
     const projectsStorageKey = `talentforge_projects_${userKey}`;
@@ -38,17 +24,17 @@ function Profile() {
     const experiencesStorageKey = `talentforge_experiences_${userKey}`;
 
     const defaultProfile = {
-        role: "",
-        university: "",
-        year: "",
-        location: "",
-        headline: "",
-        about: "",
-        skills: [],
-        interests: [],
-        tags: [],
-        coverImage: "",
-        isVerified: false
+        role: user?.role || "",
+        university: user?.university || user?.college || "",
+        year: user?.year || "",
+        location: user?.location || "",
+        headline: user?.headline || "",
+        about: user?.about || "",
+        skills: user?.skills || [],
+        interests: user?.interests || [],
+        tags: user?.tags || [],
+        coverImage: user?.coverImage || "",
+        isVerified: user?.isVerified || false
     };
 
     const [profile, setProfile] = useState(() => {
@@ -146,39 +132,40 @@ const [posts, setPosts] = useState(() => {
     }
 });
 useEffect(() => {
-    localStorage.setItem(
-        `talentforge_posts_${userKey}`,
-        JSON.stringify(posts)
-    );
+    try {
+        localStorage.setItem(
+            `talentforge_posts_${userKey}`,
+            JSON.stringify(posts)
+        );
+    } catch (e) {
+        console.error("Failed to save posts to localStorage:", e);
+    }
 }, [posts, userKey]);
+
     const [isEditing, setIsEditing] = useState(false);
     const [skillsInput, setSkillsInput] = useState("");
     const [interestsInput, setInterestsInput] = useState("");
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-
-        if (storedUser) {
-            try {
-                setUser(JSON.parse(storedUser));
-            } catch (error) {
-                setUser(null);
-            }
+        try {
+            localStorage.setItem(
+                profileStorageKey,
+                JSON.stringify(profile)
+            );
+        } catch (e) {
+            console.error("Failed to save profile to localStorage:", e);
         }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem(
-            profileStorageKey,
-            JSON.stringify(profile)
-        );
     }, [profile, profileStorageKey]);
 
     useEffect(() => {
-        localStorage.setItem(
-            projectsStorageKey,
-            JSON.stringify(projects)
-        );
+        try {
+            localStorage.setItem(
+                projectsStorageKey,
+                JSON.stringify(projects)
+            );
+        } catch (e) {
+            console.error("Failed to save projects to localStorage:", e);
+        }
     }, [projects, projectsStorageKey]);
 
     useEffect(() => {
@@ -254,14 +241,31 @@ function handleDeletePost(id) {
 }
 
     function handleSaveProfile() {
+        updateCurrentUser(profile);
         setIsEditing(false);
     }
 
     function handleCoverChange(imageUrl) {
-        setProfile(prev => ({
-            ...prev,
-            coverImage: imageUrl
-        }));
+        setProfile(prev => {
+            const updated = {
+                ...prev,
+                coverImage: imageUrl
+            };
+            updateCurrentUser({ coverImage: imageUrl });
+            return updated;
+        });
+    }
+
+    function handleAvatarChange(imageUrl) {
+        setProfile(prev => {
+            const updated = {
+                ...prev,
+                avatar: imageUrl,
+                profileImage: imageUrl
+            };
+            updateCurrentUser({ avatar: imageUrl, profileImage: imageUrl });
+            return updated;
+        });
     }
 
     function handleAddSkill(skill) {
@@ -406,6 +410,7 @@ function handleDeleteConnection(id) {
                 edit={handleEdit}
                 isEditing={isEditing}
                 onCoverChange={handleCoverChange}
+                onAvatarChange={handleAvatarChange}
             />
 
             <ProfileStats stats={stats} />

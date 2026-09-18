@@ -1,12 +1,9 @@
-
 import {
     GoogleAuthProvider,
     signInWithEmailAndPassword,
     signInWithPopup,
-    setPersistence
-} from "firebase/auth";
-
-import {
+    setPersistence,
+    signOut,
     browserLocalPersistence,
     browserSessionPersistence
 } from "firebase/auth";
@@ -17,15 +14,16 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { auth } from "../../../../config/firebase";
 import background from "../../../Background_image.png";
+import { useUser } from "../../../../context/UserContext";
 
-function Login({ setuser }) {
-
+function Login() {
     const navigate = useNavigate();
 
     const [show, setshow] = useState(false);
     const a = new GoogleAuthProvider();
     const [check, setcheck] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { setCurrentUser } = useUser();
 
     async function applyPersistence() {
         await setPersistence(
@@ -35,7 +33,6 @@ function Login({ setuser }) {
     }
 
     async function google() {
-
         if (loading) {
             return;
         }
@@ -48,22 +45,17 @@ function Login({ setuser }) {
             const pop = await signInWithPopup(auth, a);
             const user = pop.user;
 
-            setuser(user);
-            localStorage.setItem(
-    "user",
-    JSON.stringify({
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName,
-        avatar: user.photoURL
-    })
-);
+            const email = user?.email ? user.email.trim().toLowerCase() : "";
+            if (!email || !email.endsWith("@chitkara.edu.in")) {
+                await signOut(auth);
+                setCurrentUser(null);
+                window.alert("Access denied. Please sign in with your Chitkara University student email (@chitkara.edu.in).");
+                return;
+            }
 
-console.log(user);
-navigate("/dashboard", { replace: true });
-            console.log(user);
-            window.alert("Successfully entered mail");
-            navigate("/dashboard");
+            setCurrentUser(user);
+            window.alert("Successfully logged in with Google");
+            navigate("/dashboard", { replace: true });
         }
         catch (error) {
             console.log(error);
@@ -75,7 +67,6 @@ navigate("/dashboard", { replace: true });
     }
 
     async function handleSubmit(event) {
-
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
@@ -95,31 +86,25 @@ navigate("/dashboard", { replace: true });
                 password
             );
             const user = result.user;
-            setuser(result.user);
-            localStorage.setItem("user",JSON.stringify({uid: user.uid,
-        email: user.email,
-        name: user.displayName,
-        avatar: user.photoURL
-    })
-);
+            setCurrentUser(user);
             window.alert("Successfully logged in");
             navigate("/dashboard", { replace: true });
         }
         catch (error) {
             const code = error?.code || "";
 
-        if (
-            code.includes("user-not-found") ||
-            code.includes("wrong-password") ||
-            code.includes("invalid-credential")
-        ) {
-            window.alert("Invalid email or password.");
-        } else if (code.includes("operation-not-allowed")) {
-            window.alert("Firebase login is disabled.");
-        } else {
-            console.log(error);
-            window.alert(error.message);
-        }
+            if (
+                code.includes("user-not-found") ||
+                code.includes("wrong-password") ||
+                code.includes("invalid-credential")
+            ) {
+                window.alert("Invalid email or password.");
+            } else if (code.includes("operation-not-allowed")) {
+                window.alert("Firebase login is disabled.");
+            } else {
+                console.log(error);
+                window.alert(error.message);
+            }
         }
         finally {
             setLoading(false);
@@ -128,25 +113,16 @@ navigate("/dashboard", { replace: true });
 
     return (
         <div className="data">
-
             <div className="card">
-
                 <img src={background} alt="" />
-
                 <div className="card-content">
-
                     <h1>Your Campus.</h1>
                     <h1>Your People.</h1>
                     <h1>Your Opportunities.</h1>
 
                     <div className="card-description">
-                        <p>
-                            <i>Connect, collaborate and create</i>
-                        </p>
-
-                        <p>
-                            <i>amazing things together.</i>
-                        </p>
+                        <p><i>Connect, collaborate and create</i></p>
+                        <p><i>amazing things together.</i></p>
                     </div>
 
                     <div className="feature">
@@ -169,32 +145,19 @@ navigate("/dashboard", { replace: true });
                             <span>Explore Opportunities</span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
             <div className="login-box">
-
                 <div className="head">
                     <h1>Welcome Back!</h1>
-
-                    <p>
-                        <b>Login to continue to TalentForge</b>
-                    </p>
+                    <p><b>Login to continue to TalentForge</b></p>
                 </div>
 
                 <div className="input">
-
-                    <form
-                        className="form-sign"
-                        onSubmit={handleSubmit}
-                    >
-
+                    <form className="form-sign" onSubmit={handleSubmit}>
                         <label>Email Address</label>
-
                         <i className="bi bi-envelope"></i>
-
                         <input
                             name="email"
                             type="email"
@@ -204,38 +167,25 @@ navigate("/dashboard", { replace: true });
                         />
 
                         <div>
-
                             <label>Password</label>
-
                             <i className="bi bi-lock"></i>
-
                             <input
                                 name="password"
                                 type={show ? "text" : "password"}
                                 placeholder="Enter your password"
                                 required
                             />
-
                             <button
                                 type="button"
                                 onClick={() => setshow(!show)}
                             >
-                                <i
-                                    className={
-                                        show
-                                            ? "bi bi-eye"
-                                            : "bi bi-eye-slash"
-                                    }
-                                ></i>
+                                <i className={show ? "bi bi-eye" : "bi bi-eye-slash"}></i>
                             </button>
-
                         </div>
 
                         <div>
-
                             <label className="remember">
                                 Remember me
-
                                 <input
                                     type="checkbox"
                                     className="checkbox"
@@ -243,29 +193,18 @@ navigate("/dashboard", { replace: true });
                                     onChange={() => setcheck(!check)}
                                 />
                             </label>
-
                         </div>
 
                         <button type="button">
                             Forgot Password?
                         </button>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                        >
-                            {loading
-                                ? "Logging in..."
-                                : "Login"
-                            }
+                        <button type="submit" disabled={loading}>
+                            {loading ? "Logging in..." : "Login"}
                         </button>
 
                         <div className="divider">
-
-                            <span>
-                                or continue with
-                            </span>
-
+                            <span>or continue with</span>
                         </div>
 
                         <button
@@ -274,35 +213,22 @@ navigate("/dashboard", { replace: true });
                             onClick={google}
                             disabled={loading}
                         >
-
                             <i className="bi bi-google"></i>
-
-                            {loading
-                                ? "Signing in..."
-                                : "Continue with Google"
-                            }
-
+                            {loading ? "Signing in..." : "Continue with Google"}
                         </button>
 
                         <p className="signup">
-
                             Don't have an account?
-
                             <button
                                 type="button"
                                 onClick={() => navigate("/signup")}
                             >
                                 Sign up
                             </button>
-
                         </p>
-
                     </form>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

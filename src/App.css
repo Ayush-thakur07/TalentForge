@@ -526,6 +526,64 @@
         font-size: 17px;
     }
 }
+.post-menu-wrapper {
+    position: relative;
+}
+
+.post-menu-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.post-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+
+    min-width: 140px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    padding: 6px;
+}
+.post-action-btn.saved {
+    color: #261a87;
+}
+.post-menu-message {
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #6b7280;
+    white-space: nowrap;
+}
+.post-menu-delete {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.post-menu-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    padding: 9px 12px;
+    text-align: left;
+    border-radius: 6px;
+}
+
+.post-menu-delete {
+    color: #dc2626;
+}
+
+.post-menu-delete:hover {
+    background: #fee2e2;
+}
 .header-avatar {
     width: 48px;
     height: 48px;
