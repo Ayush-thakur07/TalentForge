@@ -276,8 +276,7 @@
         font-size: 18px;
     }
 
-    .sidebar > .upgrade-card,
-    .sidebar > .user-mini-profile {
+    .sidebar > .upgrade-card {
         display: none;
     }
 }
