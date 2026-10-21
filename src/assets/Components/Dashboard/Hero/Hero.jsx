@@ -21,7 +21,7 @@ function getGreeting(current_hour) {
 function Hero() {
     const navigate = useNavigate();
     const [postModalOpen, setPostModalOpen] = useState(false);
-    const { currentUser } = useUser();
+    const { currentUser, isPro } = useUser();
     const { unreadCount: newMessages } = useMessages();
     let current_hours = new Date().getHours();
     const dashboardUser = currentUser;
@@ -67,6 +67,11 @@ function Hero() {
             <div className="hero_text">
                 <h1 className="greetings">
                     {greetings}{userName && <>, <span className="greeting-name">{userName}</span></>}!
+                    {isPro && (
+                        <span className="hero-pro-watermark-pill" title="TalentForge Pro Member">
+                            <i className="bi bi-crown-fill"></i> Pro Member
+                        </span>
+                    )}
                 </h1>
                 <p>Find the right people, Build amazing things together</p>
                 <div className="hero_stats">

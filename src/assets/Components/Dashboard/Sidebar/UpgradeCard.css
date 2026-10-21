@@ -127,22 +127,12 @@
     transform: translateX(3px);
 }
 
-.coming-soon-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 5000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(20, 18, 38, 0.48);
-    backdrop-filter: blur(8px);
-    animation: fadeIn 0.2s ease;
-}
 
-.coming-soon-modal {
+.pricing-modal {
     position: relative;
-    width: min(440px, 100%);
+    width: min(900px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
     padding: 32px;
     border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 24px;
@@ -152,144 +142,176 @@
     animation: modalEnter 0.28s ease;
 }
 
-.coming-soon-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 34px;
-    height: 34px;
+@media (max-width: 1050px) {
+    .upgrade-card {
+        display: none;
+    }
+}
+
+.pricing-heading {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.pricing-heading h2 {
+    color: #19154b;
+    font-size: 28px;
+    margin: 0 0 10px;
+}
+
+.pricing-heading p {
+    color: #77749a;
+    font-size: 13px;
+}
+
+.pricing-plans {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.pricing-plan {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    padding: 24px;
     border: 1px solid #e8e6f2;
-    border-radius: 10px;
-    background: #ffffff;
-    color: #55516d;
-    font-size: 21px;
-    line-height: 1;
-    cursor: pointer;
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
+    border-radius: 16px;
+    background: #fff;
 }
 
-.coming-soon-close:hover {
-    background: #f4f1ff;
-    color: #5138ee;
+.pricing-plan-pro {
+    border: 2px solid #7952e8;
+    box-shadow: 0 8px 25px rgba(81, 56, 238, 0.12);
 }
 
-.coming-soon-icon {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 18px;
-    border-radius: 18px;
-    background: linear-gradient(135deg, #eeeaff, #ddd7ff);
-    color: #5138ee;
-    font-size: 27px;
-}
-
-.coming-soon-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 11px;
+.pricing-badge {
+    align-self: flex-start;
+    padding: 6px 10px;
     margin-bottom: 12px;
     border-radius: 20px;
     background: #eeebff;
     color: #5138ee;
     font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.7px;
 }
 
-.coming-soon-modal h2 {
-    margin: 0 0 10px;
-    color: #19154b;
-    font-size: 25px;
-    font-weight: 750;
-}
-
-.coming-soon-modal > p {
-    max-width: 350px;
-    margin: 0 auto 22px;
+.pricing-description {
     color: #77749a;
-    font-size: 13px;
-    line-height: 1.65;
+    font-size: 12px;
 }
 
-.coming-soon-features {
+.pricing-price {
+    margin: 16px 0 20px;
+}
+
+.pricing-price strong {
+    font-size: 30px;
+    color: #29215f;
+}
+
+.pricing-price span {
+    margin-left: 6px;
+    color: #77749a;
+    font-size: 12px;
+}
+
+.pricing-features {
     display: flex;
     flex-direction: column;
-    gap: 9px;
-    margin-bottom: 24px;
-    text-align: left;
+    gap: 12px;
+    padding: 0;
+    margin: 0 0 24px;
+    list-style: none;
 }
 
-.coming-soon-features div {
+.pricing-features li {
     display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 11px 13px;
-    border: 1px solid #eeeaf9;
-    border-radius: 11px;
-    background: #faf9ff;
+    align-items: flex-start;
+    gap: 9px;
     color: #4d4a68;
     font-size: 12px;
-    font-weight: 600;
+    line-height: 1.5;
 }
 
-.coming-soon-features i {
-    color: #5a43f0;
-    font-size: 15px;
+.pricing-features i {
+    color: #20a878;
 }
 
-.coming-soon-button {
+.pricing-button {
     width: 100%;
-    height: 42px;
+    margin-top: auto;
+    padding: 12px;
     border: none;
-    border-radius: 11px;
+    border-radius: 9px;
     background: linear-gradient(135deg, #5a43f0, #4931dc);
-    color: #ffffff;
-    font-size: 13px;
+    color: #fff;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(81, 56, 238, 0.2);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
-.coming-soon-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 11px 25px rgba(81, 56, 238, 0.28);
+.pricing-current {
+    background: #eceaf2;
+    color: #686274;
+    cursor: default;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+.pricing-footer {
+    margin: 22px 0 0;
+    color: #77749a;
+    font-size: 12px;
+    text-align: center;
 }
 
-@keyframes modalEnter {
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.97);
+@media (max-width: 650px) {
+    .pricing-modal {
+        padding: 42px 16px 20px;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+    .pricing-plans {
+        grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 1050px) {
-    .upgrade-card {
-        display: none;
-    }
+/* PRO ACTIVE CARD STATE */
+.upgrade-card.pro-active-card {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: radial-gradient(circle at 100% 0%, rgba(254, 240, 138, 0.25), transparent 50%),
+                linear-gradient(145deg, #fffdfa 0%, #fef8ee 100%);
+    box-shadow: 0 10px 28px rgba(245, 158, 11, 0.12);
+}
+
+.upgrade-icon.pro-active-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.28);
+}
+
+.pro-card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.pro-card-title-row h3 {
+    margin: 0;
+}
+
+.pro-active-tag {
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+    letter-spacing: 0.5px;
+}
+
+.upgrade-button.pro-manage-btn {
+    background: linear-gradient(135deg, #1e1456, #2d1c7a);
+    box-shadow: 0 4px 14px rgba(30, 20, 86, 0.25);
+}
+
+.upgrade-button.pro-manage-btn:hover {
+    background: linear-gradient(135deg, #2a1b7a, #3b269e);
 }

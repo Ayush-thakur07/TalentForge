@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext";
 import { useMessages } from "../../../../context/MessageContext";
 function HeaderActions() {
-    const { currentUser: user, setCurrentUser } = useUser();
+    const { currentUser: user, setCurrentUser, isPro } = useUser();
     const[profileOpen,setProfileOpen]=useState(false);
     const navigate=useNavigate();
     function toggleProfile()
@@ -70,13 +70,21 @@ function HeaderActions() {
         <i className="bi bi-person-circle"></i>
     )}
             <span className="user_name">{user?.name || "User"}</span>
+            {isPro && (
+                <span className="header-pro-watermark" title="TalentForge Pro Member">
+                    <i className="bi bi-crown-fill"></i> Pro Member
+                </span>
+            )}
             <i className="bi bi-chevron-compact-down"></i>
             </button>
             {profileOpen && (<div className="profile-dropdown">
                 <div className="head">
                     {user?.avatar ? <img src={user.avatar} alt="Profile"/> : <i className="bi bi-person-circle"></i>}
-                    <h1>{user?.name || "User"}</h1>
-                    <p>{user?.email}</p>
+                    <h1>
+                        {user?.name || "User"}
+                        {isPro && <span className="dropdown-pro-badge"><i className="bi bi-crown-fill"></i> PRO</span>}
+                    </h1>
+                    <p>{isPro ? `👑 Pro Member • ${user?.email}` : user?.email}</p>
                 </div>
                     <div className="buttons_profile">
                         <button onClick={() => navigate("/profile")}><i className="bi bi-person"></i>View Profile</button>

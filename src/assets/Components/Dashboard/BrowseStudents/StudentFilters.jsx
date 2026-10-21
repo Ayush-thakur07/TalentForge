@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useUser } from "../../../../context/UserContext";
 
 const availabilityOptions = [
     { label: "Open", value: "open" },
@@ -7,6 +8,7 @@ const availabilityOptions = [
 ];
 
 function StudentFilters({ students, onFilterChange }) {
+    const { isPro, openUpgradeModal } = useUser();
     const [selectedSkill, setSelectedSkill] = useState("");
     const [selectedField, setSelectedField] = useState("");
     const [selectedYear, setSelectedYear] = useState("");
@@ -38,19 +40,38 @@ function StudentFilters({ students, onFilterChange }) {
         onFilterChange({ skill, field: selectedField, year: selectedYear, availability: selectedAvailability });
     }
 
+    const interceptProFilter = (e, featureName) => {
+        if (!isPro) {
+            e.preventDefault();
+            openUpgradeModal(featureName);
+        }
+    };
+
     function handleFieldChange(event) {
+        if (!isPro) {
+            openUpgradeModal("Advanced Filters (Field)");
+            return;
+        }
         const field = event.target.value;
         setSelectedField(field);
         onFilterChange({ skill: selectedSkill, field, year: selectedYear, availability: selectedAvailability });
     }
 
     function handleYearChange(event) {
+        if (!isPro) {
+            openUpgradeModal("Advanced Filters (Year)");
+            return;
+        }
         const year = event.target.value;
         setSelectedYear(year);
         onFilterChange({ skill: selectedSkill, field: selectedField, year, availability: selectedAvailability });
     }
 
     function handleAvailabilityChange(event) {
+        if (!isPro) {
+            openUpgradeModal("Advanced Filters (Availability)");
+            return;
+        }
         const availability = event.target.value;
         setSelectedAvailability(availability);
         onFilterChange({ skill: selectedSkill, field: selectedField, year: selectedYear, availability });
@@ -75,13 +96,26 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
-                <label htmlFor="field-filter">Field</label>
+                <label htmlFor="field-filter">
+                    Field
+                    {!isPro && (
+                        <span
+                            className="filter-pro-pill"
+                            onClick={() => openUpgradeModal("Advanced Filters (Field)")}
+                            title="Pro Feature: Advanced Filter"
+                        >
+                            <i className="bi bi-lock-fill"></i> PRO
+                        </span>
+                    )}
+                </label>
                 <select
                     id="field-filter"
                     value={selectedField}
+                    onMouseDown={(e) => interceptProFilter(e, "Advanced Filters (Field)")}
                     onChange={handleFieldChange}
+                    className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Fields</option>
+                    <option value="">All Fields {!isPro ? "(Pro)" : ""}</option>
                     {allFields.map((field) => (
                         <option key={field} value={field}>
                             {field}
@@ -91,13 +125,26 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
-                <label htmlFor="year-filter">Year</label>
+                <label htmlFor="year-filter">
+                    Year
+                    {!isPro && (
+                        <span
+                            className="filter-pro-pill"
+                            onClick={() => openUpgradeModal("Advanced Filters (Year)")}
+                            title="Pro Feature: Advanced Filter"
+                        >
+                            <i className="bi bi-lock-fill"></i> PRO
+                        </span>
+                    )}
+                </label>
                 <select
                     id="year-filter"
                     value={selectedYear}
+                    onMouseDown={(e) => interceptProFilter(e, "Advanced Filters (Year)")}
                     onChange={handleYearChange}
+                    className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Years</option>
+                    <option value="">All Years {!isPro ? "(Pro)" : ""}</option>
                     {allYears.map((year) => (
                         <option key={year} value={year}>
                             {year}
@@ -107,13 +154,26 @@ function StudentFilters({ students, onFilterChange }) {
             </div>
 
             <div className="filter-group">
-                <label htmlFor="availability-filter">Availability</label>
+                <label htmlFor="availability-filter">
+                    Availability
+                    {!isPro && (
+                        <span
+                            className="filter-pro-pill"
+                            onClick={() => openUpgradeModal("Advanced Filters (Availability)")}
+                            title="Pro Feature: Advanced Filter"
+                        >
+                            <i className="bi bi-lock-fill"></i> PRO
+                        </span>
+                    )}
+                </label>
                 <select
                     id="availability-filter"
                     value={selectedAvailability}
+                    onMouseDown={(e) => interceptProFilter(e, "Advanced Filters (Availability)")}
                     onChange={handleAvailabilityChange}
+                    className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Availability</option>
+                    <option value="">All Availability {!isPro ? "(Pro)" : ""}</option>
                     {availabilityOptions.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}
