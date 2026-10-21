@@ -58,6 +58,13 @@ function SidebarNavigation() {
             />
 
             <SidebarItem
+                label="Collaboration Planner"
+                href="/schedule"
+                icon="bi bi-calendar3"
+                active={currentPath === "/schedule"}
+            />
+
+            <SidebarItem
                 label="Saved"
                 href="/saved"
                 icon="bi bi-bookmark"

@@ -1,4 +1,5 @@
 import "./ProfileHeader.css";
+import { useUser } from "../../../context/UserContext";
 
 function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatarChange }) {
     function handleCoverChange(e) {
@@ -119,6 +120,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
         e.target.value = "";
     }
 
+    const { isPro, openUpgradeModal } = useUser();
     const currentCover = profile?.coverImage || user?.coverImage;
     const currentAvatar = profile?.avatar || user?.avatar || profile?.profileImage || user?.profileImage;
 
@@ -129,6 +131,12 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                     <img src={currentCover} alt="Profile cover" />
                 ) : (
                     <div className="profile-cover-placeholder"></div>
+                )}
+
+                {isPro && (
+                    <div className="cover-pro-watermark" title="TalentForge Pro Member">
+                        <i className="bi bi-crown-fill"></i> PRO MEMBER
+                    </div>
                 )}
 
                 <label className="profile-cover-edit">
@@ -167,9 +175,15 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                     <div className="profile-name">
                         <h1>{user?.name || "Your Name"}</h1>
 
-                        {profile.isVerified && (
-                            <span className="verified-badge">
+                        {(profile.isVerified || isPro) && (
+                            <span className="verified-badge" title="Verified TalentForge Member">
                                 <i className="bi bi-patch-check-fill"></i>
+                            </span>
+                        )}
+
+                        {isPro && (
+                            <span className="profile-pro-watermark" title="TalentForge Pro Member">
+                                <i className="bi bi-crown-fill"></i> Pro Member
                             </span>
                         )}
                     </div>
@@ -197,6 +211,12 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                             <span>
                                 <i className="bi bi-geo-alt"></i>
                                 {profile.location}
+                            </span>
+                        )}
+
+                        {isPro && (
+                            <span className="pro-meta-tag">
+                                <i className="bi bi-stars"></i> Pro Member
                             </span>
                         )}
                     </div>
@@ -233,6 +253,27 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                         </button>
                     ) : (
                         <>
+                            <button
+                                type="button"
+                                className="profile-action-button secondary pro-feature-button"
+                                onClick={() => {
+                                    if (!isPro) {
+                                        openUpgradeModal("Portfolio Export (PDF & Link)");
+                                    } else {
+                                        window.print();
+                                    }
+                                }}
+                                title={isPro ? "Export profile as PDF" : "Pro Feature: Export Portfolio"}
+                            >
+                                <i className="bi bi-file-earmark-pdf"></i>
+                                Export Portfolio
+                                {!isPro && (
+                                    <span className="pro-lock-badge">
+                                        <i className="bi bi-lock-fill"></i> PRO
+                                    </span>
+                                )}
+                            </button>
+
                             <button className="profile-action-button secondary">
                                 <i className="bi bi-share"></i>
                                 Share Profile

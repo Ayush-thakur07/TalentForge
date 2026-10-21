@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useUser } from "../../../../context/UserContext";
 import "./BrowseStudents.css";
 
 function getMatchColor(score) {
@@ -7,9 +9,81 @@ function getMatchColor(score) {
     return { background: "#fee2e2", color: "#991b1b" };
 }
 
+function getConnectionStorageKey(user) {
+    const userKey = user?.uid || user?.id || user?.email;
+    return userKey ? `talentforge_connection_requests_${encodeURIComponent(userKey)}` : null;
+}
+
+function getWeekStart() {
+    const date = new Date();
+    const daysSinceMonday = (date.getUTCDay() + 6) % 7;
+    date.setUTCDate(date.getUTCDate() - daysSinceMonday);
+    return date.toISOString().slice(0, 10);
+}
+
+function readConnections(storageKey) {
+    if (!storageKey) return { connectedIds: [], weekStart: "", weeklyIds: [] };
+    try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        return {
+            connectedIds: Array.isArray(stored.connectedIds) ? stored.connectedIds : [],
+            weekStart: typeof stored.weekStart === "string" ? stored.weekStart : "",
+            weeklyIds: Array.isArray(stored.weeklyIds) ? stored.weeklyIds : []
+        };
+    } catch {
+        return { connectedIds: [], weekStart: "", weeklyIds: [] };
+    }
+}
+
 function StudentCard({ student, matchScore }) {
+    const { currentUser, isPro, openUpgradeModal } = useUser();
+    const connectionStorageKey = getConnectionStorageKey(currentUser);
     const formattedScore = typeof matchScore === "number" ? `${matchScore}% Profile Match` : null;
     const matchColor = typeof matchScore === "number" ? getMatchColor(matchScore) : null;
+
+    const [isConnected, setIsConnected] = useState(() => {
+        return readConnections(connectionStorageKey).connectedIds.includes(student.id);
+    });
+
+    const handleConnect = () => {
+        if (isConnected) return;
+
+        const connections = readConnections(connectionStorageKey);
+        if (connections.connectedIds.includes(student.id)) {
+            setIsConnected(true);
+            return;
+        }
+
+        const weekStart = getWeekStart();
+        const weeklyIds = connections.weekStart === weekStart ? connections.weeklyIds : [];
+
+        // Restriction: Free users have a 5 connections limit per week
+        if (!isPro && weeklyIds.length >= 5) {
+            openUpgradeModal("Unlimited Connect Requests (Weekly Free limit of 5 reached)");
+            return;
+        }
+
+        const updated = {
+            connectedIds: [...connections.connectedIds, student.id],
+            weekStart,
+            weeklyIds: [...weeklyIds, student.id]
+        };
+        try {
+            localStorage.setItem(connectionStorageKey, JSON.stringify(updated));
+        } catch (error) {
+            console.error("Failed to save connection request:", error);
+            window.alert("Your connection request couldn't be saved. Please try again.");
+            return;
+        }
+        setIsConnected(true);
+
+        const freeRemaining = 5 - updated.weeklyIds.length;
+        if (!isPro) {
+            window.alert(`Connection request sent to ${student.name}! (${freeRemaining >= 0 ? freeRemaining : 0} free requests remaining this week)`);
+        } else {
+            window.alert(`Connection request sent to ${student.name}! (Unlimited Pro Member)`);
+        }
+    };
 
     return (
         <div className="student-card">
@@ -73,8 +147,13 @@ function StudentCard({ student, matchScore }) {
 
             <div className="student-card-footer">
                 <button className="btn-outline">View Profile</button>
-                <button className="btn-icon" aria-label="Connect">
-                    <i className="bi bi-person-plus"></i>
+                <button
+                    className={`btn-icon ${isConnected ? "connected" : ""}`}
+                    aria-label={isConnected ? "Connected" : "Connect"}
+                    title={isConnected ? "Connection Request Sent" : isPro ? "Connect (Unlimited Pro)" : "Connect (Free: 5/week)"}
+                    onClick={handleConnect}
+                >
+                    <i className={isConnected ? "bi bi-check-lg" : "bi bi-person-plus"}></i>
                 </button>
             </div>
         </div>

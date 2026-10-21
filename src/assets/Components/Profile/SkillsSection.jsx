@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useUser } from "../../../context/UserContext";
 import "./SkillsSection.css";
 
 function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
+    const { isPro } = useUser();
     const [skillInput, setSkillInput] = useState("");
 
     function handleSubmit(e) {
@@ -21,8 +23,10 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
         <section className="skills-section">
             <div className="skills-section-header">
                 <div>
-                    <h2>Skills</h2>
-                    <p>Showcase what you can do</p>
+                    <h2>
+                        Skills {isPro && <span className="pro-skills-badge"><i className="bi bi-patch-check-fill"></i> Verified Showcase</span>}
+                    </h2>
+                    <p>{isPro ? "Skills validated by mentor reviews & project evaluations" : "Showcase what you can do"}</p>
                 </div>
                 <div className="skills-section-icon">
                     <i className="bi bi-lightning-charge-fill"></i>
@@ -45,8 +49,14 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
             <div className="skills-list">
                 {skills.length > 0 ? (
                     skills.map((skill, index) => (
-                        <div className="skill-item" key={`${skill}-${index}`}>
+                        <div className={`skill-item ${isPro ? "verified-pro-skill" : ""}`} key={`${skill}-${index}`}>
+                            {isPro && (
+                                <span className="skill-verified-icon" title="Verified Skill (Pro Member)">
+                                    <i className="bi bi-patch-check-fill"></i>
+                                </span>
+                            )}
                             <span>{skill}</span>
+                            {isPro && <span className="verified-mentor-tag">Verified</span>}
                             <button
                                 type="button"
                                 onClick={() => onRemoveSkill(skill)}
@@ -58,8 +68,7 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
                 ) : (
                     <div className="skills-empty">
                         <i className="bi bi-lightning"></i>
-                        <h3>No skills added yet</h3>
-                        <p>Add your skills to help other students discover you.</p>
+                        <p>No skills added yet.</p>
                     </div>
                 )}
             </div>

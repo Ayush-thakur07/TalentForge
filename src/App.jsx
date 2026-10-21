@@ -1,3 +1,5 @@
+import ManagePlan from './assets/Components/Dashboard/Subscription/ManagePlan';
+import PaymentUpgradeModal from './assets/Components/Dashboard/Subscription/PaymentUpgradeModal';
 import Profile from './assets/Components/Profile/Profile';
 import Dashboard from './assets/Components/Dashboard/Dashboard';
 import './App.css';
@@ -21,6 +23,7 @@ import { ApplicationProvider } from './context/ApplicationContext';
 
 import SearchPage from './assets/Components/Dashboard/Search/SearchPage';
 import Saved from './assets/Components/Saved/Saved';
+import CollaborationPlanner from './assets/Components/Dashboard/CollaborationPlanner/CollaborationPlanner';
 
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
@@ -63,7 +66,6 @@ function ProtectedRoute({ children }) {
   return <Navigate to="/login" replace />;
 }
 
-
 function AppRoutes() {
 
   return (
@@ -71,7 +73,20 @@ function AppRoutes() {
 
       <ApplicationProvider>
 
+        <PaymentUpgradeModal />
+
         <Routes>
+          {/* Manage Plan */}
+          <Route
+            path="/manage-plan"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <ManagePlan />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
 
           {/* Login */}
           <Route
@@ -155,6 +170,18 @@ function AppRoutes() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <SearchPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Collaboration Planner */}
+          <Route
+            path="/schedule"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <CollaborationPlanner />
                 </DashboardLayout>
               </ProtectedRoute>
             }
