@@ -30,6 +30,7 @@ import ResumeBuilder from './assets/Components/Dashboard/ResumeBuilder/ResumeBui
 
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
+import ThemeProvider from './context/ThemeContext';
 
 
 function ProtectedRoute({ children }) {
@@ -220,19 +221,21 @@ function AppRoutes() {
 function App() {
 
   return (
-    <UserProvider>
+    <ThemeProvider>
+      <UserProvider>
 
-      <NotificationProvider>
+        <NotificationProvider>
 
-        <MessageProvider>
+          <MessageProvider>
 
-          <AppRoutes />
+            <AppRoutes />
 
-        </MessageProvider>
+          </MessageProvider>
 
-      </NotificationProvider>
+        </NotificationProvider>
 
-    </UserProvider>
+      </UserProvider>
+    </ThemeProvider>
   );
 }
 

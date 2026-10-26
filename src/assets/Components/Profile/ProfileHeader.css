@@ -1,10 +1,10 @@
 .profile-header {
     width: 100%;
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(74, 58, 120, 0.08);
-    border: 1px solid #eeeaf5;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 1px solid var(--border);
 }
 
 
@@ -63,9 +63,9 @@
     position: relative;
     z-index: 5;
     border-radius: 50%;
-    border: 6px solid #ffffff;
-    background: #ffffff;
-    box-shadow: 0 5px 18px rgba(48, 38, 80, 0.16);
+    border: 6px solid var(--surface);
+    background: var(--surface);
+    box-shadow: 0 5px 18px var(--shadow);
     overflow: hidden;
 }
 
@@ -103,7 +103,7 @@
 
 .profile-name h1 {
     margin: 0;
-    color: #29243a;
+    color: var(--text-primary);
     font-size: 29px;
     line-height: 1.2;
     font-weight: 700;
@@ -121,7 +121,7 @@
 
 .profile-role {
     margin: 0 0 11px;
-    color: #665e78;
+    color: var(--text-secondary);
     font-size: 15px;
     font-weight: 500;
 }
@@ -139,24 +139,23 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: #777083;
+    color: var(--text-muted);
     font-size: 13px;
 }
 
 .profile-meta i {
-    color: #8066d9;
+    color: var(--brand);
     font-size: 14px;
 }
 
 
 .profile-headline {
     margin: 0 0 12px;
-    color: #4c465c;
+    color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.6;
     font-weight: 500;
 }
-
 
 .profile-about {
     max-width: 760px;
@@ -164,11 +163,10 @@
 
 .profile-about p {
     margin: 0;
-    color: #777083;
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.65;
 }
-
 
 .profile-tags {
     display: flex;
@@ -180,9 +178,9 @@
 .profile-tags span {
     padding: 6px 12px;
     border-radius: 20px;
-    background: #f1edff;
-    color: #7156c8;
-    border: 1px solid #e4ddfb;
+    background: var(--brand-soft);
+    color: var(--brand);
+    border: 1px solid var(--border);
     font-size: 12px;
     font-weight: 600;
 }

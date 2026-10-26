@@ -9,10 +9,10 @@
 .about-card {
     width: 100%;
     padding: 24px;
-    background: #ffffff;
-    border: 1px solid #eeeaf5;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+    box-shadow: 0 4px 18px var(--shadow);
 }
 
 .about-card-header {
@@ -25,14 +25,14 @@
 
 .about-card-header h2 {
     margin: 0 0 5px;
-    color: #2d283c;
+    color: var(--text-primary);
     font-size: 18px;
     font-weight: 700;
 }
 
 .about-card-header p {
     margin: 0;
-    color: #8a8495;
+    color: var(--text-muted);
     font-size: 12px;
 }
 
@@ -44,14 +44,14 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background: #f1edff;
-    color: #7658d7;
+    background: var(--brand-soft);
+    color: var(--brand);
     font-size: 16px;
 }
 
 .about-content p {
     margin: 0;
-    color: #696273;
+    color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.8;
 }
@@ -64,20 +64,20 @@
     justify-content: center;
     gap: 7px;
     padding: 15px;
-    border: 1px dashed #ddd6ee;
+    border: 1px dashed var(--border-strong);
     border-radius: 10px;
-    background: #faf9fd;
+    background: var(--surface-alt);
     text-align: center;
 }
 
 .empty-profile-content i {
-    color: #8a72d3;
+    color: var(--brand);
     font-size: 20px;
 }
 
 .empty-profile-content p {
     margin: 0;
-    color: #938d9e;
+    color: var(--text-muted);
     font-size: 12px;
     line-height: 1.5;
 }
@@ -98,9 +98,9 @@
 .about-list > span {
     padding: 8px 13px;
     border-radius: 20px;
-    background: #f2eeff;
-    border: 1px solid #e4dcfa;
-    color: #7055c6;
+    background: var(--brand-soft);
+    border: 1px solid var(--border);
+    color: var(--brand);
     font-size: 12px;
     font-weight: 600;
 }
