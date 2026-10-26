@@ -4,6 +4,7 @@ function SidebarItem({ label, href, icon, active, badge }) {
     return (
         <Link
             to={href}
+            reloadDocument={href === "/projects"}
             className={active ? "sidebar-item active" : "sidebar-item"}
         >
             <i className={icon}></i>

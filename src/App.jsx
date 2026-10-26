@@ -3,7 +3,9 @@ import PaymentUpgradeModal from './assets/Components/Dashboard/Subscription/Paym
 import Profile from './assets/Components/Profile/Profile';
 import Dashboard from './assets/Components/Dashboard/Dashboard';
 import './App.css';
-
+import LandingPage from './pages/LandingPage';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import BrowseStudents from './assets/Components/Dashboard/BrowseStudents/BrowseStudents';
 import NotificationsPage from './assets/Components/Dashboard/Notifications/NotificationsPage';
 import Login from './assets/Components/Authentication/Login/Login';
@@ -92,9 +94,15 @@ function AppRoutes() {
 
           {/* Login */}
           <Route
-            path="/"
-            element={<Login />}
-          />
+  path="/"
+  element={
+    <>
+      <Header />
+      <LandingPage />
+      <Footer />
+    </>
+  }
+/>
 
           <Route
             path="/login"

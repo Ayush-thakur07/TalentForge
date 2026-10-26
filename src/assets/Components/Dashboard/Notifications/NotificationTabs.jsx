@@ -1,9 +1,26 @@
+
 function NotificationTabs({ activeTab, setActiveTab, counts }) {
     const tabs = [
         { id: 'all', label: 'All', icon: 'bi-grid', count: counts.all },
         { id: 'unread', label: 'Unread', icon: 'bi-bell', count: counts.unread },
-        { id: 'applications', label: 'Applications', icon: 'bi-person-badge', count: counts.applications },
-        { id: 'connections', label: 'Connections', icon: 'bi-people', count: counts.connections },
+        {
+            id: 'applications',
+            label: 'Applications',
+            icon: 'bi-person-badge',
+            count: counts.applications,
+        },
+        {
+            id: 'connections',
+            label: 'Connections',
+            icon: 'bi-people',
+            count: counts.connections,
+        },
+        {
+            id: 'posts',
+            label: 'Posts',
+            icon: 'bi-chat-square-text',
+            count: counts.posts,
+        },
     ];
 
     return (
@@ -16,7 +33,9 @@ function NotificationTabs({ activeTab, setActiveTab, counts }) {
                 >
                     <i className={`bi ${tab.icon}`}></i>
                     <span>{tab.label}</span>
-                    {tab.count > 0 && <span className="tab-count">{tab.count}</span>}
+                    {tab.count > 0 && (
+                        <span className="tab-count">{tab.count}</span>
+                    )}
                 </button>
             ))}
         </div>

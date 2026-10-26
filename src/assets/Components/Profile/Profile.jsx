@@ -49,7 +49,7 @@ function Profile() {
                 ...defaultProfile,
                 ...JSON.parse(savedProfile)
             };
-        } catch (error) {
+        } catch  {
             return defaultProfile;
         }
     });
@@ -63,7 +63,7 @@ function Profile() {
 
         try {
             return JSON.parse(savedProjects);
-        } catch (error) {
+        } catch {
             return [];
         }
     });
@@ -77,7 +77,7 @@ function Profile() {
 
         try {
             return JSON.parse(savedEducation);
-        } catch (error) {
+        } catch  {
             return [];
         }
     });
@@ -91,7 +91,7 @@ function Profile() {
 
         try {
             return JSON.parse(savedExperiences);
-        } catch (error) {
+        } catch  {
             return [];
         }
     });
@@ -106,7 +106,7 @@ function Profile() {
 
     try {
         return JSON.parse(savedConnections);
-    } catch (error) {
+    } catch  {
         return [];
     }
 });
@@ -127,7 +127,7 @@ const [posts, setPosts] = useState(() => {
 
     try {
         return JSON.parse(savedPosts);
-    } catch (error) {
+    } catch  {
         return [];
     }
 });
@@ -183,11 +183,13 @@ useEffect(() => {
     }, [experiences, experiencesStorageKey]);
 
     useEffect(() => {
-        if (isEditing) {
-            setSkillsInput(profile.skills.join(", "));
-            setInterestsInput(profile.interests.join(", "));
-        }
-    }, [isEditing, profile.skills, profile.interests]);
+  if (!isEditing) return;
+
+  queueMicrotask(() => {
+    setSkillsInput(profile.skills.join(", "));
+    setInterestsInput(profile.interests.join(", "));
+  });
+}, [isEditing, profile.skills, profile.interests]);
 
     function handleEdit() {
         setIsEditing(prev => !prev);

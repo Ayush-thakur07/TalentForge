@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 import { auth } from "../../../../config/firebase";
 import "./Signup.css";
 import { useUser } from "../../../../context/UserContext";
@@ -47,15 +51,26 @@ function SignupForm() {
     try {
       setLoading(true);
 
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        cleanEmail,
-        password
-      );
+      
+const result = await createUserWithEmailAndPassword(
+  auth,
+  cleanEmail,
+  password
+);
 
-      setCurrentUser(result.user);
+await sendEmailVerification(result.user);
 
-      navigate("/dashboard", { replace: true });
+setCurrentUser(null);
+await signOut(auth);
+
+navigate("/login", {
+  replace: true,
+  state: {
+    message:
+      "Account created! Check your college inbox and click the verification link before logging in.",
+  },
+});
+
     } catch (err) {
       const code = err?.code || "";
       if (code.includes("email-already-in-use")) {
@@ -100,7 +115,7 @@ function SignupForm() {
           setError("");
         }}
         required
-        pattern="[A-Za-z0-9._%+-]+@chitkara\.edu\.in"
+        pattern="[A-Za-z0-9._%+-]+@chitkara[.]edu[.]in"
       />
       {emailError && (
         <div className="signup-error" role="alert">

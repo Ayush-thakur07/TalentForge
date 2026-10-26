@@ -10,14 +10,23 @@ function NotificationsPage() {
     const [activeTab, setActiveTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
-    const counts = useMemo(() => {
-        return {
-            all: notifications.length,
-            unread: notifications.filter(n => !n.read).length,
-            applications: notifications.filter(n => n.type === 'applications' && !n.read).length,
-            connections: notifications.filter(n => n.type === 'connections' && !n.read).length,
-        };
-    }, [notifications]);
+    
+const counts = useMemo(() => {
+    return {
+        all: notifications.length,
+        unread: notifications.filter((n) => !n.read).length,
+        applications: notifications.filter(
+            (n) => n.type === 'applications' && !n.read
+        ).length,
+        connections: notifications.filter(
+            (n) => n.type === 'connections' && !n.read
+        ).length,
+        posts: notifications.filter(
+            (n) => n.type === 'posts' && !n.read
+        ).length,
+    };
+}, [notifications]);
+
 
     const filteredNotifications = useMemo(() => {
         return notifications.filter(item => {

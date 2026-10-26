@@ -1,10 +1,9 @@
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Your existing Firebase configuration
 const firebaseConfig = {
   apiKey: "REMOVED_FIREBASE_API_KEY",
   authDomain: "talentforge-7b691.firebaseapp.com",
@@ -12,10 +11,16 @@ const firebaseConfig = {
   storageBucket: "talentforge-7b691.firebasestorage.app",
   messagingSenderId: "668199496849",
   appId: "1:668199496849:web:96039336e4ddacb0bfa330",
-  measurementId: "G-5EN86NB4GZ"
+  measurementId: "G-5EN86NB4GZ",
 };
 
-// Initialize Firebase
+// Initialize Firebase once
 const app = initializeApp(firebaseConfig);
-const auth=getAuth(app);
-export {auth};
+
+// Existing authentication
+const auth = getAuth(app);
+
+// Shared database
+const db = getFirestore(app);
+
+export { auth, db };

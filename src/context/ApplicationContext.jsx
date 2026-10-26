@@ -133,7 +133,7 @@ export function ApplicationProvider({ children }) {
         </ApplicationStore>
     );
 }
-
+// eslint-disable-next-line react-refresh/only-export-components
 export function useApplications() {
     const context = useContext(ApplicationContext);
     if (!context) throw new Error("useApplications must be used within an ApplicationProvider");

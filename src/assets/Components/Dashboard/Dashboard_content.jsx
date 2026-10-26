@@ -1,5 +1,11 @@
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  removePost as removePostFromStore,
+} from "../../../features/posts/postsSlice";
+import { removePost } from "../../../services/postsService";
 import { studentData } from "./BrowseStudents/studentData";
-import { getRecommendedStudents, getTrendingSkills, normalizePosts } from "./recommendationUtils";
+import { getRecommendedStudents, getTrendingSkills } from "./recommendationUtils";
 import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
@@ -7,28 +13,15 @@ import { useUser } from "../../../context/UserContext";
 import "./Dashboard_content.css";
 
 function DashboardContent() {
-    const navigate = useNavigate();
-    const { currentUser } = useUser();
-    const [posts, setPosts] = useState([]);
-    const [postToDelete, setPostToDelete] = useState(null);
-    useEffect(() => {
-    const loadPosts = () => {
-    try {
+    
+const navigate = useNavigate();
+const { currentUser } = useUser();
+const dispatch = useDispatch();
 
-        const storedPosts = JSON.parse(localStorage.getItem("talentforge_posts") || "[]");
-        setPosts(normalizePosts(storedPosts));
-    } catch {
-        setPosts([]);
-    }
-};
-    loadPosts();
-    window.addEventListener("postsUpdated", loadPosts);
-    window.addEventListener("storage", loadPosts);
-    return () => {
-        window.removeEventListener("postsUpdated", loadPosts);
-        window.removeEventListener("storage", loadPosts);
-    };
-}, []);
+const posts = useSelector((state) => state.posts.items);
+
+    const [postToDelete, setPostToDelete] = useState(null);
+
 
     const [upvoteCounts, setUpvoteCounts] = useState(() => {
         const stored = localStorage.getItem("talentforge_upvotes");
@@ -83,22 +76,32 @@ function DashboardContent() {
         setPostToDelete(postId);
     };
 
-    const confirmDelete = () => {
-        const postId = postToDelete;
-        if (postId === null) return;
+    
+const confirmDelete = async () => {
+  const postId = postToDelete;
+  if (postId === null) return;
 
-        const updatedPosts = posts.filter((p) => p.id !== postId);
-        setPosts(updatedPosts);
-        localStorage.setItem("talentforge_posts", JSON.stringify(updatedPosts));
+  try {
+    await removePost(postId);
 
-        const updatedCounts = { ...upvoteCounts };
-        delete updatedCounts[postId];
-        setUpvoteCounts(updatedCounts);
-        saveUpvotes(updatedCounts, likedPosts);
+    dispatch(removePostFromStore(postId));
 
-        window.dispatchEvent(new Event("postsUpdated"));
-        setPostToDelete(null);
-    };
+    const updatedCounts = { ...upvoteCounts };
+    delete updatedCounts[postId];
+    setUpvoteCounts(updatedCounts);
+
+    const updatedLiked = new Set(likedPosts);
+    updatedLiked.delete(postId);
+    setLikedPosts(updatedLiked);
+
+    saveUpvotes(updatedCounts, updatedLiked);
+    setPostToDelete(null);
+  } catch (error) {
+    console.error("Failed to delete post:", error);
+    alert(error.message || "Could not delete the post. Please try again.");
+  }
+};
+
 
     const cancelDelete = () => {
         setPostToDelete(null);
