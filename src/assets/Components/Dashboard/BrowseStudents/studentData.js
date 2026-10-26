@@ -7,6 +7,7 @@ export const studentData = [
     college: "IIT Hyderabad",
     major: "Computer Science",
     year: "2nd Year",
+    
     skills: ["React", "Node.js", "JavaScript", "SQL", "Docker"],
     interests: ["Web Development", "Open Source", "Hackathons"],
     lookingFor: "Frontend collaborators and hackathon teammates",

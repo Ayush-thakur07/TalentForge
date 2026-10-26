@@ -6,7 +6,7 @@ function SignupBrand() {
 
             <div className="bg_image">
                 <img
-                    src="/signup-image.png"
+                    src={`${import.meta.env.BASE_URL}signup-image.png`}
                     alt=""
                     className="back_image"
                 />
@@ -14,7 +14,7 @@ function SignupBrand() {
 
             <div className="header_logo">
                 <img
-                    src="/favicon.svg"
+                    src={`${import.meta.env.BASE_URL}favicon.svg`}
                     alt="TalentForge logo"
                     className="signup_logo"
                 />

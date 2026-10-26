@@ -1,13 +1,12 @@
 import {
-    GoogleAuthProvider,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    setPersistence,
-    signOut,
-    browserLocalPersistence,
-    browserSessionPersistence
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  setPersistence,
+  signOut,
+  browserLocalPersistence,
+  browserSessionPersistence,
 } from "firebase/auth";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -66,50 +65,47 @@ function Login() {
         }
     }
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+    
+async function handleSubmit(event) {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
 
-        const formData = new FormData(event.currentTarget);
-        const email = formData.get("email");
-        const password = formData.get("password");
+  if (loading) return;
 
-        if (loading) {
-            return;
-        }
-        
-        try {
-            setLoading(true);
-            await applyPersistence();
-            const result = await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-            const user = result.user;
-            setCurrentUser(user);
-            window.alert("Successfully logged in");
-            navigate("/dashboard", { replace: true });
-        }
-        catch (error) {
-            const code = error?.code || "";
+  try {
+    setLoading(true);
+    await applyPersistence();
 
-            if (
-                code.includes("user-not-found") ||
-                code.includes("wrong-password") ||
-                code.includes("invalid-credential")
-            ) {
-                window.alert("Invalid email or password.");
-            } else if (code.includes("operation-not-allowed")) {
-                window.alert("Firebase login is disabled.");
-            } else {
-                console.log(error);
-                window.alert(error.message);
-            }
-        }
-        finally {
-            setLoading(false);
-        }
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+    if (!user.email?.toLowerCase().endsWith("@chitkara.edu.in")) {
+      await signOut(auth);
+      setCurrentUser(null);
+      window.alert("Please use your Chitkara University student email.");
+      return;
     }
+    setCurrentUser(user);
+    navigate("/dashboard", { replace: true });
+  } catch (error) {
+    const code = error?.code || "";
+
+    if (
+      code.includes("user-not-found") ||
+      code.includes("wrong-password") ||
+      code.includes("invalid-credential")
+    ) {
+      window.alert("Invalid email or password.");
+    } else {
+      console.error("Login failed:", error);
+      window.alert(error.message || "Login failed. Please try again.");
+    }
+  } finally {
+    setLoading(false);
+  }
+}
+
 
     return (
         <div className="data">
@@ -150,9 +146,9 @@ function Login() {
 
             <div className="login-box">
                 <div className="head">
-                    <h1>Welcome Back!</h1>
-                    <p><b>Login to continue to TalentForge</b></p>
-                </div>
+    <h1>Welcome Back!</h1>
+    <p><b>Login to continue to TalentForge</b></p>
+</div>
 
                 <div className="input">
                     <form className="form-sign" onSubmit={handleSubmit}>
@@ -163,7 +159,7 @@ function Login() {
                             type="email"
                             placeholder="Enter your college email"
                             required
-                            pattern="[A-Za-z0-9._%+-]+@chitkara\.edu\.in"
+                            pattern="[A-Za-z0-9._%+-]+@chitkara[.]edu[.]in"
                         />
 
                         <div>

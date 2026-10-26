@@ -45,10 +45,17 @@ function BrowseStudents() {
     const [sort, setSort] = useState("default");
 
     useEffect(() => {
-        if (location.state?.search) {
-            setFilters((currentFilters) => ({ ...currentFilters, search: location.state.search }));
-        }
-    }, [location.state]);
+  const search = location.state?.search;
+
+  if (search) {
+    queueMicrotask(() => {
+      setFilters((currentFilters) => ({
+        ...currentFilters,
+        search,
+      }));
+    });
+  }
+}, [location.state]);
 
     const filteredStudents = useMemo(() => {
         return allStudents.filter((student) => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { extractRequiredSkills } from "../recommendationUtils";
 import "./PostModal.css";
 import { useUser } from "../../../../context/UserContext";
-
+import { createPost } from "../../../../services/postsService";
 function PostModal({ onClose }) {
     const { currentUser } = useUser();
     const [selecteddiv, setSeleectedDiv] = useState("shareProject");
@@ -87,39 +87,30 @@ function PostModal({ onClose }) {
             [id]: value
         }));
     };
-    const savePost = (postData) => {
-        const existingPosts =
-            JSON.parse(localStorage.getItem("talentforge_posts")) || [];
-
+   
+const savePost = async (postData) => {
+    try {
         const newPost = {
-            id: Date.now(),
             ...postData,
             detectedSkills: extractRequiredSkills(postData),
             author: {
-                id: currentUser?.id || currentUser?.uid || "",
-                name: currentUser?.name || "TalentForge User",
+                id: currentUser?.uid || currentUser?.id || "",
+                name: currentUser?.displayName || currentUser?.name || "TalentForge User",
                 email: currentUser?.email || "",
-                avatar: currentUser?.avatar || ""
-            },
-            createdAt: new Date().toISOString()
+                avatar: currentUser?.photoURL || currentUser?.avatar || ""
+            }
         };
 
-        const updatedPosts = [
-            newPost,
-            ...existingPosts
-        ];
-
-        localStorage.setItem(
-            "talentforge_posts",
-            JSON.stringify(updatedPosts)
-        );
-        window.dispatchEvent(new Event("postsUpdated"));
-        console.log("New TalentForge post:", newPost);
+        await createPost(newPost);
 
         alert("Your post has been created successfully!");
-
         onClose();
-    };
+    } catch (error) {
+        console.error("Failed to create TalentForge post:", error);
+        alert(error.message || "Could not create your post. Please try again.");
+    }
+};
+
 
     const handleCollaboratorSubmit = (e) => {
         e.preventDefault();

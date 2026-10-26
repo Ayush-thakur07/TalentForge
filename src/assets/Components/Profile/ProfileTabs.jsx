@@ -1,36 +1,36 @@
-import { useState } from "react";
+
 import "./ProfileTabs.css";
 
-function ProfileTabs({activeTab,onTabChange}) {
+function ProfileTabs({ activeTab, onTabChange }) {
     const tabs = [
         {
             label: "Overview",
-            icon: "bi bi-grid"
+            icon: "bi bi-grid",
         },
         {
             label: "Projects",
-            icon: "bi bi-folder2-open"
+            icon: "bi bi-folder2-open",
         },
         {
             label: "Skills",
-            icon: "bi bi-lightning"
+            icon: "bi bi-lightning",
         },
         {
             label: "Experience",
-            icon: "bi bi-briefcase"
+            icon: "bi bi-briefcase",
         },
         {
             label: "Education",
-            icon: "bi bi-mortarboard"
+            icon: "bi bi-mortarboard",
         },
         {
             label: "Connections",
-            icon: "bi bi-people"
+            icon: "bi bi-people",
         },
         {
             label: "Activity",
-            icon: "bi bi-activity"
-        }
+            icon: "bi bi-activity",
+        },
     ];
 
     return (

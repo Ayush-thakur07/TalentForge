@@ -1,5 +1,5 @@
 //if the user has not entered their skills then values will be undefined an dundefined.map()=>error therefore i used an empty array to help sort this error
-function toSet(values) 
+function toSet(values) //values are basically skills here
 {
     return new Set((Array.isArray(values) ? values : []).map((value) => String(value || "").trim().toLowerCase()).filter(Boolean));
 }
