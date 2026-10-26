@@ -6,8 +6,10 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../../context/UserContext";
 import { useMessages } from "../../../../context/MessageContext";
+import { useTheme } from "../../../../context/useTheme";
 function HeaderActions() {
     const { currentUser: user, setCurrentUser, isPro } = useUser();
+    const { theme, toggleTheme } = useTheme();
     const[profileOpen,setProfileOpen]=useState(false);
     const navigate=useNavigate();
     function toggleProfile()
@@ -51,6 +53,18 @@ function HeaderActions() {
                     onClose={() => setDropdownOpen(false)}
                 />
             </div>
+
+            <button
+                type="button"
+                className="theme-toggle"
+                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                aria-pressed={theme === "dark"}
+                onClick={toggleTheme}
+            >
+                <span className="theme-toggle-thumb">
+                    <i className={theme === "dark" ? "bi bi-moon-fill" : "bi bi-sun-fill"}></i>
+                </span>
+            </button>
 
             <button aria-label="Messages" onClick={msgcount}>
                 <i className="bi bi-chat-dots-fill" id="three"></i>

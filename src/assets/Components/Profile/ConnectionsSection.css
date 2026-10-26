@@ -1,10 +1,10 @@
 .connections-section {
     width: 100%;
-    background: #ffffff;
-    border: 1px solid #e8e5f2;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 18px;
     padding: 28px;
-    box-shadow: 0 4px 18px rgba(55, 45, 95, 0.05);
+    box-shadow: 0 4px 18px var(--shadow);
 }
 
 .connections-header {
@@ -16,14 +16,14 @@
 
 .connections-header h2 {
     margin: 0;
-    color: #242133;
+    color: var(--text-primary);
     font-size: 24px;
     font-weight: 700;
 }
 
 .connections-header p {
     margin: 6px 0 0;
-    color: #817c91;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
@@ -34,17 +34,17 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: #f0ebff;
-    color: #7357d9;
+    background: var(--brand-soft);
+    color: var(--brand);
     font-size: 20px;
 }
 
 .connections-form {
     padding: 22px;
     margin-bottom: 28px;
-    border: 1px solid #ebe7f3;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: #faf9fd;
+    background: var(--surface-alt);
 }
 
 .connections-form-row {
@@ -61,7 +61,7 @@
 }
 
 .connections-field label {
-    color: #373143;
+    color: var(--text-secondary);
     font-size: 13px;
     font-weight: 600;
 }
@@ -71,17 +71,17 @@
     height: 44px;
     box-sizing: border-box;
     padding: 0 14px;
-    border: 1px solid #ddd9e9;
+    border: 1px solid var(--border-strong);
     border-radius: 9px;
     outline: none;
-    background: #ffffff;
-    color: #29243a;
+    background: var(--surface);
+    color: var(--text-primary);
     font-size: 14px;
 }
 
 .connections-field input:focus {
-    border-color: #8065dc;
-    box-shadow: 0 0 0 3px rgba(128, 101, 220, 0.1);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
 .connections-add-button {
@@ -89,7 +89,7 @@
     padding: 0 18px;
     border: none;
     border-radius: 9px;
-    background: #7357d9;
+    background: var(--brand);
     color: #ffffff;
     font-size: 14px;
     font-weight: 600;
@@ -100,7 +100,7 @@
 }
 
 .connections-add-button:hover {
-    background: #6247c7;
+    background: var(--brand-strong);
 }
 
 .connections-list {
@@ -113,9 +113,9 @@
     display: flex;
     gap: 14px;
     padding: 18px;
-    border: 1px solid #ebe7f3;
+    border: 1px solid var(--border);
     border-radius: 14px;
-    background: #ffffff;
+    background: var(--surface-alt);
 }
 
 .connection-avatar {
@@ -126,7 +126,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #7357d9;
+    background: var(--brand);
     color: #ffffff;
     font-size: 18px;
     font-weight: 700;
@@ -145,14 +145,14 @@
 
 .connection-top h3 {
     margin: 0;
-    color: #29243a;
+    color: var(--text-primary);
     font-size: 16px;
     font-weight: 700;
 }
 
 .connection-top p {
     margin: 4px 0 0;
-    color: #756f84;
+    color: var(--text-muted);
     font-size: 13px;
 }
 
@@ -162,19 +162,19 @@
     border: none;
     border-radius: 8px;
     background: transparent;
-    color: #9992a7;
+    color: var(--text-soft);
     cursor: pointer;
 }
 
 .connection-delete:hover {
-    background: #fff0f2;
+    background: rgba(239, 68, 68, 0.08);
     color: #d34f67;
 }
 
 .connection-email {
     display: block;
     margin-top: 10px;
-    color: #817b90;
+    color: var(--text-muted);
     font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -189,24 +189,24 @@
     grid-column: 1 / -1;
     padding: 45px 20px;
     text-align: center;
-    border: 1px dashed #dcd7e9;
+    border: 1px dashed var(--border-strong);
     border-radius: 14px;
 }
 
 .connections-empty i {
     font-size: 34px;
-    color: #8065dc;
+    color: var(--brand);
 }
 
 .connections-empty h3 {
     margin: 12px 0 6px;
-    color: #302b40;
+    color: var(--text-primary);
     font-size: 17px;
 }
 
 .connections-empty p {
     margin: 0;
-    color: #898397;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
