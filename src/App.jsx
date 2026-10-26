@@ -24,6 +24,7 @@ import { ApplicationProvider } from './context/ApplicationContext';
 import SearchPage from './assets/Components/Dashboard/Search/SearchPage';
 import Saved from './assets/Components/Saved/Saved';
 import CollaborationPlanner from './assets/Components/Dashboard/CollaborationPlanner/CollaborationPlanner';
+import ResumeBuilder from './assets/Components/Dashboard/ResumeBuilder/ResumeBuilder';
 
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
@@ -182,6 +183,18 @@ function AppRoutes() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <CollaborationPlanner />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Resume Builder */}
+          <Route
+            path="/resume-builder"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <ResumeBuilder />
                 </DashboardLayout>
               </ProtectedRoute>
             }

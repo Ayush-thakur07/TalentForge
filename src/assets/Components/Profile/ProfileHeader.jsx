@@ -1,7 +1,9 @@
 import "./ProfileHeader.css";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
 
 function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatarChange }) {
+    const navigate = useNavigate();
     function handleCoverChange(e) {
         const file = e.target.files[0];
 
@@ -258,15 +260,15 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                                 className="profile-action-button secondary pro-feature-button"
                                 onClick={() => {
                                     if (!isPro) {
-                                        openUpgradeModal("Portfolio Export (PDF & Link)");
+                                        openUpgradeModal("Resume Builder");
                                     } else {
-                                        window.print();
+                                        navigate("/resume-builder");
                                     }
                                 }}
-                                title={isPro ? "Export profile as PDF" : "Pro Feature: Export Portfolio"}
+                                title={isPro ? "Open Resume Builder" : "Pro Feature: Resume Builder"}
                             >
-                                <i className="bi bi-file-earmark-pdf"></i>
-                                Export Portfolio
+                                <i className="bi bi-file-earmark-richtext"></i>
+                                Resume Builder
                                 {!isPro && (
                                     <span className="pro-lock-badge">
                                         <i className="bi bi-lock-fill"></i> PRO
