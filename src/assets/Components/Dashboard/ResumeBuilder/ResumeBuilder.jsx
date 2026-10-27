@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../context/UserContext';
 import { downloadResume } from './resumeGenerator';
@@ -102,6 +103,7 @@ function readStoredJson(key, fallback) {
 }
 
 function ResumeBuilder() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { currentUser, isPro, openUpgradeModal, loading } = useUser();
     const [selectedTemplateId, setSelectedTemplateId] = useState('classic');
@@ -306,7 +308,7 @@ function ResumeBuilder() {
     if (loading) {
         return (
             <div className="resume-builder-page">
-                <div className="resume-builder-loading">Checking access...</div>
+                <div className="resume-builder-loading">{t("resume.checkingAccess", "Checking access...")}</div>
             </div>
         );
     }
@@ -333,7 +335,7 @@ function ResumeBuilder() {
                     <p className="resume-builder-kicker"><span className="kicker-mark" />TALENTFORGE / CAREER TOOLS</p>
                     <h1>Resume Builder</h1>
                     <p className="resume-builder-subtitle">Choose a design. Your saved profile becomes a polished, editable Word resume.</p>
-                    <p className="resume-data-note"><i className="bi bi-arrow-repeat" aria-hidden="true" /> Your profile, education, experience, and projects are used automatically.</p>
+                    <p className="resume-data-note"><i className="bi bi-arrow-repeat" aria-hidden="true" /> {t("resume.dataNote", "Your profile, education, experience, and projects are used automatically.")}</p>
                 </div>
                 <span className="resume-builder-badge"><i className="bi bi-stars" aria-hidden="true" /> PRO WORKSPACE</span>
             </header>
@@ -343,7 +345,7 @@ function ResumeBuilder() {
                     <div className="gallery-intro">
                         <div>
                             <p className="gallery-step">01 <span>/</span> SELECT A DESIGN</p>
-                            <h2>Start with a layout</h2>
+                            <h2>{t("resume.startWithLayout", "Start with a layout")}</h2>
                         </div>
                         <p className="gallery-count">{templates.length} templates <span>·</span> Word export</p>
                     </div>

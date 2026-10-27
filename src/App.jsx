@@ -31,10 +31,12 @@ import ResumeBuilder from './assets/Components/Dashboard/ResumeBuilder/ResumeBui
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
 import ThemeProvider from './context/ThemeContext';
+import { useTranslation } from 'react-i18next';
 
 
 function ProtectedRoute({ children }) {
 
+  const { t } = useTranslation();
   const { currentUser, loading } = useUser();
 
   // If authentication is still loading,
@@ -55,7 +57,7 @@ function ProtectedRoute({ children }) {
             color: "#4f46e5"
           }}
         >
-          Loading TalentForge...
+          {t('common.loading', 'Loading TalentForge...')}
         </div>
       </div>
     );

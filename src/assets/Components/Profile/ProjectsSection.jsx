@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./ProjectsSection.css";
 
 function ProjectsSection({ projects, onAdd, onDelete }) {
+    const { t } = useTranslation();
     const [form, setForm] = useState({
         title: "",
         description: "",
@@ -46,8 +48,8 @@ function ProjectsSection({ projects, onAdd, onDelete }) {
         <section className="projects-section">
             <div className="projects-header">
                 <div>
-                    <h2>Projects</h2>
-                    <p>Showcase the projects you have built</p>
+                    <h2>{t("profile.projectsSection.title", "Projects")}</h2>
+                    <p>{t("profile.projectsSection.subtitle", "Showcase the projects you have built")}</p>
                 </div>
 
                 <div className="projects-header-icon">
@@ -57,52 +59,52 @@ function ProjectsSection({ projects, onAdd, onDelete }) {
 
             <form className="projects-form" onSubmit={handleSubmit}>
                 <div className="projects-field">
-                    <label>Project Name</label>
+                    <label>{t("profile.projectsSection.nameLabel", "Project Name")}</label>
                     <input
                         type="text"
                         name="title"
                         value={form.title}
-                        placeholder="Enter project name"
+                        placeholder={t("profile.projectsSection.namePlaceholder", "Enter project name")}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className="projects-field">
-                    <label>Description</label>
+                    <label>{t("profile.projectsSection.descLabel", "Description")}</label>
                     <textarea
                         name="description"
                         value={form.description}
-                        placeholder="Describe your project"
+                        placeholder={t("profile.projectsSection.descPlaceholder", "Describe your project")}
                         rows="4"
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className="projects-field">
-                    <label>Technologies</label>
+                    <label>{t("profile.projectsSection.techLabel", "Technologies")}</label>
                     <input
                         type="text"
                         name="technologies"
                         value={form.technologies}
-                        placeholder="React, Java, MongoDB"
+                        placeholder={t("profile.projectsSection.techPlaceholder", "React, Java, MongoDB")}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className="projects-field">
-                    <label>Project Link</label>
+                    <label>{t("profile.projectsSection.linkLabel", "Project Link")}</label>
                     <input
                         type="url"
                         name="link"
                         value={form.link}
-                        placeholder="https://github.com/..."
+                        placeholder={t("profile.projectsSection.linkPlaceholder", "https://github.com/...")}
                         onChange={handleChange}
                     />
                 </div>
 
                 <button className="projects-add-button" type="submit">
                     <i className="bi bi-plus-lg"></i>
-                    Add Project
+                    {t("profile.projectsSection.addButton", "Add Project")}
                 </button>
             </form>
 
@@ -117,10 +119,10 @@ function ProjectsSection({ projects, onAdd, onDelete }) {
                             <div className="project-card-content">
                                 <div className="project-card-top">
                                     <h3>{project.title}</h3>
-
                                     <button
                                         className="project-delete"
                                         onClick={() => onDelete(project.id)}
+                                        aria-label="Delete project"
                                     >
                                         <i className="bi bi-trash3"></i>
                                     </button>
@@ -148,7 +150,7 @@ function ProjectsSection({ projects, onAdd, onDelete }) {
                                         rel="noreferrer"
                                     >
                                         <i className="bi bi-box-arrow-up-right"></i>
-                                        View Project
+                                        {t("profile.projectsSection.viewProject", "View Project")}
                                     </a>
                                 )}
                             </div>
@@ -157,9 +159,9 @@ function ProjectsSection({ projects, onAdd, onDelete }) {
                 ) : (
                     <div className="projects-empty">
                         <i className="bi bi-folder2-open"></i>
-                        <h3>No projects added yet</h3>
+                        <h3>{t("profile.projectsSection.emptyTitle", "No projects added yet")}</h3>
                         <p>
-                            Add projects to showcase your work and skills.
+                            {t("profile.projectsSection.emptySubtitle", "Add projects to showcase your work and skills.")}
                         </p>
                     </div>
                 )}

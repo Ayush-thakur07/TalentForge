@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./PostsSection.css";
 
 function PostsSection({ posts, onAdd, onDelete }) {
+    const { t } = useTranslation();
     const [postText, setPostText] = useState("");
 
     function handleSubmit(e) {
@@ -26,8 +28,8 @@ function PostsSection({ posts, onAdd, onDelete }) {
         <section className="posts-section">
             <div className="posts-header">
                 <div>
-                    <h2>Activity</h2>
-                    <p>Share your thoughts, updates and achievements</p>
+                    <h2>{t("profile.postsSection.title", "Activity")}</h2>
+                    <p>{t("profile.postsSection.subtitle", "Share your thoughts, updates and achievements")}</p>
                 </div>
 
                 <div className="posts-header-icon">
@@ -38,7 +40,7 @@ function PostsSection({ posts, onAdd, onDelete }) {
             <form className="post-form" onSubmit={handleSubmit}>
                 <textarea
                     value={postText}
-                    placeholder="Share something with the TalentForge community..."
+                    placeholder={t("profile.postsSection.placeholder", "Share something with the TalentForge community...")}
                     rows="4"
                     onChange={(e) => setPostText(e.target.value)}
                 />
@@ -46,12 +48,12 @@ function PostsSection({ posts, onAdd, onDelete }) {
                 <div className="post-form-footer">
                     <span>
                         <i className="bi bi-pencil-square"></i>
-                        Create a post
+                        {t("profile.postsSection.createPost", "Create a post")}
                     </span>
 
                     <button type="submit">
                         <i className="bi bi-send"></i>
-                        Post
+                        {t("profile.postsSection.postButton", "Post")}
                     </button>
                 </div>
             </form>
@@ -79,6 +81,7 @@ function PostsSection({ posts, onAdd, onDelete }) {
                                     <button
                                         className="post-delete"
                                         onClick={() => onDelete(post.id)}
+                                        aria-label="Delete post"
                                     >
                                         <i className="bi bi-trash3"></i>
                                     </button>
@@ -91,17 +94,17 @@ function PostsSection({ posts, onAdd, onDelete }) {
                                 <div className="post-actions">
                                     <button>
                                         <i className="bi bi-heart"></i>
-                                        Like
+                                        {t("dashboard.postCard.unlike", "Like")}
                                     </button>
 
                                     <button>
                                         <i className="bi bi-chat"></i>
-                                        Comment
+                                        {t("dashboard.postCard.comment", "Comment")}
                                     </button>
 
                                     <button>
                                         <i className="bi bi-share"></i>
-                                        Share
+                                        {t("dashboard.postCard.share", "Share")}
                                     </button>
                                 </div>
                             </article>
@@ -109,10 +112,9 @@ function PostsSection({ posts, onAdd, onDelete }) {
                 ) : (
                     <div className="posts-empty">
                         <i className="bi bi-activity"></i>
-                        <h3>No activity yet</h3>
+                        <h3>{t("profile.postsSection.emptyTitle", "No activity yet")}</h3>
                         <p>
-                            Create your first post and share something
-                            with the TalentForge community.
+                            {t("profile.postsSection.emptySubtitle", "Share project milestones, questions, or ideas with the campus.")}
                         </p>
                     </div>
                 )}

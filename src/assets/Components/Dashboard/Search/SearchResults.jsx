@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { hasSearchResults } from "./searchUtils";
+import { useTranslation } from "react-i18next";
 import "./SearchResults.css";
 
 function SearchResultGroup({ icon, title, items, onSelect }) {
@@ -25,7 +26,9 @@ function SearchResultGroup({ icon, title, items, onSelect }) {
 }
 
 function SearchResults({ results, compact = false, onResultSelect }) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
+
     const selectResult = (item, type) => {
         if (type === "student") {
             navigate("/students", { state: { search: item.name } });
@@ -43,17 +46,17 @@ function SearchResults({ results, compact = false, onResultSelect }) {
         return (
             <div className={`global-search-empty ${compact ? "compact" : ""}`}>
                 <i className="bi bi-search"></i>
-                <strong>No results found</strong>
-                <span>Try searching for a different skill, project, or student.</span>
+                <strong>{t("search.noResults", "No results found")}</strong>
+                <span>{t("search.tryDifferent", "Try searching for a different skill, project, or student.")}</span>
             </div>
         );
     }
 
     return (
         <div className={`global-search-results ${compact ? "compact" : ""}`}>
-            <SearchResultGroup icon="bi-person" title="Students" items={results.students} onSelect={(item) => selectResult(item, "student")} />
-            <SearchResultGroup icon="bi-folder2-open" title="Projects" items={results.projects} onSelect={(item) => selectResult(item, "project")} />
-            <SearchResultGroup icon="bi-lightning-charge" title="Skills" items={results.skills} onSelect={(item) => selectResult(item, "skill")} />
+            <SearchResultGroup icon="bi-person" title={t("search.studentsGroup", "Students")} items={results.students} onSelect={(item) => selectResult(item, "student")} />
+            <SearchResultGroup icon="bi-folder2-open" title={t("search.projectsGroup", "Projects")} items={results.projects} onSelect={(item) => selectResult(item, "project")} />
+            <SearchResultGroup icon="bi-lightning-charge" title={t("search.skillsGroup", "Skills")} items={results.skills} onSelect={(item) => selectResult(item, "skill")} />
         </div>
     );
 }

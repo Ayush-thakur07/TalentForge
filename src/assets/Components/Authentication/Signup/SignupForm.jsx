@@ -8,8 +8,11 @@ import {
 import { auth } from "../../../../config/firebase";
 import "./Signup.css";
 import { useUser } from "../../../../context/UserContext";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "../../../../components/LanguageSelector";
 
 function SignupForm() {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -21,28 +24,26 @@ function SignupForm() {
   const [loading, setLoading] = useState(false);
   const { setCurrentUser } = useUser();
 
-  /* this was the previous line which i changed so that the exsisting year mail id can only be accepted
-  const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+[0-9]{2}@chitkara\.edu\.in$/;
-*/
-  const chitkaraEmailPattern =/^[a-z]+[0-9]{4}\.[a-z]+(23|24|25|26)@chitkara\.edu\.in$/;
+  const chitkaraEmailPattern = /^[a-z]+[0-9]{4}\.[a-z]+(23|24|25|26)@chitkara\.edu\.in$/;
+
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
 
     if (!email || !password || !confirmPassword) {
-      setError("All fields are required.");
+      setError(t("auth.errorAllFields", "All fields are required."));
       return;
     }
     const cleanEmail = email.trim().toLowerCase();
     if (!chitkaraEmailPattern.test(cleanEmail)) {
       setEmailError(
-        "Please use your valid Chitkara University student email."
+        t("auth.errorChitkaraEmail", "Please use your valid Chitkara University student email.")
       );
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError(t("auth.errorPasswordsMismatch", "Passwords do not match."));
       return;
     }
 
@@ -51,40 +52,32 @@ function SignupForm() {
     try {
       setLoading(true);
 
-      
-const result = await createUserWithEmailAndPassword(
-  auth,
-  cleanEmail,
-  password
-);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        cleanEmail,
+        password
+      );
 
-await sendEmailVerification(result.user);
+      await sendEmailVerification(result.user);
 
-setCurrentUser(null);
-await signOut(auth);
+      setCurrentUser(null);
+      await signOut(auth);
 
-navigate("/login", {
-  replace: true,
-  state: {
-    message:
-      "Account created! Check your college inbox and click the verification link before logging in.",
-  },
-});
+      navigate("/login", {
+        replace: true,
+        state: {
+          message: t("auth.accountCreatedNotice", "Account created! Check your college inbox and click the verification link before logging in."),
+        },
+      });
 
     } catch (err) {
       const code = err?.code || "";
       if (code.includes("email-already-in-use")) {
-        setError("This email is already registered. Try logging in instead.");
-      } else if (code.includes("invalid-email")) {
-        setError("Please enter a valid college email address.");
+        setError(t("auth.errorEmailInUse", "This email is already registered. Try logging in instead."));
       } else if (code.includes("weak-password")) {
-        setError("Password is too weak. Use at least 6 characters.");
-      } else if (code.includes("operation-not-allowed")) {
-        setError("Firebase signup is disabled.");
-      } else if (code.includes("network-request-failed")) {
-        setError("Network error. Please check your internet connection.");
+        setError(t("auth.errorWeakPassword", "Password is too weak. Use at least 6 characters."));
       } else {
-        setError(err?.message || "Signup failed. Please try again.");
+        setError(err?.message || t("auth.errorGeneral", "Signup failed. Please try again."));
       }
     } finally {
       setLoading(false);
@@ -93,8 +86,12 @@ navigate("/login", {
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
-      <h2>Create Account</h2>
-      <p>Sign up to get started with TalentForge</p>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "8px" }}>
+        <LanguageSelector />
+      </div>
+
+      <h2>{t("auth.createAccount", "Create Account")}</h2>
+      <p>{t("auth.signupSubtitle", "Sign up to get started with TalentForge")}</p>
 
       {error && (
         <div className="signup-error" role="alert">
@@ -103,11 +100,11 @@ navigate("/login", {
         </div>
       )}
 
-      <label>Email Address</label>
+      <label>{t("auth.emailLabel", "Email Address")}</label>
       <input
         name="email"
         type="email"
-        placeholder="Enter your college email"
+        placeholder={t("auth.emailPlaceholder", "Enter your college email")}
         value={email}
         onChange={(e) => {
           setEmail(e.target.value);
@@ -125,14 +122,14 @@ navigate("/login", {
       )}
 
       <div className="form-field">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{t("auth.passwordLabel", "Password")}</label>
         <div className="password-input-wrapper">
           <i className="bi bi-lock password-lock"></i>
           <input
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}
-            placeholder="Create a password"
+            placeholder={t("auth.createPasswordPlaceholder", "Create a password")}
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -159,14 +156,14 @@ navigate("/login", {
       </div>
 
       <div className="form-field">
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">{t("auth.confirmPasswordLabel", "Confirm Password")}</label>
         <div className="password-input-wrapper">
           <i className="bi bi-lock password-lock"></i>
           <input
             id="confirmPassword"
             name="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
-            placeholder="Confirm your password"
+            placeholder={t("auth.confirmPasswordPlaceholder", "Confirm your password")}
             value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
@@ -199,13 +196,13 @@ navigate("/login", {
       </div>
 
       <button type="submit" disabled={loading}>
-        {loading ? "Creating account..." : "Sign Up"}
+        {loading ? t("auth.creatingAccount", "Creating account...") : t("auth.signUpButton", "Sign Up")}
       </button>
 
       <p className="signup-login">
-        Already have an account?{" "}
+        {t("auth.alreadyHaveAccount", "Already have an account?")}{" "}
         <button type="button" onClick={() => navigate("/login")}>
-          Log in
+          {t("auth.logInLink", "Log in")}
         </button>
       </p>
     </form>

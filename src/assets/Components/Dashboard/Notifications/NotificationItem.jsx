@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../../../context/NotificationContext';
 import { useApplications } from '../../../../context/ApplicationContext';
+import { useTranslation } from 'react-i18next';
 
 function NotificationItem({ notification }) {
+    const { t } = useTranslation();
     const { toggleReadStatus, deleteNotification, markAsRead } = useNotifications();
     const { openApplication } = useApplications();
     const navigate = useNavigate();
@@ -13,14 +15,14 @@ function NotificationItem({ notification }) {
                 return {
                     icon: 'bi-person-badge-fill',
                     badgeClass: 'badge-applications',
-                    label: 'Application'
+                    label: t('notifications.tabs.applications', 'Application')
                 };
             case 'connections':
             default:
                 return {
                     icon: 'bi-people-fill',
                     badgeClass: 'badge-connections',
-                    label: 'Connection'
+                    label: t('notifications.tabs.connections', 'Connection')
                 };
         }
     };
@@ -67,14 +69,15 @@ function NotificationItem({ notification }) {
             <div className="card-right">
                 {(notification.actionUrl || notification.applicationId) && (
                     <button className="btn-action" onClick={handleActionClick}>
-                        View Details <i className="bi bi-arrow-right-short"></i>
+                        {t('notifications.viewDetails', 'View Details')} <i className="bi bi-arrow-right-short"></i>
                     </button>
                 )}
 
                 <button
                     className="btn-icon-action"
                     onClick={() => toggleReadStatus(notification.id)}
-                    title={notification.read ? "Mark as unread" : "Mark as read"}
+                    title={notification.read ? t('notifications.markAsUnread', 'Mark as unread') : t('notifications.markAsRead', 'Mark as read')}
+                    aria-label={notification.read ? t('notifications.markAsUnread', 'Mark as unread') : t('notifications.markAsRead', 'Mark as read')}
                 >
                     <i className={`bi ${notification.read ? 'bi-envelope' : 'bi-envelope-open'}`}></i>
                 </button>
@@ -82,7 +85,8 @@ function NotificationItem({ notification }) {
                 <button
                     className="btn-icon-action delete"
                     onClick={() => deleteNotification(notification.id)}
-                    title="Delete notification"
+                    title={t('notifications.delete', 'Delete notification')}
+                    aria-label={t('notifications.delete', 'Delete notification')}
                 >
                     <i className="bi bi-trash"></i>
                 </button>

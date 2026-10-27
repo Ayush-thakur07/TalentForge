@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useUser } from "../../../context/UserContext";
+import { useTranslation } from "react-i18next";
 import "./SkillsSection.css";
 
 function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
+    const { t } = useTranslation();
     const { isPro } = useUser();
     const [skillInput, setSkillInput] = useState("");
 
@@ -24,9 +26,18 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
             <div className="skills-section-header">
                 <div>
                     <h2>
-                        Skills {isPro && <span className="pro-skills-badge"><i className="bi bi-patch-check-fill"></i> Verified Showcase</span>}
+                        {t("profile.skillsSection.title", "Skills")}{" "}
+                        {isPro && (
+                            <span className="pro-skills-badge">
+                                <i className="bi bi-patch-check-fill"></i> {t("profile.skillsSection.verifiedShowcase", "Verified Showcase")}
+                            </span>
+                        )}
                     </h2>
-                    <p>{isPro ? "Skills validated by mentor reviews & project evaluations" : "Showcase what you can do"}</p>
+                    <p>
+                        {isPro
+                            ? t("profile.skillsSection.proSubtitle", "Skills validated by mentor reviews & project evaluations")
+                            : t("profile.skillsSection.subtitle", "Showcase what you can do")}
+                    </p>
                 </div>
                 <div className="skills-section-icon">
                     <i className="bi bi-lightning-charge-fill"></i>
@@ -37,12 +48,12 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
                 <input
                     type="text"
                     value={skillInput}
-                    placeholder="Add a skill..."
+                    placeholder={t("profile.skillsSection.placeholder", "Add a skill...")}
                     onChange={(e) => setSkillInput(e.target.value)}
                 />
                 <button type="submit">
                     <i className="bi bi-plus-lg"></i>
-                    Add Skill
+                    {t("profile.skillsSection.addButton", "Add Skill")}
                 </button>
             </form>
 
@@ -56,10 +67,11 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
                                 </span>
                             )}
                             <span>{skill}</span>
-                            {isPro && <span className="verified-mentor-tag">Verified</span>}
+                            {isPro && <span className="verified-mentor-tag">{t("profile.skillsSection.verified", "Verified")}</span>}
                             <button
                                 type="button"
                                 onClick={() => onRemoveSkill(skill)}
+                                aria-label="Remove skill"
                             >
                                 <i className="bi bi-x-lg"></i>
                             </button>
@@ -68,7 +80,7 @@ function SkillsSection({ skills, onAddSkill, onRemoveSkill }) {
                 ) : (
                     <div className="skills-empty">
                         <i className="bi bi-lightning"></i>
-                        <p>No skills added yet.</p>
+                        <p>{t("profile.skillsSection.empty", "No skills added yet.")}</p>
                     </div>
                 )}
             </div>

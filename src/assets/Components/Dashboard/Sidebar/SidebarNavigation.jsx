@@ -1,8 +1,10 @@
 import { useLocation } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import { useNotifications } from "../../../../context/NotificationContext";
+import { useTranslation } from "react-i18next";
 
 function SidebarNavigation() {
+    const { t } = useTranslation();
     const location = useLocation();
     const { notifications, unreadCount } = useNotifications();
 
@@ -14,14 +16,14 @@ function SidebarNavigation() {
     return (
         <nav>
             <SidebarItem
-                label="Dashboard"
+                label={t("nav.dashboard", "Dashboard")}
                 href="/dashboard"
                 icon="bi bi-house"
                 active={currentPath === "/dashboard"}
             />
 
             <SidebarItem
-                label="Browse Students"
+                label={t("nav.browseStudents", "Browse Students")}
                 href="/students"
                 icon="bi bi-search"
                 active={currentPath === "/students"}
@@ -29,21 +31,21 @@ function SidebarNavigation() {
             />
 
             <SidebarItem
-                label="Browse Projects"
+                label={t("nav.browseProjects", "Browse Projects")}
                 href="/projects"
                 icon="bi bi-folder2-open"
                 active={currentPath === "/projects"}
             />
 
             <SidebarItem
-                label="My Listings"
+                label={t("nav.myListings", "My Listings")}
                 href="/listings"
                 icon="bi bi-card-list"
                 active={currentPath === "/listings"}
             />
 
             <SidebarItem
-                label="Connections"
+                label={t("nav.connections", "Connections")}
                 href="/connections"
                 icon="bi bi-people"
                 active={currentPath === "/connections"}
@@ -51,28 +53,28 @@ function SidebarNavigation() {
             />
 
             <SidebarItem
-                label="Messages"
+                label={t("nav.messages", "Messages")}
                 href="/messages"
                 icon="bi bi-chat"
                 active={currentPath === "/messages"}
             />
 
             <SidebarItem
-                label="Collaboration Planner"
+                label={t("nav.collaborationPlanner", "Collaboration Planner")}
                 href="/schedule"
                 icon="bi bi-calendar3"
                 active={currentPath === "/schedule"}
             />
 
             <SidebarItem
-                label="Saved"
+                label={t("nav.saved", "Saved")}
                 href="/saved"
                 icon="bi bi-bookmark"
                 active={currentPath === "/saved"}
             />
 
             <SidebarItem
-                label="Notifications"
+                label={t("nav.notifications", "Notifications")}
                 href="/notifications"
                 icon="bi bi-bell"
                 active={currentPath === "/notifications"}
@@ -80,21 +82,21 @@ function SidebarNavigation() {
             />
 
             <SidebarItem
-                label="Profile"
+                label={t("nav.profile", "Profile")}
                 href="/profile"
                 icon="bi bi-person"
                 active={currentPath === "/profile"}
             />
 
             <SidebarItem
-                label="Analytics"
+                label={t("nav.analytics", "Analytics")}
                 href="/analytics"
                 icon="bi bi-graph-up"
                 active={currentPath === "/analytics"}
             />
 
             <SidebarItem
-                label="Settings"
+                label={t("nav.settings", "Settings")}
                 href="/settings"
                 icon="bi bi-gear"
                 active={currentPath === "/settings"}

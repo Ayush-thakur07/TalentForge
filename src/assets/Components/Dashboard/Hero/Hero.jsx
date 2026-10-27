@@ -4,21 +4,11 @@ import PostModal from "./PostModal";
 import { useState, useEffect } from "react";
 import { useUser } from "../../../../context/UserContext";
 import { useMessages } from "../../../../context/MessageContext";
+import { useTranslation } from "react-i18next";
 import "./Hero.css";
 
-function getGreeting(current_hour) {
-    if (current_hour >= 5 && current_hour < 12) {
-        return "Good morning";
-    } else if (current_hour >= 12 && current_hour <= 16) {
-        return "Good afternoon";
-    } else if (current_hour > 16 && current_hour <= 19) {
-        return "Good evening";
-    } else {
-        return "Good night";
-    }
-}
-
 function Hero() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [postModalOpen, setPostModalOpen] = useState(false);
     const { currentUser, isPro } = useUser();
@@ -56,7 +46,20 @@ function Hero() {
     }, []);
 
     const ongoingProjects = dashboardUser?.ongoingProjects?.length || 0;
-    const greetings = getGreeting(current_hours);
+
+    function getGreeting() {
+        if (current_hours >= 5 && current_hours < 12) {
+            return t("dashboard.greetings.morning", "Good morning");
+        } else if (current_hours >= 12 && current_hours <= 16) {
+            return t("dashboard.greetings.afternoon", "Good afternoon");
+        } else if (current_hours > 16 && current_hours <= 19) {
+            return t("dashboard.greetings.evening", "Good evening");
+        } else {
+            return t("dashboard.greetings.night", "Good night");
+        }
+    }
+
+    const greeting = getGreeting();
     const userName = typeof currentUser?.name === "string" ? currentUser.name.trim() : "";
 
     return (
@@ -66,14 +69,14 @@ function Hero() {
             </div>
             <div className="hero_text">
                 <h1 className="greetings">
-                    {greetings}{userName && <>, <span className="greeting-name">{userName}</span></>}!
+                    {greeting}{userName && <>, <span className="greeting-name">{userName}</span></>}!
                     {isPro && (
                         <span className="hero-pro-watermark-pill" title="TalentForge Pro Member">
-                            <i className="bi bi-crown-fill"></i> Pro Member
+                            <i className="bi bi-crown-fill"></i> {t("dashboard.proMember", "Pro Member")}
                         </span>
                     )}
                 </h1>
-                <p>Find the right people, Build amazing things together</p>
+                <p>{t("dashboard.heroSubtitle", "Find the right people, Build amazing things together")}</p>
                 <div className="hero_stats">
                     <div className="hero_stat_card">
                         <div className="hero_stat_icon">
@@ -81,7 +84,7 @@ function Hero() {
                         </div>
                         <div className="hero_stat_info">
                             <strong>{connections}</strong>
-                            <span>Connections</span>
+                            <span>{t("dashboard.stats.connections", "Connections")}</span>
                         </div>
                     </div>
 
@@ -96,7 +99,7 @@ function Hero() {
                         </div>
                         <div className="hero_stat_info">
                             <strong>{savedCount}</strong>
-                            <span>Saved</span>
+                            <span>{t("dashboard.stats.saved", "Saved")}</span>
                         </div>
                     </div>
 
@@ -106,7 +109,7 @@ function Hero() {
                         </div>
                         <div className="hero_stat_info">
                             <strong>{ongoingProjects}</strong>
-                            <span>Ongoing Projects</span>
+                            <span>{t("dashboard.stats.ongoingProjects", "Ongoing Projects")}</span>
                         </div>
                     </div>
 
@@ -116,20 +119,20 @@ function Hero() {
                         </div>
                         <div className="hero_stat_info">
                             <strong>{newMessages}</strong>
-                            <span>New Message</span>
+                            <span>{t("dashboard.stats.newMessages", "New Messages")}</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="hero_actions">
                     <button className="explore_matches" onClick={() => navigate("/students")}>
-                        Explore Matches
+                        {t("dashboard.actions.exploreMatches", "Explore Matches")}
                         <i className="bi bi-arrow-right"></i>
                     </button>
 
                     <button className="post_project" onClick={() => setPostModalOpen(true)}>
                         <i className="bi bi-plus-lg"></i>
-                        Post a Project
+                        {t("dashboard.actions.postProject", "Post a Project")}
                     </button>
 
                     {postModalOpen && (

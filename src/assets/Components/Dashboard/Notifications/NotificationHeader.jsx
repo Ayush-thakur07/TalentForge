@@ -1,6 +1,8 @@
 import { useNotifications } from '../../../../context/NotificationContext';
+import { useTranslation } from 'react-i18next';
 
 function NotificationHeader({ searchQuery, setSearchQuery }) {
+    const { t } = useTranslation();
     const { unreadCount, markAllAsRead, clearReadNotifications, resetNotifications } = useNotifications();
 
     return (
@@ -11,7 +13,7 @@ function NotificationHeader({ searchQuery, setSearchQuery }) {
                     <input
                         type="text"
                         className="search-input"
-                        placeholder="Search notifications by keyword or title..."
+                        placeholder={t("notifications.searchPlaceholder", "Search notifications by keyword or title...")}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -19,7 +21,7 @@ function NotificationHeader({ searchQuery, setSearchQuery }) {
                         <button
                             className="search-clear"
                             onClick={() => setSearchQuery('')}
-                            title="Clear search"
+                            title={t("notifications.clearSearch", "Clear search")}
                         >
                             <i className="bi bi-x"></i>
                         </button>
@@ -31,23 +33,23 @@ function NotificationHeader({ searchQuery, setSearchQuery }) {
                         className="btn-secondary"
                         onClick={markAllAsRead}
                         disabled={unreadCount === 0}
-                        title="Mark all notifications as read"
+                        title={t("notifications.markAllRead", "Mark all notifications as read")}
                     >
-                        <i className="bi bi-check2-all"></i> Mark All Read
+                        <i className="bi bi-check2-all"></i> {t("notifications.markAllRead", "Mark All Read")}
                     </button>
                     <button
                         className="btn-outline-danger"
                         onClick={clearReadNotifications}
-                        title="Clear read notifications"
+                        title={t("notifications.clearRead", "Clear read notifications")}
                     >
-                        <i className="bi bi-trash"></i> Clear Read
+                        <i className="bi bi-trash"></i> {t("notifications.clearRead", "Clear Read")}
                     </button>
                     <button
                         className="btn-ghost"
                         onClick={resetNotifications}
-                        title="Reload notifications"
+                        title={t("notifications.reload", "Reload notifications")}
                     >
-                        <i className="bi bi-arrow-clockwise"></i> Reload
+                        <i className="bi bi-arrow-clockwise"></i> {t("notifications.reload", "Reload")}
                     </button>
                 </div>
             </div>

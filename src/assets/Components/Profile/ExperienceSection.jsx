@@ -1,12 +1,15 @@
 import "./ExperienceSection.css";
+import { useTranslation } from "react-i18next";
 
 function ExperienceSection({ experiences, onAdd, onDelete }) {
+    const { t } = useTranslation();
+
     return (
         <section className="experience-section">
             <div className="experience-header">
                 <div>
-                    <h2>Experience</h2>
-                    <p>Your professional and project experience</p>
+                    <h2>{t("profile.experienceSection.title", "Experience")}</h2>
+                    <p>{t("profile.experienceSection.subtitle", "Your professional and project experience")}</p>
                 </div>
 
                 <button
@@ -14,7 +17,7 @@ function ExperienceSection({ experiences, onAdd, onDelete }) {
                     onClick={onAdd}
                 >
                     <i className="bi bi-plus-lg"></i>
-                    Add Experience
+                    {t("profile.experienceSection.addButton", "Add Experience")}
                 </button>
             </div>
 
@@ -41,6 +44,7 @@ function ExperienceSection({ experiences, onAdd, onDelete }) {
                                         onClick={() =>
                                             onDelete(experience.id)
                                         }
+                                        aria-label="Delete experience"
                                     >
                                         <i className="bi bi-trash3"></i>
                                     </button>
@@ -66,11 +70,10 @@ function ExperienceSection({ experiences, onAdd, onDelete }) {
                         <i className="bi bi-briefcase"></i>
                     </div>
 
-                    <h3>No experience added</h3>
+                    <h3>{t("profile.experienceSection.emptyTitle", "No experience added yet")}</h3>
 
                     <p>
-                        Add internships, jobs, freelance work, or other
-                        professional experience.
+                        {t("profile.experienceSection.emptySubtitle", "Add your internships, freelance work, and roles.")}
                     </p>
 
                     <button
@@ -78,7 +81,7 @@ function ExperienceSection({ experiences, onAdd, onDelete }) {
                         onClick={onAdd}
                     >
                         <i className="bi bi-plus-lg"></i>
-                        Add Experience
+                        {t("profile.experienceSection.addButton", "Add Experience")}
                     </button>
                 </div>
             )}

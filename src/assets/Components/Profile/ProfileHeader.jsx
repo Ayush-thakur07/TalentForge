@@ -1,9 +1,12 @@
 import "./ProfileHeader.css";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
+import { useTranslation } from "react-i18next";
 
 function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatarChange }) {
+    const { t } = useTranslation();
     const navigate = useNavigate();
+
     function handleCoverChange(e) {
         const file = e.target.files[0];
 
@@ -137,13 +140,13 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
 
                 {isPro && (
                     <div className="cover-pro-watermark" title="TalentForge Pro Member">
-                        <i className="bi bi-crown-fill"></i> PRO MEMBER
+                        <i className="bi bi-crown-fill"></i> {t("dashboard.proMember", "Pro Member")}
                     </div>
                 )}
 
                 <label className="profile-cover-edit">
                     <i className="bi bi-camera-fill"></i>
-                    Change Cover
+                    {t("profile.changeCover", "Change Cover")}
                     <input
                         type="file"
                         accept="image/*"
@@ -153,7 +156,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
             </div>
 
             <div className="profile-main">
-                <label className="profile-image profile-image-clickable" title="Click to upload profile picture">
+                <label className="profile-image profile-image-clickable" title={t("profile.clickUploadAvatar", "Click to upload profile picture")}>
                     {currentAvatar ? (
                         <img src={currentAvatar} alt={user?.name || "Profile"} />
                     ) : (
@@ -163,7 +166,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                     )}
                     <div className="profile-avatar-overlay">
                         <i className="bi bi-camera-fill"></i>
-                        <span>Edit</span>
+                        <span>{t("profile.edit", "Edit")}</span>
                     </div>
                     <input
                         type="file"
@@ -178,14 +181,14 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                         <h1>{user?.name || "Your Name"}</h1>
 
                         {(profile.isVerified || isPro) && (
-                            <span className="verified-badge" title="Verified TalentForge Member">
+                            <span className="verified-badge" title={t("profile.verifiedMember", "Verified TalentForge Member")}>
                                 <i className="bi bi-patch-check-fill"></i>
                             </span>
                         )}
 
                         {isPro && (
-                            <span className="profile-pro-watermark" title="TalentForge Pro Member">
-                                <i className="bi bi-crown-fill"></i> Pro Member
+                            <span className="profile-pro-watermark" title={t("profile.proMember", "TalentForge Pro Member")}>
+                                <i className="bi bi-crown-fill"></i> {t("dashboard.proMember", "Pro Member")}
                             </span>
                         )}
                     </div>
@@ -218,7 +221,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
 
                         {isPro && (
                             <span className="pro-meta-tag">
-                                <i className="bi bi-stars"></i> Pro Member
+                                <i className="bi bi-stars"></i> {t("dashboard.proMember", "Pro Member")}
                             </span>
                         )}
                     </div>
@@ -251,7 +254,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                             onClick={edit}
                         >
                             <i className="bi bi-check-lg"></i>
-                            Save Profile
+                            {t("profile.saveProfile", "Save Profile")}
                         </button>
                     ) : (
                         <>
@@ -268,7 +271,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                                 title={isPro ? "Open Resume Builder" : "Pro Feature: Resume Builder"}
                             >
                                 <i className="bi bi-file-earmark-richtext"></i>
-                                Resume Builder
+                                {t("profile.resumeBuilder", "Resume Builder")}
                                 {!isPro && (
                                     <span className="pro-lock-badge">
                                         <i className="bi bi-lock-fill"></i> PRO
@@ -278,7 +281,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
 
                             <button className="profile-action-button secondary">
                                 <i className="bi bi-share"></i>
-                                Share Profile
+                                {t("profile.shareProfile", "Share Profile")}
                             </button>
 
                             <button
@@ -286,7 +289,7 @@ function ProfileHeader({ user, profile, edit, isEditing, onCoverChange, onAvatar
                                 onClick={edit}
                             >
                                 <i className="bi bi-pencil"></i>
-                                Edit Profile
+                                {t("profile.editProfile", "Edit Profile")}
                             </button>
                         </>
                     )}

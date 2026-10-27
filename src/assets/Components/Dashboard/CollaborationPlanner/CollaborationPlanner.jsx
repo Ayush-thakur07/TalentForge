@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useUser } from "../../../../context/UserContext";
 import "./CollaborationPlanner.css";
 
@@ -258,6 +259,7 @@ function getEntryDayLayout(entries, date, endHour = 20) {
 }
 
 function CollaborationPlanner() {
+  const { t } = useTranslation();
   const { currentUser } = useUser();
   const userId = currentUser?.uid || currentUser?.id || currentUser?.email || "guest";
   const [entries, setEntries] = useState(() => loadEntriesFromStorage(userId));
@@ -549,13 +551,13 @@ function CollaborationPlanner() {
     <div className="planner-page">
       <div className="planner-header-row">
         <div>
-          <p className="planner-eyebrow">Your schedule</p>
-          <h1>Collaboration Planner</h1>
-          <p className="planner-subtitle">Find time to build something together.</p>
+          <p className="planner-eyebrow">{t("planner.eyebrow", "Your schedule")}</p>
+          <h1>{t("planner.title", "Collaboration Planner")}</h1>
+          <p className="planner-subtitle">{t("planner.subtitle", "Find time to build something together.")}</p>
         </div>
         <div className="planner-header-actions">
-            <button className="secondary-button" onClick={() => openCreateSlot(currentDate, "09:00", "availability")}>Set Availability</button>
-            <button className="primary-button" onClick={() => openCreateSlot(currentDate, "13:00", "event")}>Create Event</button>
+            <button className="secondary-button" onClick={() => openCreateSlot(currentDate, "09:00", "availability")}>{t("planner.setAvailability", "Set Availability")}</button>
+            <button className="primary-button" onClick={() => openCreateSlot(currentDate, "13:00", "event")}>{t("planner.createEvent", "Create Event")}</button>
         </div>
       </div>
 
@@ -563,7 +565,7 @@ function CollaborationPlanner() {
         <div className="toolbar-group toolbar-nav">
           <button aria-label="Previous period" className="icon-button" onClick={() => updateView(-1)}><i className="bi bi-chevron-left" /></button>
           <button aria-label="Next period" className="icon-button" onClick={() => updateView(1)}><i className="bi bi-chevron-right" /></button>
-          <button className="today-button" onClick={() => setCurrentDate(new Date())}>Today</button>
+          <button className="today-button" onClick={() => setCurrentDate(new Date())}>{t("planner.today", "Today")}</button>
         </div>
 
         <div className="toolbar-range">{currentRangeLabel}</div>
@@ -592,8 +594,8 @@ function CollaborationPlanner() {
           <input
             value={filters.search}
             onChange={(event) => setFilters((previous) => ({ ...previous, search: event.target.value }))}
-            placeholder="Search schedule or connections"
-            aria-label="Search schedule or connections"
+            placeholder={t("planner.searchPlaceholder", "Search schedule or connections")}
+            aria-label={t("planner.searchPlaceholder", "Search schedule or connections")}
           />
         </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useUser } from "../../../../context/UserContext";
+import { useTranslation } from "react-i18next";
 import "./BrowseStudents.css";
 
 function getMatchColor(score) {
@@ -36,9 +37,10 @@ function readConnections(storageKey) {
 }
 
 function StudentCard({ student, matchScore }) {
+    const { t } = useTranslation();
     const { currentUser, isPro, openUpgradeModal } = useUser();
     const connectionStorageKey = getConnectionStorageKey(currentUser);
-    const formattedScore = typeof matchScore === "number" ? `${matchScore}% Profile Match` : null;
+    const formattedScore = typeof matchScore === "number" ? t("students.profileMatch", { score: matchScore, defaultValue: `${matchScore}% Profile Match` }) : null;
     const matchColor = typeof matchScore === "number" ? getMatchColor(matchScore) : null;
 
     const [isConnected, setIsConnected] = useState(() => {
@@ -85,6 +87,10 @@ function StudentCard({ student, matchScore }) {
         }
     };
 
+    const availabilityText = student.availability
+        ? t(`students.availability.${student.availability}`, student.availability.replace(/_/g, " "))
+        : "";
+
     return (
         <div className="student-card">
             <div className="student-card-header">
@@ -118,7 +124,7 @@ function StudentCard({ student, matchScore }) {
             <div className="student-card-body">
                 <div className="student-section">
                     <span className={`availability-badge ${student.availability}`}>
-                        {student.availability.replace(/_/g, " ")}
+                        {availabilityText}
                     </span>
                 </div>
 
@@ -134,23 +140,23 @@ function StudentCard({ student, matchScore }) {
 
                 <div className="student-section">
                     <p className="interests-text">
-                        <strong>Interests:</strong> {(student.interests || []).join(", ")}
+                        <strong>{t("students.interests", "Interests:")}</strong> {(student.interests || []).join(", ")}
                     </p>
                 </div>
 
                 <div className="student-section">
                     <p className="looking-for">
-                        <strong>Looking for:</strong> {student.lookingFor}
+                        <strong>{t("students.lookingFor", "Looking for:")}</strong> {student.lookingFor}
                     </p>
                 </div>
             </div>
 
             <div className="student-card-footer">
-                <button className="btn-outline">View Profile</button>
+                <button className="btn-outline">{t("students.viewProfile", "View Profile")}</button>
                 <button
                     className={`btn-icon ${isConnected ? "connected" : ""}`}
-                    aria-label={isConnected ? "Connected" : "Connect"}
-                    title={isConnected ? "Connection Request Sent" : isPro ? "Connect (Unlimited Pro)" : "Connect (Free: 5/week)"}
+                    aria-label={isConnected ? t("students.connected", "Connected") : t("students.connect", "Connect")}
+                    title={isConnected ? t("students.connectionSent", "Connection Request Sent") : isPro ? `${t("students.connect", "Connect")} (Unlimited Pro)` : `${t("students.connect", "Connect")} (Free: 5/week)`}
                     onClick={handleConnect}
                 >
                     <i className={isConnected ? "bi bi-check-lg" : "bi bi-person-plus"}></i>

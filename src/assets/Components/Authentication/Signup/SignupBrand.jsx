@@ -1,9 +1,11 @@
 import "./SignupBrand.css";
+import { useTranslation } from "react-i18next";
 
 function SignupBrand() {
+    const { t } = useTranslation();
+
     return (
         <div className="main">
-
             <div className="bg_image">
                 <img
                     src={`${import.meta.env.BASE_URL}signup-image.png`}
@@ -26,15 +28,13 @@ function SignupBrand() {
 
             <div className="bg_text">
                 <h1>
-                    More Than Just a College.
+                    {t("auth.signupBrandTitle", "More Than Just a College.")}
                 </h1>
 
                 <h3>
-                    Join a trusted community where students
-                    learn, collaborate, exchange and grow together.
+                    {t("auth.signupBrandSubtitle", "Join a trusted community where students learn, collaborate, exchange and grow together.")}
                 </h3>
             </div>
-
         </div>
     );
 }

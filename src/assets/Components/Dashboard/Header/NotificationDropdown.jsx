@@ -2,8 +2,10 @@ import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../../../context/NotificationContext';
 import { useApplications } from '../../../../context/ApplicationContext';
+import { useTranslation } from 'react-i18next';
 
 function NotificationDropdown({ isOpen, onClose }) {
+    const { t } = useTranslation();
     const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
     const { openApplication } = useApplications();
     const dropdownRef = useRef(null);
@@ -60,18 +62,20 @@ function NotificationDropdown({ isOpen, onClose }) {
         <div className="notification-dropdown shadow-lg" ref={dropdownRef}>
             <div className="dropdown-header">
                 <div className="dropdown-title-row">
-                    <h3>Notifications</h3>
+                    <h3>{t("nav.notificationsAria", "Notifications")}</h3>
                     {unreadCount > 0 && (
-                        <span className="unread-badge">{unreadCount} new</span>
+                        <span className="unread-badge">
+                            {t("nav.newBadge", { count: unreadCount, defaultValue: `${unreadCount} new` })}
+                        </span>
                     )}
                 </div>
                 {unreadCount > 0 && (
                     <button 
                         className="btn-mark-all" 
                         onClick={markAllAsRead}
-                        title="Mark all notifications as read"
+                        title={t("nav.markAllRead", "Mark all notifications as read")}
                     >
-                        <i className="bi bi-check2-all"></i> Mark all read
+                        <i className="bi bi-check2-all"></i> {t("nav.markAllRead", "Mark all read")}
                     </button>
                 )}
             </div>
@@ -80,7 +84,7 @@ function NotificationDropdown({ isOpen, onClose }) {
                 {recentNotifications.length === 0 ? (
                     <div className="dropdown-empty">
                         <i className="bi bi-bell-slash"></i>
-                        <p>No notifications yet</p>
+                        <p>{t("nav.noNotificationsYet", "No notifications yet")}</p>
                     </div>
                 ) : (
                     recentNotifications.map((item) => (
@@ -107,7 +111,7 @@ function NotificationDropdown({ isOpen, onClose }) {
 
             <div className="dropdown-footer">
                 <button className="btn-view-all" onClick={handleViewAll}>
-                    View All Notifications <i className="bi bi-arrow-right"></i>
+                    {t("nav.searchViewAll", "View all")} <i className="bi bi-arrow-right"></i>
                 </button>
             </div>
         </div>

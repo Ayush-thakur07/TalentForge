@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./ConnectionsSection.css";
 
 function ConnectionsSection({ connections, onAdd, onDelete }) {
+    const { t } = useTranslation();
     const [form, setForm] = useState({
         name: "",
         role: "",
@@ -40,8 +42,8 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
         <section className="connections-section">
             <div className="connections-header">
                 <div>
-                    <h2>Connections</h2>
-                    <p>People you're connected with</p>
+                    <h2>{t("profile.connectionsSection.title", "Connections")}</h2>
+                    <p>{t("profile.connectionsSection.subtitle", "People you're connected with")}</p>
                 </div>
 
                 <div className="connections-header-icon">
@@ -55,35 +57,35 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
             >
                 <div className="connections-form-row">
                     <div className="connections-field">
-                        <label>Name</label>
+                        <label>{t("profile.connectionsSection.nameLabel", "Name")}</label>
                         <input
                             type="text"
                             name="name"
                             value={form.name}
-                            placeholder="Enter name"
+                            placeholder={t("profile.connectionsSection.namePlaceholder", "Student name")}
                             onChange={handleChange}
                         />
                     </div>
 
                     <div className="connections-field">
-                        <label>Role</label>
+                        <label>{t("profile.connectionsSection.roleLabel", "Role")}</label>
                         <input
                             type="text"
                             name="role"
                             value={form.role}
-                            placeholder="Student, Developer..."
+                            placeholder={t("profile.connectionsSection.rolePlaceholder", "Frontend Developer")}
                             onChange={handleChange}
                         />
                     </div>
                 </div>
 
                 <div className="connections-field">
-                    <label>Email</label>
+                    <label>{t("profile.connectionsSection.emailLabel", "Email (optional)")}</label>
                     <input
                         type="email"
                         name="email"
                         value={form.email}
-                        placeholder="Enter email"
+                        placeholder={t("profile.connectionsSection.emailPlaceholder", "student@chitkara.edu.in")}
                         onChange={handleChange}
                     />
                 </div>
@@ -93,7 +95,7 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
                     type="submit"
                 >
                     <i className="bi bi-person-plus"></i>
-                    Add Connection
+                    {t("profile.connectionsSection.addButton", "Add Connection")}
                 </button>
             </form>
 
@@ -105,7 +107,7 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
                             key={connection.id}
                         >
                             <div className="connection-avatar">
-                                {connection.name
+                                {(connection.name || "?")
                                     .charAt(0)
                                     .toUpperCase()}
                             </div>
@@ -122,6 +124,7 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
                                         onClick={() =>
                                             onDelete(connection.id)
                                         }
+                                        aria-label="Delete connection"
                                     >
                                         <i className="bi bi-trash3"></i>
                                     </button>
@@ -139,9 +142,9 @@ function ConnectionsSection({ connections, onAdd, onDelete }) {
                 ) : (
                     <div className="connections-empty">
                         <i className="bi bi-people"></i>
-                        <h3>No connections yet</h3>
+                        <h3>{t("profile.connectionsSection.emptyTitle", "No connections yet")}</h3>
                         <p>
-                            Your connections will appear here.
+                            {t("profile.connectionsSection.emptySubtitle", "Connect with other students across campus to collaborate.")}
                         </p>
                     </div>
                 )}

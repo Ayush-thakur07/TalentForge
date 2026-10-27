@@ -3,7 +3,9 @@ import { extractRequiredSkills } from "../recommendationUtils";
 import "./PostModal.css";
 import { useUser } from "../../../../context/UserContext";
 import { createPost } from "../../../../services/postsService";
+import { useTranslation } from "react-i18next";
 function PostModal({ onClose }) {
+    const { t } = useTranslation();
     const { currentUser } = useUser();
     const [selecteddiv, setSeleectedDiv] = useState("shareProject");
     const [projectTitle, setProjectTitle] = useState("");
@@ -178,11 +180,8 @@ const savePost = async (postData) => {
             <div className="post-modal">
                 <div className="post-modal-header">
                     <div className="Heading">
-                        <h1>CREATE A POST</h1>
-                        <p>
-                            Share what you're working on or what kind
-                            of collaboration you're looking for
-                        </p>
+                        <h1>{t("dashboard.postModal.title", "CREATE A POST")}</h1>
+                        <p>{t("dashboard.postModal.subtitle", "Share what you're working on or what kind of collaboration you're looking for")}</p>
                     </div>
                     <button
                         type="button"
@@ -207,10 +206,8 @@ const savePost = async (postData) => {
                             }
                         >
                             <i className="bi bi-pc-display-horizontal"></i>
-                            <h1>Share a Project</h1>
-                            <p>
-                                Showcase your idea or project
-                            </p>
+                            <h1>{t("dashboard.postTypes.shareProject", "Share a Project")}</h1>
+                            <p>{t("dashboard.postModal.tabShareProjectDesc", "Showcase your idea or project")}</p>
                         </div>
 
                         {/* FIND COLLABORATORS */}
@@ -228,11 +225,9 @@ const savePost = async (postData) => {
 
                             <i className="bi bi-people-fill"></i>
 
-                            <h1>Find collaborators</h1>
+                            <h1>{t("dashboard.postTypes.findCollaborators", "Find Collaborators")}</h1>
 
-                            <p>
-                                Looking for people to work with?
-                            </p>
+                            <p>{t("dashboard.postModal.tabFindCollaboratorsDesc", "Looking for people to work with?")}</p>
 
                         </div>
 
@@ -252,11 +247,9 @@ const savePost = async (postData) => {
 
                             <i className="bi bi-calendar-day-fill"></i>
 
-                            <h1>Available to Help</h1>
+                            <h1>{t("dashboard.postTypes.availableToHelp", "Available to Help")}</h1>
 
-                            <p>
-                                Let others know you're free
-                            </p>
+                            <p>{t("dashboard.postModal.tabAvailableToHelpDesc", "Let others know you're free")}</p>
 
                         </div>
 
@@ -276,11 +269,9 @@ const savePost = async (postData) => {
 
                             <i className="bi bi-person-fill"></i>
 
-                            <h1>Need Help</h1>
+                            <h1>{t("dashboard.postTypes.needHelp", "Need Help")}</h1>
 
-                            <p>
-                                Get support from the community
-                            </p>
+                            <p>{t("dashboard.postModal.tabNeedHelpDesc", "Get support from the community")}</p>
 
                         </div>
 

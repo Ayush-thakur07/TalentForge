@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useUser } from "../../../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import "./PaymentUpgradeModal.css";
@@ -10,6 +11,7 @@ function PaymentUpgradeModal() {
 }
 
 function UpgradeCheckout() {
+    const { t } = useTranslation();
     const {
         upgradeModalFeature,
         upgradeModalPlan,
@@ -195,7 +197,7 @@ function UpgradeCheckout() {
                                 </div>
                             </div>
 
-                            <h3 className="checkout-title">Payment details</h3>
+                            <h3 className="checkout-title">{t("subscription.paymentDetails", "Payment details")}</h3>
 
                             {/* Plan Card */}
                             <div className="checkout-plan-card">
@@ -204,7 +206,7 @@ function UpgradeCheckout() {
                                 </div>
                                 <div className="plan-summary-info">
                                     <div className="plan-name-row">
-                                        <h4>Pro Plan</h4>
+                                        <h4>{t("subscription.proTitle", "Pro Plan")}</h4>
                                         <span className="plan-cost">{planPrice} / {planPeriod}</span>
                                     </div>
                                     <p className="plan-billing-note">
@@ -215,7 +217,7 @@ function UpgradeCheckout() {
 
                             {/* Payment Methods */}
                             <div className="payment-methods-section">
-                                <label className="input-group-label">Select Payment Method</label>
+                                <label className="input-group-label">{t("subscription.selectMethod", "Select Payment Method")}</label>
                                 <div className="payment-method-tabs">
                                     <button
                                         type="button"
@@ -223,7 +225,7 @@ function UpgradeCheckout() {
                                         onClick={() => setPaymentMethod("card")}
                                     >
                                         <i className="bi bi-credit-card-2-front"></i>
-                                        <span>Card</span>
+                                        <span>{t("subscription.card", "Card")}</span>
                                     </button>
                                     <button
                                         type="button"
@@ -231,7 +233,7 @@ function UpgradeCheckout() {
                                         onClick={() => setPaymentMethod("upi")}
                                     >
                                         <i className="bi bi-qr-code-scan"></i>
-                                        <span>UPI</span>
+                                        <span>{t("subscription.upi", "UPI")}</span>
                                     </button>
                                     <button
                                         type="button"
@@ -239,7 +241,7 @@ function UpgradeCheckout() {
                                         onClick={() => setPaymentMethod("netbanking")}
                                     >
                                         <i className="bi bi-bank"></i>
-                                        <span>Net Banking</span>
+                                        <span>{t("subscription.netbanking", "Net Banking")}</span>
                                     </button>
                                 </div>
                             </div>
@@ -249,7 +251,7 @@ function UpgradeCheckout() {
                                 {paymentMethod === "card" && (
                                     <>
                                         <div className="form-group">
-                                            <label htmlFor="card-number">Card Number</label>
+                                            <label htmlFor="card-number">{t("subscription.cardNumber", "Card Number")}</label>
                                             <div className="card-input-wrapper">
                                                 <input
                                                     id="card-number"
@@ -269,7 +271,7 @@ function UpgradeCheckout() {
 
                                         <div className="form-row">
                                             <div className="form-group">
-                                                <label htmlFor="expiry-date">Expiry Date</label>
+                                                <label htmlFor="expiry-date">{t("subscription.expiryDate", "Expiry Date")}</label>
                                                 <input
                                                     id="expiry-date"
                                                     type="text"
@@ -285,7 +287,7 @@ function UpgradeCheckout() {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="card-cvv">CVV</label>
+                                                <label htmlFor="card-cvv">{t("subscription.cvv", "CVV")}</label>
                                                 <input
                                                     id="card-cvv"
                                                     type="password"
@@ -303,7 +305,7 @@ function UpgradeCheckout() {
                                         </div>
 
                                         <div className="form-group">
-                                            <label htmlFor="card-name">Name on Card</label>
+                                            <label htmlFor="card-name">{t("subscription.nameOnCard", "Name on Card")}</label>
                                             <input
                                                 id="card-name"
                                                 type="text"
@@ -319,7 +321,7 @@ function UpgradeCheckout() {
 
                                 {paymentMethod === "upi" && (
                                     <div className="form-group">
-                                        <label htmlFor="upi-id">UPI ID / VPA</label>
+                                        <label htmlFor="upi-id">{t("subscription.upiId", "UPI ID / VPA")}</label>
                                         <input
                                             id="upi-id"
                                             type="text"
@@ -340,7 +342,7 @@ function UpgradeCheckout() {
 
                                 {paymentMethod === "netbanking" && (
                                     <div className="form-group">
-                                        <label htmlFor="select-bank">Select Your Bank</label>
+                                        <label htmlFor="select-bank">{t("subscription.selectBank", "Select Your Bank")}</label>
                                         <select
                                             id="select-bank"
                                             value={selectedBank}
@@ -363,7 +365,7 @@ function UpgradeCheckout() {
                                             onChange={(e) => setConfirmedDemo(e.target.checked)}
                                         />
                                         <span className="checkbox-label">
-                                            I understand this is a demo. No payment will be taken.
+                                            {t("subscription.demoTerms", "I understand this is a demo. No payment will be taken.")}
                                         </span>
                                     </label>
                                 </div>
@@ -380,15 +382,15 @@ function UpgradeCheckout() {
                                     {isProcessing ? (
                                         <>
                                             <span className="spinner-border" />
-                                            Applying your demo upgrade...
+                                            {t("subscription.applyingDemo", "Applying your demo upgrade...")}
                                         </>
                                     ) : (
-                                        <>Confirm demo upgrade — {planPrice} / {planPeriod}</>
+                                        <>{t("subscription.confirmDemo", "Confirm demo upgrade")} — {planPrice} / {planPeriod}</>
                                     )}
                                 </button>
 
                                 <p className="demo-notice-text">
-                                    Demo only — don't enter real payment details. No payment is processed or charged.
+                                    {t("subscription.demoNotice", "Demo only — don't enter real payment details. No payment is processed or charged.")}
                                 </p>
                             </form>
                         </div>
@@ -401,9 +403,9 @@ function UpgradeCheckout() {
                                 <i className="bi bi-check-lg"></i>
                             </div>
 
-                            <h2>You're on Pro</h2>
+                            <h2>{t("subscription.youreOnPro", "You're on Pro")}</h2>
                             <p className="success-subtitle">
-                                Pro features are now enabled for your account.
+                                {t("subscription.proFeaturesEnabled", "Pro features are now enabled for your account.")}
                             </p>
 
                             <button
@@ -411,13 +413,13 @@ function UpgradeCheckout() {
                                 className="explore-pro-btn"
                                 onClick={handleExplorePro}
                             >
-                                Explore Pro Features
+                                {t("subscription.explorePro", "Explore Pro Features")}
                                 <i className="bi bi-arrow-right"></i>
                             </button>
                         </div>
 
                         <div className="quick-start-guide">
-                            <h3>Quick Start Guide</h3>
+                            <h3>{t("subscription.quickStartGuide", "Quick Start Guide")}</h3>
                             <div className="guide-steps-list">
                                 <div className="guide-step-card">
                                     <div className="step-badge">1</div>

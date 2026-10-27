@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import "./EditProfileModal.css";
 
 function EditProfileModal({
@@ -10,6 +11,8 @@ function EditProfileModal({
     onSave,
     onClose
 }) {
+    const { t } = useTranslation();
+
     return (
         <div className="edit-profile-overlay" onClick={onClose}>
             <div
@@ -18,28 +21,27 @@ function EditProfileModal({
             >
                 <div className="edit-profile-header">
                     <div>
-                        <h2>Edit Profile</h2>
-                        <p>Update your TalentForge profile</p>
+                        <h2>{t("profile.editModal.title", "Edit Profile")}</h2>
+                        <p>{t("profile.editModal.subtitle", "Update your TalentForge profile")}</p>
                     </div>
 
                     <button
                         className="edit-profile-close"
                         onClick={onClose}
+                        aria-label="Close"
                     >
                         <i className="bi bi-x-lg"></i>
                     </button>
                 </div>
 
                 <div className="edit-profile-body">
-
                     <div className="edit-profile-row">
-
                         <div className="edit-profile-field">
-                            <label>Role</label>
+                            <label>{t("profile.editModal.roleLabel", "Role")}</label>
                             <input
                                 type="text"
                                 value={profile.role}
-                                placeholder="Software Developer"
+                                placeholder={t("profile.editModal.rolePlaceholder", "Software Developer")}
                                 onChange={(e) =>
                                     onChange("role", e.target.value)
                                 }
@@ -47,25 +49,24 @@ function EditProfileModal({
                         </div>
 
                         <div className="edit-profile-field">
-                            <label>Year</label>
+                            <label>{t("profile.editModal.yearLabel", "Year")}</label>
                             <input
                                 type="text"
                                 value={profile.year}
-                                placeholder="2nd Year"
+                                placeholder={t("profile.editModal.yearPlaceholder", "2nd Year")}
                                 onChange={(e) =>
                                     onChange("year", e.target.value)
                                 }
                             />
                         </div>
-
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>University</label>
+                        <label>{t("profile.editModal.universityLabel", "University")}</label>
                         <input
                             type="text"
                             value={profile.university}
-                            placeholder="Enter your university"
+                            placeholder={t("profile.editModal.universityPlaceholder", "Enter your university")}
                             onChange={(e) =>
                                 onChange("university", e.target.value)
                             }
@@ -73,11 +74,11 @@ function EditProfileModal({
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>Location</label>
+                        <label>{t("profile.editModal.locationLabel", "Location")}</label>
                         <input
                             type="text"
                             value={profile.location}
-                            placeholder="City, Country"
+                            placeholder={t("profile.editModal.locationPlaceholder", "City, Country")}
                             onChange={(e) =>
                                 onChange("location", e.target.value)
                             }
@@ -85,11 +86,11 @@ function EditProfileModal({
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>Headline</label>
+                        <label>{t("profile.editModal.headlineLabel", "Headline")}</label>
                         <input
                             type="text"
                             value={profile.headline}
-                            placeholder="Coder | Learner | Builder"
+                            placeholder={t("profile.editModal.headlinePlaceholder", "Coder | Learner | Builder")}
                             onChange={(e) =>
                                 onChange("headline", e.target.value)
                             }
@@ -97,10 +98,10 @@ function EditProfileModal({
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>About Me</label>
+                        <label>{t("profile.editModal.aboutLabel", "About Me")}</label>
                         <textarea
                             value={profile.about}
-                            placeholder="Tell people about yourself..."
+                            placeholder={t("profile.editModal.aboutPlaceholder", "Tell people about yourself...")}
                             rows="5"
                             onChange={(e) =>
                                 onChange("about", e.target.value)
@@ -109,31 +110,30 @@ function EditProfileModal({
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>Skills</label>
+                        <label>{t("profile.editModal.skillsLabel", "Skills")}</label>
                         <input
                             type="text"
                             value={skillsInput}
-                            placeholder="React, Java, SQL, Python"
+                            placeholder={t("profile.editModal.skillsPlaceholder", "React, Java, SQL, Python")}
                             onChange={(e) =>
                                 onSkillsChange(e.target.value)
                             }
                         />
-                        <span>Separate skills with commas</span>
+                        <span>{t("profile.editModal.skillsHint", "Separate skills with commas")}</span>
                     </div>
 
                     <div className="edit-profile-field">
-                        <label>Interests</label>
+                        <label>{t("profile.editModal.interestsLabel", "Interests")}</label>
                         <input
                             type="text"
                             value={interestsInput}
-                            placeholder="AI, Startups, Web Development"
+                            placeholder={t("profile.editModal.interestsPlaceholder", "AI, Startups, Web Development")}
                             onChange={(e) =>
                                 onInterestsChange(e.target.value)
                             }
                         />
-                        <span>Separate interests with commas</span>
+                        <span>{t("profile.editModal.interestsHint", "Separate interests with commas")}</span>
                     </div>
-
                 </div>
 
                 <div className="edit-profile-footer">
@@ -141,7 +141,7 @@ function EditProfileModal({
                         className="edit-profile-cancel"
                         onClick={onClose}
                     >
-                        Cancel
+                        {t("profile.editModal.cancel", "Cancel")}
                     </button>
 
                     <button
@@ -149,7 +149,7 @@ function EditProfileModal({
                         onClick={onSave}
                     >
                         <i className="bi bi-check-lg"></i>
-                        Save Changes
+                        {t("profile.editModal.saveChanges", "Save Changes")}
                     </button>
                 </div>
             </div>

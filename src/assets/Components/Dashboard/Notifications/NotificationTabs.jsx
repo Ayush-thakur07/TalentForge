@@ -1,23 +1,26 @@
+import { useTranslation } from "react-i18next";
 
 function NotificationTabs({ activeTab, setActiveTab, counts }) {
+    const { t } = useTranslation();
+
     const tabs = [
-        { id: 'all', label: 'All', icon: 'bi-grid', count: counts.all },
-        { id: 'unread', label: 'Unread', icon: 'bi-bell', count: counts.unread },
+        { id: 'all', label: t('notifications.tabs.all', 'All'), icon: 'bi-grid', count: counts.all },
+        { id: 'unread', label: t('notifications.tabs.unread', 'Unread'), icon: 'bi-bell', count: counts.unread },
         {
             id: 'applications',
-            label: 'Applications',
+            label: t('notifications.tabs.applications', 'Applications'),
             icon: 'bi-person-badge',
             count: counts.applications,
         },
         {
             id: 'connections',
-            label: 'Connections',
+            label: t('notifications.tabs.connections', 'Connections'),
             icon: 'bi-people',
             count: counts.connections,
         },
         {
             id: 'posts',
-            label: 'Posts',
+            label: t('notifications.tabs.posts', 'Posts'),
             icon: 'bi-chat-square-text',
             count: counts.posts,
         },

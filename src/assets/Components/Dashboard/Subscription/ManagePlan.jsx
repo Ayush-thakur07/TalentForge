@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useUser } from "../../../../context/UserContext";
 import "./ManagePlan.css";
 
@@ -216,6 +217,7 @@ function CardsBackdrop() {
 }
 
 function ManagePlan() {
+    const { t } = useTranslation();
     const { isPro, openUpgradeModal, downgradeToFree } = useUser();
     const [billingCycle, setBillingCycle] = useState("monthly");
     const [selectedPlan, setSelectedPlan] = useState(isPro ? "pro" : "free");
@@ -324,14 +326,14 @@ function ManagePlan() {
                                 </svg>
                             </div>
                             <div className="plan-info">
-                                <h2 className="plan-title">Free</h2>
-                                <p className="plan-subtitle">Start your journey</p>
+                                <h2 className="plan-title">{t("subscription.freeTitle", "Free")}</h2>
+                                <p className="plan-subtitle">{t("subscription.freeSubtitle", "Start your journey")}</p>
                             </div>
                         </div>
 
                         <div className="plan-price-block">
-                            <span className="plan-price-currency">₹0</span>
-                            <span className="plan-price-unit">/ month</span>
+                            <span className="plan-price-currency">{t("subscription.freePrice", "₹0")}</span>
+                            <span className="plan-price-unit">{t("subscription.perMonth", "/ month")}</span>
                         </div>
 
                         <ul className="plan-features-list">
@@ -371,7 +373,7 @@ function ManagePlan() {
                                 disabled
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <i className="bi bi-check-circle-fill"></i> Current Plan
+                                <i className="bi bi-check-circle-fill"></i> {t("subscription.currentPlan", "Current Plan")}
                             </button>
                         )}
                     </article>
@@ -391,7 +393,7 @@ function ManagePlan() {
                         }}
                     >
                         <div className="pro-popular-badge">
-                            {isPro ? "Active Plan" : "Most Popular"}
+                            {isPro ? t("subscription.activePlan", "Active Plan") : t("subscription.mostPopular", "Most Popular")}
                         </div>
 
                         <div className="plan-card-header">
@@ -413,8 +415,8 @@ function ManagePlan() {
                                 </svg>
                             </div>
                             <div className="plan-info">
-                                <h2 className="plan-title">Pro</h2>
-                                <p className="plan-subtitle">For serious builders</p>
+                                <h2 className="plan-title">{t("subscription.proTitle", "Pro")}</h2>
+                                <p className="plan-subtitle">{t("subscription.proSubtitle", "For serious builders")}</p>
                             </div>
                         </div>
 
@@ -439,7 +441,7 @@ function ManagePlan() {
                                 disabled
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <i className="bi bi-crown-fill"></i> Current Plan (Active)
+                                <i className="bi bi-crown-fill"></i> {t("subscription.currentPlanActive", "Current Plan (Active)")}
                             </button>
                         ) : (
                             <button

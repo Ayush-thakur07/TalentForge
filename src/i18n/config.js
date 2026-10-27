@@ -1,4 +1,3 @@
-
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
@@ -14,12 +13,16 @@ import enSite from "../locales/en/site.json";
 import hiSite from "../locales/hi/site.json";
 import paSite from "../locales/pa/site.json";
 
+import enApp from "../locales/en/app.json";
+import hiApp from "../locales/hi/app.json";
+import paApp from "../locales/pa/app.json";
+
 const supportedLanguages = ["en", "hi", "pa"];
 
 const resources = {
-  en: { common: enCommon, landing: enLanding, site: enSite },
-  hi: { common: hiCommon, landing: hiLanding, site: hiSite },
-  pa: { common: paCommon, landing: paLanding, site: paSite }
+  en: { common: enCommon, landing: enLanding, site: enSite, app: enApp },
+  hi: { common: hiCommon, landing: hiLanding, site: hiSite, app: hiApp },
+  pa: { common: paCommon, landing: paLanding, site: paSite, app: paApp }
 };
 
 function getInitialLanguage() {
@@ -39,10 +42,11 @@ if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources,
     lng: getInitialLanguage(),
-    fallbackLng: false,
+    fallbackLng: "en",
     supportedLngs: supportedLanguages,
-    defaultNS: "common",
-    ns: ["common", "landing", "site"],
+    defaultNS: "app",
+    ns: ["app", "common", "landing", "site"],
+    fallbackNS: ["app", "common"],
     interpolation: {
       escapeValue: false
     },

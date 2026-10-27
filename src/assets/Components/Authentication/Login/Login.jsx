@@ -9,13 +9,16 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "./Login.css";
 import { auth } from "../../../../config/firebase";
 import background from "../../../Background_image.png";
 import { useUser } from "../../../../context/UserContext";
+import LanguageSelector from "../../../../components/LanguageSelector";
 
 function Login() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const [show, setshow] = useState(false);
@@ -38,7 +41,6 @@ function Login() {
 
         try {
             setLoading(true);
-
             await applyPersistence();
 
             const pop = await signInWithPopup(auth, a);
@@ -48,132 +50,135 @@ function Login() {
             if (!email || !email.endsWith("@chitkara.edu.in")) {
                 await signOut(auth);
                 setCurrentUser(null);
-                window.alert("Access denied. Please sign in with your Chitkara University student email (@chitkara.edu.in).");
+                window.alert(t("auth.errorChitkaraEmail", "Access denied. Please sign in with your Chitkara University student email (@chitkara.edu.in)."));
                 return;
             }
 
             setCurrentUser(user);
-            window.alert("Successfully logged in with Google");
+            window.alert(t("auth.googleLoginSuccess", "Successfully logged in with Google"));
             navigate("/dashboard", { replace: true });
         }
         catch (error) {
             console.log(error);
-            window.alert(error.message);
+            window.alert(error.message || t("auth.errorGeneral", "Something went wrong. Please try again."));
         }
         finally {
             setLoading(false);
         }
     }
 
-    
-async function handleSubmit(event) {
-  event.preventDefault();
-  const formData = new FormData(event.currentTarget);
-  const email = String(formData.get("email") || "").trim().toLowerCase();
-  const password = String(formData.get("password") || "");
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const email = String(formData.get("email") || "").trim().toLowerCase();
+        const password = String(formData.get("password") || "");
 
-  if (loading) return;
+        if (loading) return;
 
-  try {
-    setLoading(true);
-    await applyPersistence();
+        try {
+            setLoading(true);
+            await applyPersistence();
 
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    const user = result.user;
-    if (!user.email?.toLowerCase().endsWith("@chitkara.edu.in")) {
-      await signOut(auth);
-      setCurrentUser(null);
-      window.alert("Please use your Chitkara University student email.");
-      return;
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            const user = result.user;
+            if (!user.email?.toLowerCase().endsWith("@chitkara.edu.in")) {
+                await signOut(auth);
+                setCurrentUser(null);
+                window.alert(t("auth.errorChitkaraEmail", "Please use your Chitkara University student email."));
+                return;
+            }
+            setCurrentUser(user);
+            navigate("/dashboard", { replace: true });
+        } catch (error) {
+            const code = error?.code || "";
+
+            if (
+                code.includes("user-not-found") ||
+                code.includes("wrong-password") ||
+                code.includes("invalid-credential")
+            ) {
+                window.alert(t("auth.errorInvalidCredentials", "Invalid email or password."));
+            } else {
+                console.error("Login failed:", error);
+                window.alert(error.message || t("auth.errorGeneral", "Login failed. Please try again."));
+            }
+        } finally {
+            setLoading(false);
+        }
     }
-    setCurrentUser(user);
-    navigate("/dashboard", { replace: true });
-  } catch (error) {
-    const code = error?.code || "";
-
-    if (
-      code.includes("user-not-found") ||
-      code.includes("wrong-password") ||
-      code.includes("invalid-credential")
-    ) {
-      window.alert("Invalid email or password.");
-    } else {
-      console.error("Login failed:", error);
-      window.alert(error.message || "Login failed. Please try again.");
-    }
-  } finally {
-    setLoading(false);
-  }
-}
-
 
     return (
         <div className="data">
             <div className="card">
                 <img src={background} alt="" />
                 <div className="card-content">
-                    <h1>Your Campus.</h1>
-                    <h1>Your People.</h1>
-                    <h1>Your Opportunities.</h1>
+                    <h1>{t("auth.brandHero1", "Your Campus.")}</h1>
+                    <h1>{t("auth.brandHero2", "Your People.")}</h1>
+                    <h1>{t("auth.brandHero3", "Your Opportunities.")}</h1>
 
                     <div className="card-description">
-                        <p><i>Connect, collaborate and create</i></p>
-                        <p><i>amazing things together.</i></p>
+                        <p><i>{t("auth.brandHeroSubtitle1", "Connect, collaborate and create")}</i></p>
+                        <p><i>{t("auth.brandHeroSubtitle2", "amazing things together.")}</i></p>
                     </div>
 
                     <div className="feature">
                         <div className="feature-title">
                             <i className="bi bi-people-fill"></i>
-                            <span>Connect with students</span>
+                            <span>{t("auth.featureConnect", "Connect with students")}</span>
                         </div>
                     </div>
 
                     <div className="feature">
                         <div className="feature-title">
                             <i className="bi bi-suitcase-lg-fill"></i>
-                            <span>Build & share projects</span>
+                            <span>{t("auth.featureBuild", "Build & share projects")}</span>
                         </div>
                     </div>
 
                     <div className="feature">
                         <div className="feature-title">
                             <i className="bi bi-search"></i>
-                            <span>Explore Opportunities</span>
+                            <span>{t("auth.featureExplore", "Explore Opportunities")}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="login-box">
+                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+                    <LanguageSelector />
+                </div>
+
                 <div className="head">
-    <h1>Welcome Back!</h1>
-    <p><b>Login to continue to TalentForge</b></p>
-</div>
+                    <h1>{t("auth.welcomeBack", "Welcome Back!")}</h1>
+                    <p><b>{t("auth.loginSubtitle", "Login to continue to TalentForge")}</b></p>
+                </div>
 
                 <div className="input">
                     <form className="form-sign" onSubmit={handleSubmit}>
-                        <label>Email Address</label>
+                        <label>{t("auth.emailLabel", "Email Address")}</label>
                         <i className="bi bi-envelope"></i>
                         <input
                             name="email"
                             type="email"
-                            placeholder="Enter your college email"
+                            placeholder={t("auth.emailPlaceholder", "Enter your college email")}
                             required
                             pattern="[A-Za-z0-9._%+-]+@chitkara[.]edu[.]in"
                         />
 
                         <div>
-                            <label>Password</label>
+                            <label>{t("auth.passwordLabel", "Password")}</label>
                             <i className="bi bi-lock"></i>
                             <input
                                 name="password"
                                 type={show ? "text" : "password"}
-                                placeholder="Enter your password"
+                                placeholder={t("auth.passwordPlaceholder", "Enter your password")}
                                 required
                             />
                             <button
                                 type="button"
                                 onClick={() => setshow(!show)}
+                                aria-label={show ? "Hide password" : "Show password"}
                             >
                                 <i className={show ? "bi bi-eye" : "bi bi-eye-slash"}></i>
                             </button>
@@ -181,7 +186,7 @@ async function handleSubmit(event) {
 
                         <div>
                             <label className="remember">
-                                Remember me
+                                {t("auth.rememberMe", "Remember me")}
                                 <input
                                     type="checkbox"
                                     className="checkbox"
@@ -192,15 +197,15 @@ async function handleSubmit(event) {
                         </div>
 
                         <button type="button">
-                            Forgot Password?
+                            {t("auth.forgotPassword", "Forgot Password?")}
                         </button>
 
                         <button type="submit" disabled={loading}>
-                            {loading ? "Logging in..." : "Login"}
+                            {loading ? t("auth.loggingIn", "Logging in...") : t("auth.loginButton", "Login")}
                         </button>
 
                         <div className="divider">
-                            <span>or continue with</span>
+                            <span>{t("auth.orContinueWith", "or continue with")}</span>
                         </div>
 
                         <button
@@ -210,16 +215,16 @@ async function handleSubmit(event) {
                             disabled={loading}
                         >
                             <i className="bi bi-google"></i>
-                            {loading ? "Signing in..." : "Continue with Google"}
+                            {loading ? t("auth.signingIn", "Signing in...") : t("auth.continueWithGoogle", "Continue with Google")}
                         </button>
 
                         <p className="signup">
-                            Don't have an account?
+                            {t("auth.noAccount", "Don't have an account?")}{" "}
                             <button
                                 type="button"
                                 onClick={() => navigate("/signup")}
                             >
-                                Sign up
+                                {t("auth.signUpLink", "Sign up")}
                             </button>
                         </p>
                     </form>

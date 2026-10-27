@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import PostCard from "../Dashboard/PostCard";
+import { useTranslation } from "react-i18next";
 import "./Saved.css";
 
 function Saved() {
+    const { t } = useTranslation();
     const [savedPosts, setSavedPosts] = useState([]);
 
     useEffect(() => {
@@ -44,8 +46,8 @@ function Saved() {
     return (
         <div className="saved-page">
             <div className="saved-header">
-                <h1>Saved Posts</h1>
-                <p>Access your bookmarked opportunities and project listings.</p>
+                <h1>{t("saved.title", "Saved Posts")}</h1>
+                <p>{t("saved.subtitle", "Access your bookmarked opportunities and project listings.")}</p>
             </div>
 
             {savedPosts.length === 0 ? (
@@ -53,8 +55,8 @@ function Saved() {
                     <div className="empty-icon-circle">
                         <i className="bi bi-bookmark"></i>
                     </div>
-                    <h3>No Saved Posts</h3>
-                    <p>Click the bookmark button on any post to save it for later.</p>
+                    <h3>{t("saved.emptyTitle", "No Saved Posts")}</h3>
+                    <p>{t("saved.emptySubtitle", "Click the bookmark button on any post to save it for later.")}</p>
                 </div>
             ) : (
                 <div className="saved-posts-grid">

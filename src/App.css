@@ -253,51 +253,167 @@ body {
 }
 
 .theme-toggle {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 68px;
-    min-width: 68px;
-    height: 36px;
-    padding: 5px 6px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--toggle-track);
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.08);
-    cursor: pointer;
-    transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  --toggle-width: 68px;
+  --toggle-height: 36px;
+  --thumb-size: 28px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  width: var(--toggle-width);
+  min-width: var(--toggle-width);
+  height: var(--toggle-height);
+  padding: 3px;
+
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--toggle-track);
+
+  box-shadow:
+    inset 0 2px 5px rgba(15, 23, 42, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 2px 4px rgba(35, 25, 80, 0.04);
+
+  cursor: pointer;
+  isolation: isolate;
+
+  transition:
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .theme-toggle:hover {
-    border-color: var(--border-strong);
+  border-color: var(--border-strong);
+  box-shadow:
+    inset 0 2px 5px rgba(15, 23, 42, 0.08),
+    0 4px 12px rgba(91, 63, 180, 0.10);
+}
+.theme-toggle:focus-visible {
+  outline: 3px solid rgba(109, 76, 255, 0.4);
+  outline-offset: 3px;
 }
 
 .theme-toggle-thumb {
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: var(--toggle-thumb);
-    color: var(--toggle-thumb-icon);
-    box-shadow: 0 3px 10px var(--toggle-thumb-shadow);
-    transform: translateY(-50%);
-    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+  position: absolute;
+  left: 3px;
+  top: 3px;
+
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff 0%,
+    #f4f0ff 48%,
+    #ded5ff 100%
+  );
+
+  color: #6545f5;
+
+  box-shadow:
+    0 3px 0 rgba(103, 69, 210, 0.20),
+    0 5px 9px rgba(35, 24, 85, 0.17),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 2px rgba(102, 72, 180, 0.12);
+
+  transform: translateX(0);
+
+  transition:
+    transform 650ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 300ms ease,
+    color 300ms ease,
+    box-shadow 250ms ease;
+
+  z-index: 1;
+}
+.theme-toggle-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+}
+.theme-toggle-thumb i {
+  position: relative;
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 300ms ease;
+}
+.theme-toggle:hover .theme-toggle-thumb {
+  box-shadow:
+    0 4px 0 rgba(103, 69, 210, 0.18),
+    0 7px 13px rgba(35, 24, 85, 0.19),
+    inset 0 1px 0 #ffffff;
+}
+.theme-toggle:active .theme-toggle-thumb {
+  transform: translateX(0) scale(0.94);
+  box-shadow:
+    0 1px 0 rgba(103, 69, 210, 0.15),
+    0 2px 4px rgba(35, 24, 85, 0.15);
 }
 
-html[data-theme="dark"] .theme-toggle-thumb {
-    transform: translate(32px, -50%);
+html[data-theme="dark"] .theme-toggle {
+  background: linear-gradient(135deg, #28213f, #17152b);
+  border-color: #51436f;
+
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.32),
+    0 2px 5px rgba(0, 0, 0, 0.12);
 }
 
 .theme-toggle i {
     font-size: 12px;
     line-height: 1;
 }
+html[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(32px);
 
+  background: linear-gradient(
+    145deg,
+    #cfc3ff 0%,
+    #a68cff 50%,
+    #7955ed 100%
+  );
+
+  color: #ffffff;
+
+  border-color: rgba(255, 255, 255, 0.3);
+
+  box-shadow:
+    0 3px 0 rgba(49, 29, 117, 0.65),
+    0 5px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+html[data-theme="dark"] .theme-toggle:hover .theme-toggle-thumb {
+  box-shadow:
+    0 4px 0 rgba(49, 29, 117, 0.65),
+    0 7px 15px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+html[data-theme="dark"] .theme-toggle:active .theme-toggle-thumb {
+  transform: translateX(32px) scale(0.94);
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle-thumb,
+  .theme-toggle-thumb i {
+    transition: none;
+  }
+}
 .Headeractions > button:not(.profile-trigger) {
     position: relative;
 

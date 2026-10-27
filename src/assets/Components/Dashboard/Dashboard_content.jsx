@@ -11,8 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../../../context/UserContext";
 import "./Dashboard_content.css";
+import { useTranslation } from "react-i18next";
 
 function DashboardContent() {
+    const { t } = useTranslation();
     
 const navigate = useNavigate();
 const { currentUser } = useUser();
@@ -141,7 +143,7 @@ const confirmDelete = async () => {
 
                 <i className="bi bi-file-earmark-post"></i>
 
-                <h3>No posts yet</h3>
+                <h3>{t("dashboard.feed.noPosts", "No posts yet")}</h3>
 
                 <p>
                     Be the first to share something with the TalentForge
@@ -172,9 +174,9 @@ const confirmDelete = async () => {
     {postToDelete !== null && (
         <div className="delete-confirm-overlay" onClick={cancelDelete}>
             <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
-                <h3 className="delete-confirm-title">Delete this post?</h3>
+                <h3 className="delete-confirm-title">{t("dashboard.feed.deleteTitle", "Delete this post?")}</h3>
                 <p className="delete-confirm-text">
-                    Are you sure you want to delete this post? This action cannot be undone.
+                    {t("dashboard.feed.deleteText", "Are you sure you want to delete this post? This action cannot be undone.")}
                 </p>
                 <div className="delete-confirm-buttons">
                     <button type="button" className="delete-confirm-btn cancel" onClick={cancelDelete}>
@@ -192,12 +194,12 @@ const confirmDelete = async () => {
         <div className="recommended-section">
           <div className="dashboard-section-header">
             <div>
-              <h2>Recommended for You</h2>
-              <p>Students who match your interests and skills.</p>
+              <h2>{t("dashboard.recommended.title", "Recommended for You")}</h2>
+              <p>{t("dashboard.recommended.subtitle", "Students who match your interests and skills.")}</p>
             </div>
 
             <button className="section-link" onClick={() => navigate("/students")}>
-              See All <i className="bi bi-arrow-right"></i>
+              {t("dashboard.recommended.seeAll", "See All")} <i className="bi bi-arrow-right"></i>
             </button>
           </div>
 
@@ -246,7 +248,7 @@ const confirmDelete = async () => {
 
                     <span className="match-badge">
                         <i className="bi bi-star-fill"></i>
-                        {student.matchPercentage}% Recommendation Match
+                        {t("dashboard.recommended.match", { percent: student.matchPercentage, defaultValue: `${student.matchPercentage}% Recommendation Match` })}
                     </span>
 
                     <button className="connect-button">
@@ -269,8 +271,8 @@ const confirmDelete = async () => {
 
       <div className="dashboard-section-header">
         <div>
-          <h2>Trending Skills</h2>
-          <p>Skills gaining attention across campus.</p>
+          <h2>{t("dashboard.trending.title", "Trending Skills")}</h2>
+          <p>{t("dashboard.trending.subtitle", "Skills gaining attention across campus.")}</p>
         </div>
 
         <button className="section-link" onClick={() => navigate("/students")}>
@@ -298,7 +300,7 @@ const confirmDelete = async () => {
                 )) : (
                     <div className="trending-empty">
                         <i className="bi bi-graph-up"></i>
-                        <span>Create a post to start tracking requested skills.</span>
+                        <span>{t("dashboard.trending.empty", "Create a post to start tracking requested skills.")}</span>
                     </div>
                 )}
       </div>

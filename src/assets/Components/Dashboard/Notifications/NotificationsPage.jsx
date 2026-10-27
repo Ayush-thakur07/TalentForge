@@ -3,30 +3,30 @@ import { useNotifications } from '../../../../context/NotificationContext';
 import NotificationHeader from './NotificationHeader';
 import NotificationTabs from './NotificationTabs';
 import NotificationItem from './NotificationItem';
+import { useTranslation } from 'react-i18next';
 import './Notifications.css';
 
 function NotificationsPage() {
+    const { t } = useTranslation();
     const { notifications, resetNotifications } = useNotifications();
     const [activeTab, setActiveTab] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
-    
-const counts = useMemo(() => {
-    return {
-        all: notifications.length,
-        unread: notifications.filter((n) => !n.read).length,
-        applications: notifications.filter(
-            (n) => n.type === 'applications' && !n.read
-        ).length,
-        connections: notifications.filter(
-            (n) => n.type === 'connections' && !n.read
-        ).length,
-        posts: notifications.filter(
-            (n) => n.type === 'posts' && !n.read
-        ).length,
-    };
-}, [notifications]);
-
+    const counts = useMemo(() => {
+        return {
+            all: notifications.length,
+            unread: notifications.filter((n) => !n.read).length,
+            applications: notifications.filter(
+                (n) => n.type === 'applications' && !n.read
+            ).length,
+            connections: notifications.filter(
+                (n) => n.type === 'connections' && !n.read
+            ).length,
+            posts: notifications.filter(
+                (n) => n.type === 'posts' && !n.read
+            ).length,
+        };
+    }, [notifications]);
 
     const filteredNotifications = useMemo(() => {
         return notifications.filter(item => {
@@ -65,21 +65,21 @@ const counts = useMemo(() => {
                         <div className="empty-icon-circle">
                             <i className="bi bi-bell-slash"></i>
                         </div>
-                        <h3>No Notifications Found</h3>
+                        <h3>{t('notifications.emptyTitle', 'No Notifications Found')}</h3>
                         <p>
                             {searchQuery
-                                ? `No notifications matching "${searchQuery}"`
-                                : `You don't have any notifications in the "${activeTab}" category right now.`}
+                                ? t('notifications.emptySearch', { query: searchQuery, defaultValue: `No notifications matching "${searchQuery}"` })
+                                : t('notifications.emptyCategory', { category: activeTab, defaultValue: `You don't have any notifications in the "${activeTab}" category right now.` })}
                         </p>
                         <div className="empty-actions">
                             {searchQuery && (
                                 <button className="btn-primary" onClick={() => setSearchQuery('')}>
-                                    Clear Search
+                                    {t('notifications.clearSearchButton', 'Clear Search')}
                                 </button>
                             )}
                             {notifications.length === 0 && (
                                 <button className="btn-secondary" onClick={resetNotifications}>
-                                    <i className="bi bi-arrow-clockwise"></i> Reload Notifications
+                                    <i className="bi bi-arrow-clockwise"></i> {t('notifications.reloadButton', 'Reload Notifications')}
                                 </button>
                             )}
                         </div>

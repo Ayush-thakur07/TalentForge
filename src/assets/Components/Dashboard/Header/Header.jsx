@@ -2,22 +2,23 @@ import Searchbar from "./SearchBar";
 import HeaderActions from "./HeaderActions";
 import Branch from "./Branch";
 import { useNavigate } from "react-router-dom";
-function Header({ toggleSidebar })
-{
+import { useTranslation } from "react-i18next";
+
+function Header({ toggleSidebar }) {
     const navigate = useNavigate();
-    function onSearch(value_entered)
-    {
+    const { t } = useTranslation();
+
+    function onSearch(value_entered) {
         navigate(`/search?q=${encodeURIComponent(value_entered)}`);
     }
-    return(
-        <>
+
+    return (
         <header className="main-header">
             <Branch toggleSidebar={toggleSidebar} />
-            <Searchbar placeholder="Search Skills, projects, people..." onSearch={onSearch}/>
-            <HeaderActions/>
+            <Searchbar placeholder={t("nav.searchPlaceholder", "Search Skills, projects, people...")} onSearch={onSearch} />
+            <HeaderActions />
         </header>
-        </>
     );
-
 }
+
 export default Header;

@@ -1,36 +1,42 @@
 import { useState, useMemo } from "react";
 import { useUser } from "../../../../context/UserContext";
-
-const availabilityOptions = [
-    { label: "Open", value: "open" },
-    { label: "Open to Collaborate", value: "open_to_collaborate" },
-    { label: "Busy", value: "busy" }
-];
+import { useTranslation } from "react-i18next";
 
 function StudentFilters({ students, onFilterChange }) {
+    const { t } = useTranslation();
     const { isPro, openUpgradeModal } = useUser();
     const [selectedSkill, setSelectedSkill] = useState("");
     const [selectedField, setSelectedField] = useState("");
     const [selectedYear, setSelectedYear] = useState("");
     const [selectedAvailability, setSelectedAvailability] = useState("");
 
+    const availabilityOptions = [
+        { label: t("students.availability.open", "Open"), value: "open" },
+        { label: t("students.availability.open_to_collaborate", "Open to Collaborate"), value: "open_to_collaborate" },
+        { label: t("students.availability.busy", "Busy"), value: "busy" }
+    ];
+
     const allSkills = useMemo(() => {
         const skillSet = new Set();
         students.forEach((student) => {
-            student.skills.forEach((skill) => skillSet.add(skill));
+            (student.skills || []).forEach((skill) => skillSet.add(skill));
         });
         return Array.from(skillSet).sort();
     }, [students]);
 
     const allFields = useMemo(() => {
         const fieldSet = new Set();
-        students.forEach((student) => fieldSet.add(student.major));
+        students.forEach((student) => {
+            if (student.major) fieldSet.add(student.major);
+        });
         return Array.from(fieldSet).sort();
     }, [students]);
 
     const allYears = useMemo(() => {
         const yearSet = new Set();
-        students.forEach((student) => yearSet.add(student.year));
+        students.forEach((student) => {
+            if (student.year) yearSet.add(student.year);
+        });
         return Array.from(yearSet).sort();
     }, [students]);
 
@@ -80,13 +86,13 @@ function StudentFilters({ students, onFilterChange }) {
     return (
         <div className="student-filters">
             <div className="filter-group">
-                <label htmlFor="skill-filter">Skills</label>
+                <label htmlFor="skill-filter">{t("students.skillsLabel", "Skills")}</label>
                 <select
                     id="skill-filter"
                     value={selectedSkill}
                     onChange={handleSkillChange}
                 >
-                    <option value="">All Skills</option>
+                    <option value="">{t("students.allSkills", "All Skills")}</option>
                     {allSkills.map((skill) => (
                         <option key={skill} value={skill}>
                             {skill}
@@ -97,14 +103,14 @@ function StudentFilters({ students, onFilterChange }) {
 
             <div className="filter-group">
                 <label htmlFor="field-filter">
-                    Field
+                    {t("students.fieldLabel", "Field")}
                     {!isPro && (
                         <span
                             className="filter-pro-pill"
                             onClick={() => openUpgradeModal("Advanced Filters (Field)")}
                             title="Pro Feature: Advanced Filter"
                         >
-                            <i className="bi bi-lock-fill"></i> PRO
+                            <i className="bi bi-lock-fill"></i> {t("students.proFeature", "PRO")}
                         </span>
                     )}
                 </label>
@@ -115,7 +121,7 @@ function StudentFilters({ students, onFilterChange }) {
                     onChange={handleFieldChange}
                     className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Fields {!isPro ? "(Pro)" : ""}</option>
+                    <option value="">{t("students.allFields", "All Fields")} {!isPro ? "(Pro)" : ""}</option>
                     {allFields.map((field) => (
                         <option key={field} value={field}>
                             {field}
@@ -126,14 +132,14 @@ function StudentFilters({ students, onFilterChange }) {
 
             <div className="filter-group">
                 <label htmlFor="year-filter">
-                    Year
+                    {t("students.yearLabel", "Year")}
                     {!isPro && (
                         <span
                             className="filter-pro-pill"
                             onClick={() => openUpgradeModal("Advanced Filters (Year)")}
                             title="Pro Feature: Advanced Filter"
                         >
-                            <i className="bi bi-lock-fill"></i> PRO
+                            <i className="bi bi-lock-fill"></i> {t("students.proFeature", "PRO")}
                         </span>
                     )}
                 </label>
@@ -144,7 +150,7 @@ function StudentFilters({ students, onFilterChange }) {
                     onChange={handleYearChange}
                     className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Years {!isPro ? "(Pro)" : ""}</option>
+                    <option value="">{t("students.allYears", "All Years")} {!isPro ? "(Pro)" : ""}</option>
                     {allYears.map((year) => (
                         <option key={year} value={year}>
                             {year}
@@ -155,14 +161,14 @@ function StudentFilters({ students, onFilterChange }) {
 
             <div className="filter-group">
                 <label htmlFor="availability-filter">
-                    Availability
+                    {t("students.availabilityLabel", "Availability")}
                     {!isPro && (
                         <span
                             className="filter-pro-pill"
                             onClick={() => openUpgradeModal("Advanced Filters (Availability)")}
                             title="Pro Feature: Advanced Filter"
                         >
-                            <i className="bi bi-lock-fill"></i> PRO
+                            <i className="bi bi-lock-fill"></i> {t("students.proFeature", "PRO")}
                         </span>
                     )}
                 </label>
@@ -173,7 +179,7 @@ function StudentFilters({ students, onFilterChange }) {
                     onChange={handleAvailabilityChange}
                     className={!isPro ? "pro-restricted-select" : ""}
                 >
-                    <option value="">All Availability {!isPro ? "(Pro)" : ""}</option>
+                    <option value="">{t("students.allAvailability", "All Availability")} {!isPro ? "(Pro)" : ""}</option>
                     {availabilityOptions.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}

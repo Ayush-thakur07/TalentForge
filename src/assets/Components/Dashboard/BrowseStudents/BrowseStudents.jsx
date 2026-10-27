@@ -8,6 +8,7 @@ import StudentSort from "./StudentSort";
 import { useLocation } from "react-router-dom";
 import heroImage from "../../../hero.png";
 import { useUser } from "../../../../context/UserContext";
+import { useTranslation } from "react-i18next";
 
 function matchesSearch(student, search) {
     const term = (search || "").trim().toLowerCase();
@@ -38,6 +39,7 @@ function sortStudents(students, sort) {
 }
 
 function BrowseStudents() {
+    const { t } = useTranslation();
     const location = useLocation();
     const { currentUser } = useUser();
     const allStudents = getAllStudents();
@@ -45,17 +47,17 @@ function BrowseStudents() {
     const [sort, setSort] = useState("default");
 
     useEffect(() => {
-  const search = location.state?.search;
+        const search = location.state?.search;
 
-  if (search) {
-    queueMicrotask(() => {
-      setFilters((currentFilters) => ({
-        ...currentFilters,
-        search,
-      }));
-    });
-  }
-}, [location.state]);
+        if (search) {
+            queueMicrotask(() => {
+                setFilters((currentFilters) => ({
+                    ...currentFilters,
+                    search,
+                }));
+            });
+        }
+    }, [location.state]);
 
     const filteredStudents = useMemo(() => {
         return allStudents.filter((student) => {
@@ -97,9 +99,10 @@ function BrowseStudents() {
         <div className="browse-students">
             <div className="browse-students-header">
                 <h1>
-                    Browse Amazing <span className="highlight">Students</span>
+                    {t("students.headerTitle", "Browse Amazing")}{" "}
+                    <span className="highlight">{t("students.headerHighlight", "Students")}</span>
                 </h1>
-                <p>Find and connect with talented students to collaborate on projects, hackathons, and more.</p>
+                <p>{t("students.headerSubtitle", "Find and connect with talented students to collaborate on projects, hackathons, and more.")}</p>
             </div>
 
             <div className="browse-students-banner">
@@ -107,8 +110,8 @@ function BrowseStudents() {
                     <img src={heroImage} alt="Students collaborating" />
                 </div>
                 <div className="banner-content">
-                    <h2>Great ideas grow faster together</h2>
-                    <p>Find your next teammate today.</p>
+                    <h2>{t("students.bannerTitle", "Great ideas grow faster together")}</h2>
+                    <p>{t("students.bannerSubtitle", "Find your next teammate today.")}</p>
                 </div>
             </div>
 
@@ -122,12 +125,14 @@ function BrowseStudents() {
                     <StudentSort sort={sort} onSortChange={setSort} />
                 </div>
                 <div className="results-bar">
-                    <span>{studentsWithMatchScore.length} students found</span>
+                    <span>
+                        {t("students.studentsFound", { count: studentsWithMatchScore.length, defaultValue: `${studentsWithMatchScore.length} students found` })}
+                    </span>
                     <div className="view-toggle">
-                        <button className="view-btn active" aria-label="Grid view">
+                        <button className="view-btn active" aria-label={t("students.gridViewAria", "Grid view")}>
                             <i className="bi bi-grid"></i>
                         </button>
-                        <button className="view-btn" aria-label="List view">
+                        <button className="view-btn" aria-label={t("students.listViewAria", "List view")}>
                             <i className="bi bi-list"></i>
                         </button>
                     </div>

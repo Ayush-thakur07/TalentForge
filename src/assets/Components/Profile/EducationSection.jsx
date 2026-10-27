@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./EducationSection.css";
 
 function EducationSection({ education, onAdd, onDelete }) {
+    const { t } = useTranslation();
     const [form, setForm] = useState({
         institution: "",
         degree: "",
@@ -40,8 +42,8 @@ function EducationSection({ education, onAdd, onDelete }) {
         <section className="education-section">
             <div className="education-header">
                 <div>
-                    <h2>Education</h2>
-                    <p>Add your academic background</p>
+                    <h2>{t("profile.educationSection.title", "Education")}</h2>
+                    <p>{t("profile.educationSection.subtitle", "Add your academic background")}</p>
                 </div>
 
                 <div className="education-header-icon">
@@ -52,23 +54,23 @@ function EducationSection({ education, onAdd, onDelete }) {
             <form className="education-form" onSubmit={handleSubmit}>
                 <div className="education-form-row">
                     <div className="education-field">
-                        <label>Institution</label>
+                        <label>{t("profile.educationSection.institution", "Institution")}</label>
                         <input
                             type="text"
                             name="institution"
                             value={form.institution}
-                            placeholder="University or college"
+                            placeholder={t("profile.educationSection.institutionPlaceholder", "University or college")}
                             onChange={handleChange}
                         />
                     </div>
 
                     <div className="education-field">
-                        <label>Degree</label>
+                        <label>{t("profile.educationSection.degree", "Degree")}</label>
                         <input
                             type="text"
                             name="degree"
                             value={form.degree}
-                            placeholder="B.Tech, BCA, MCA..."
+                            placeholder={t("profile.educationSection.degreePlaceholder", "Bachelor of Technology")}
                             onChange={handleChange}
                         />
                     </div>
@@ -76,23 +78,23 @@ function EducationSection({ education, onAdd, onDelete }) {
 
                 <div className="education-form-row">
                     <div className="education-field">
-                        <label>Field of Study</label>
+                        <label>{t("profile.educationSection.field", "Field of Study")}</label>
                         <input
                             type="text"
                             name="field"
                             value={form.field}
-                            placeholder="Computer Science"
+                            placeholder={t("profile.educationSection.fieldPlaceholder", "Computer Science & Engineering")}
                             onChange={handleChange}
                         />
                     </div>
 
                     <div className="education-field">
-                        <label>Duration</label>
+                        <label>{t("profile.educationSection.duration", "Duration")}</label>
                         <input
                             type="text"
                             name="duration"
                             value={form.duration}
-                            placeholder="2024 - 2028"
+                            placeholder={t("profile.educationSection.durationPlaceholder", "2023 - 2027")}
                             onChange={handleChange}
                         />
                     </div>
@@ -100,7 +102,7 @@ function EducationSection({ education, onAdd, onDelete }) {
 
                 <button className="education-add-button" type="submit">
                     <i className="bi bi-plus-lg"></i>
-                    Add Education
+                    {t("profile.educationSection.addButton", "Add Education")}
                 </button>
             </form>
 
@@ -122,6 +124,7 @@ function EducationSection({ education, onAdd, onDelete }) {
                                     <button
                                         className="education-delete"
                                         onClick={() => onDelete(item.id)}
+                                        aria-label="Delete education"
                                     >
                                         <i className="bi bi-trash3"></i>
                                     </button>
@@ -143,8 +146,8 @@ function EducationSection({ education, onAdd, onDelete }) {
                 ) : (
                     <div className="education-empty">
                         <i className="bi bi-mortarboard"></i>
-                        <h3>No education added yet</h3>
-                        <p>Add your university, degree, and academic background.</p>
+                        <h3>{t("profile.educationSection.emptyTitle", "No education added yet")}</h3>
+                        <p>{t("profile.educationSection.emptySubtitle", "Add your academic background to complete your profile.")}</p>
                     </div>
                 )}
             </div>
