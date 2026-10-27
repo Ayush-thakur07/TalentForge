@@ -36,7 +36,7 @@ function HeaderActions() {
     }
 
     function msgcount() {
-        markAllAsRead();
+        navigate("/messages");
     }
 
     return (

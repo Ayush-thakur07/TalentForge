@@ -5,10 +5,10 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    background: #ffffff;
-    border: 1px solid #eeeaf5;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+    box-shadow: 0 4px 18px var(--shadow);
 }
 
 .profile-quote-icon {
@@ -19,14 +19,14 @@
     align-items: center;
     justify-content: center;
     border-radius: 11px;
-    background: #f1edff;
-    color: #7658d7;
+    background: var(--brand-soft);
+    color: var(--brand);
     font-size: 19px;
 }
 
 .profile-quote p {
     margin: 0;
-    color: #625b70;
+    color: var(--text-secondary);
     font-size: 14px;
     line-height: 1.7;
     font-style: italic;

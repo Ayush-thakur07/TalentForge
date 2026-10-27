@@ -2,12 +2,13 @@ import { useLocation } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import { useNotifications } from "../../../../context/NotificationContext";
 import { useTranslation } from "react-i18next";
+import { useMessages } from "../../../../context/MessageContext";
 
 function SidebarNavigation() {
     const { t } = useTranslation();
     const location = useLocation();
     const { notifications, unreadCount } = useNotifications();
-
+    const { unreadCount: unreadMessages } = useMessages();
     const currentPath = location.pathname;
 
     const connectionsUnread = notifications.filter(n => n.type === 'connections' && !n.read).length;
@@ -57,6 +58,7 @@ function SidebarNavigation() {
                 href="/messages"
                 icon="bi bi-chat"
                 active={currentPath === "/messages"}
+                badge={unreadMessages > 0 ? unreadMessages : undefined}
             />
 
             <SidebarItem

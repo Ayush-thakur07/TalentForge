@@ -6,7 +6,9 @@ import StudentFilters from "./StudentFilters";
 import StudentSearch from "./StudentSearch";
 import StudentSort from "./StudentSort";
 import { useLocation } from "react-router-dom";
-import heroImage from "../../../hero.png";
+import heroImageLight from "../../../hero.png";
+import heroImageDark from "../../../hero-dark.png";
+import { useTheme } from "../../../../context/useTheme";
 import { useUser } from "../../../../context/UserContext";
 import { useTranslation } from "react-i18next";
 
@@ -42,6 +44,8 @@ function BrowseStudents() {
     const { t } = useTranslation();
     const location = useLocation();
     const { currentUser } = useUser();
+    const { theme } = useTheme();
+    const heroImage = theme === "dark" ? heroImageDark : heroImageLight;
     const allStudents = getAllStudents();
     const [filters, setFilters] = useState({ search: location.state?.search || "", skill: "", field: "", year: "", availability: "" });
     const [sort, setSort] = useState("default");

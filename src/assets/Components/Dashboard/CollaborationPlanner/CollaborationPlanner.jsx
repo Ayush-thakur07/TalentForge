@@ -313,6 +313,18 @@ function CollaborationPlanner() {
     const timer = window.setInterval(() => setNow(new Date()), 60000);
     return () => window.clearInterval(timer);
   }, []);
+  const [connectionsVersion, setConnectionsVersion] = useState(0);
+
+  useEffect(() => {
+    const handleSync = () => setConnectionsVersion((v) => v + 1);
+    window.addEventListener("connectionsUpdated", handleSync);
+    window.addEventListener("storage", handleSync);
+    return () => {
+      window.removeEventListener("connectionsUpdated", handleSync);
+      window.removeEventListener("storage", handleSync);
+    };
+  }, []);
+
 
   const connections = useMemo(() => {
     try {
@@ -324,7 +336,7 @@ function CollaborationPlanner() {
       console.error("Unable to read planner connections:", error);
       return [];
     }
-  }, [userId]);
+  }, [userId, connectionsVersion]);
   const filteredConnections = useMemo(() => {
     const term = filters.search.trim().toLowerCase();
     return connections.filter((connection) =>

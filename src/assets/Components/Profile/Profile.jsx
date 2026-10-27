@@ -115,7 +115,25 @@ useEffect(() => {
         `talentforge_connections_${userKey}`,
         JSON.stringify(connections)
     );
+    window.dispatchEvent(new CustomEvent("connectionsUpdated", { detail: { userKey, connections } }));
 }, [connections, userKey]);
+useEffect(() => {
+    const handleSync = () => {
+        try {
+            const raw = localStorage.getItem(`talentforge_connections_${userKey}`);
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) setConnections(parsed);
+            }
+        } catch {}
+    };
+    window.addEventListener("connectionsUpdated", handleSync);
+    window.addEventListener("storage", handleSync);
+    return () => {
+        window.removeEventListener("connectionsUpdated", handleSync);
+        window.removeEventListener("storage", handleSync);
+    };
+}, [userKey]);
 const [posts, setPosts] = useState(() => {
     const savedPosts = localStorage.getItem(
         `talentforge_posts_${userKey}`

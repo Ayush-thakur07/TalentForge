@@ -27,6 +27,8 @@ import SearchPage from './assets/Components/Dashboard/Search/SearchPage';
 import Saved from './assets/Components/Saved/Saved';
 import CollaborationPlanner from './assets/Components/Dashboard/CollaborationPlanner/CollaborationPlanner';
 import ResumeBuilder from './assets/Components/Dashboard/ResumeBuilder/ResumeBuilder';
+import ConnectionsPage from './assets/Components/Dashboard/Connections/ConnectionsPage';
+import MessagesPage from './assets/Components/Dashboard/Messages/MessagesPage';
 
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
@@ -134,6 +136,30 @@ function AppRoutes() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <BrowseStudents />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Connections */}
+          <Route
+            path="/connections"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <ConnectionsPage />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Messages */}
+          <Route
+            path="/messages"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <MessagesPage />
                 </DashboardLayout>
               </ProtectedRoute>
             }

@@ -76,6 +76,17 @@ export function UserProvider({ children }) {
                 });
                 setCurrentUserState(canonicalUser);
             } else {
+                try {
+                    const testUserStr = localStorage.getItem("talentforge_test_user");
+                    if (testUserStr) {
+                        const testUser = JSON.parse(testUserStr);
+                        if (testUser && (testUser.uid || testUser.id)) {
+                            setCurrentUserState(normalizeUser(testUser));
+                            setLoading(false);
+                            return;
+                        }
+                    }
+                } catch {}
                 setCurrentUserState(null);
             }
             setLoading(false);

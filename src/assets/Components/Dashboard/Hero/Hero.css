@@ -191,45 +191,66 @@
         border-color 0.25s ease;
 }
 .explore_matches {
-    border: 1px solid #5138ee;
-    background: linear-gradient(
-        135deg,
-        #5b43f4,
-        #4930df
-    );
+    border: 1px solid var(--brand);
+    background: var(--brand);
     color: #ffffff;
-    box-shadow:
-        0 7px 18px rgba(81, 56, 238, 0.22);
+    box-shadow: 0 7px 18px var(--shadow);
 }
 
 .explore_matches:hover {
+    background: var(--brand-strong);
     transform: translateY(-3px);
-    box-shadow:
-        0 11px 25px rgba(81, 56, 238, 0.28);
+    box-shadow: 0 11px 25px var(--shadow);
 }
+
 .explore_matches i {
+    color: #ffffff;
     transition: transform 0.25s ease;
 }
 
 .explore_matches:hover i {
     transform: translateX(4px);
 }
+
 .post_project {
-    border: 1px solid rgba(117, 101, 232, 0.25);
-    background: rgba(255, 255, 255, 0.82);
-    color: #5138ee;
-    box-shadow:
-        0 5px 14px rgba(44, 42, 110, 0.05);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-primary);
+    box-shadow: 0 5px 14px var(--shadow);
 }
 
 .post_project:hover {
     transform: translateY(-3px);
-    border-color: rgba(117, 101, 232, 0.45);
-    background: #ffffff;
-    box-shadow:
-        0 10px 22px rgba(81, 56, 238, 0.12);
+    border-color: var(--border-strong);
+    background: var(--surface-soft);
+    color: var(--brand);
+    box-shadow: 0 10px 22px var(--shadow);
+}
+
+.post_project i {
+    color: var(--brand);
+}
+
+html[data-theme="dark"] .hero_part {
+    background:
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(139, 92, 246, 0.15) 0%,
+            transparent 40%
+        ),
+        linear-gradient(
+            135deg,
+            #1e293b 0%,
+            #111827 50%,
+            #0f172a 100%
+        );
+    border-color: var(--border);
+    box-shadow: 0 12px 35px var(--shadow);
+}
+
+html[data-theme="dark"] .hero_stat_card {
+    background: var(--surface);
+    border-color: var(--border);
 }
 
 .post_project i {

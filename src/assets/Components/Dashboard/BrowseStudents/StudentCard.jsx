@@ -72,6 +72,9 @@ function StudentCard({ student, matchScore }) {
         };
         try {
             localStorage.setItem(connectionStorageKey, JSON.stringify(updated));
+            if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("connectionsUpdated", { detail: { updated } }));
+            }
         } catch (error) {
             console.error("Failed to save connection request:", error);
             window.alert("Your connection request couldn't be saved. Please try again.");

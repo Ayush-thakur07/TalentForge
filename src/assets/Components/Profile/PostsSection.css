@@ -2,10 +2,10 @@
     width: 100%;
     margin-top: 18px;
     padding: 24px;
-    background: #ffffff;
-    border: 1px solid #eeeaf5;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(74, 58, 120, 0.06);
+    box-shadow: 0 4px 18px var(--shadow);
 }
 
 .posts-header {
@@ -17,14 +17,14 @@
 
 .posts-header h2 {
     margin: 0 0 5px;
-    color: #2d283c;
+    color: var(--text-primary);
     font-size: 18px;
     font-weight: 700;
 }
 
 .posts-header p {
     margin: 0;
-    color: #8a8495;
+    color: var(--text-muted);
     font-size: 12px;
 }
 
@@ -35,8 +35,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background: #f1edff;
-    color: #7658d7;
+    background: var(--brand-soft);
+    color: var(--brand);
     font-size: 16px;
 }
 
@@ -48,9 +48,9 @@
 
 .post-card {
     padding: 17px;
-    border: 1px solid #eeeaf5;
+    border: 1px solid var(--border);
     border-radius: 11px;
-    background: #ffffff;
+    background: var(--surface-alt);
 }
 
 .post-author {
@@ -62,19 +62,19 @@
 
 .post-author h3 {
     margin: 0 0 3px;
-    color: #342f42;
+    color: var(--text-primary);
     font-size: 13px;
     font-weight: 700;
 }
 
 .post-author span {
-    color: #97919f;
+    color: var(--text-muted);
     font-size: 10px;
 }
 
 .post-content p {
     margin: 0;
-    color: #6f6979;
+    color: var(--text-secondary);
     font-size: 13px;
     line-height: 1.7;
 }

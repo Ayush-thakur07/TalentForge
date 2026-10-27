@@ -1,4 +1,6 @@
-import heroImage from "../../../hero.png";
+import heroImageLight from "../../../hero.png";
+import heroImageDark from "../../../hero-dark.png";
+import { useTheme } from "../../../../context/useTheme";
 import { useNavigate } from "react-router-dom";
 import PostModal from "./PostModal";
 import { useState, useEffect } from "react";
@@ -6,17 +8,23 @@ import { useUser } from "../../../../context/UserContext";
 import { useMessages } from "../../../../context/MessageContext";
 import { useTranslation } from "react-i18next";
 import "./Hero.css";
+import { getUserKey, getActiveConnections } from "../../../../services/connectionsService";
 
 function Hero() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [postModalOpen, setPostModalOpen] = useState(false);
     const { currentUser, isPro } = useUser();
+    const { theme } = useTheme();
+    const heroImage = theme === "dark" ? heroImageDark : heroImageLight;
     const { unreadCount: newMessages } = useMessages();
     let current_hours = new Date().getHours();
     const dashboardUser = currentUser;
-    const connections = dashboardUser?.connections?.length || 0;
-
+    const userKey = getUserKey(currentUser);
+    const [connectionCount, setConnectionCount] = useState(() => {
+        return getActiveConnections(userKey).length;
+    });
+    const connections = connectionCount;
     const [savedCount, setSavedCount] = useState(() => {
         try {
             const savedIds = JSON.parse(localStorage.getItem("talentforge_saved_posts") || "[]");
@@ -36,14 +44,22 @@ function Hero() {
             }
         };
 
+        const updateConnections = () => {
+            setConnectionCount(getActiveConnections(userKey).length);
+        };
+
         window.addEventListener("storage", updateSavedCount);
+        window.addEventListener("storage", updateConnections);
         window.addEventListener("postsUpdated", updateSavedCount);
+        window.addEventListener("connectionsUpdated", updateConnections);
 
         return () => {
             window.removeEventListener("storage", updateSavedCount);
+            window.removeEventListener("storage", updateConnections);
             window.removeEventListener("postsUpdated", updateSavedCount);
+            window.removeEventListener("connectionsUpdated", updateConnections);
         };
-    }, []);
+    }, [userKey]);
 
     const ongoingProjects = dashboardUser?.ongoingProjects?.length || 0;
 
@@ -78,7 +94,12 @@ function Hero() {
                 </h1>
                 <p>{t("dashboard.heroSubtitle", "Find the right people, Build amazing things together")}</p>
                 <div className="hero_stats">
-                    <div className="hero_stat_card">
+                    <div
+                        className="hero_stat_card"
+                        onClick={() => navigate("/connections")}
+                        style={{ cursor: "pointer" }}
+                        title="View Connections"
+                    >
                         <div className="hero_stat_icon">
                             <i className="bi bi-people"></i>
                         </div>
@@ -113,7 +134,12 @@ function Hero() {
                         </div>
                     </div>
 
-                    <div className="hero_stat_card">
+                    <div
+                        className="hero_stat_card"
+                        onClick={() => navigate("/messages")}
+                        style={{ cursor: "pointer" }}
+                        title="View Messages"
+                    >
                         <div className="hero_stat_icon">
                             <i className="bi bi-chat-dots"></i>
                         </div>

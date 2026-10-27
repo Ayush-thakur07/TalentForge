@@ -69,7 +69,7 @@
     padding: 0 18px;
     border: none;
     border-radius: 10px;
-    background: #7357d9;
+    background: var(--brand);
     color: #ffffff;
     font-size: 14px;
     font-weight: 600;
@@ -81,7 +81,7 @@
 }
 
 .skills-add-form button:hover {
-    background: #6247c7;
+    background: var(--brand-strong);
 }
 
 .skills-list {
@@ -96,9 +96,9 @@
     gap: 8px;
     padding: 9px 11px 9px 15px;
     border-radius: 10px;
-    background: #f4f1ff;
-    border: 1px solid #e5defb;
-    color: #5d48ad;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     font-size: 14px;
     font-weight: 600;
 }
@@ -127,24 +127,24 @@
     width: 100%;
     padding: 45px 20px;
     text-align: center;
-    border: 1px dashed #dcd7e9;
+    border: 1px dashed var(--border-strong);
     border-radius: 14px;
 }
 
 .skills-empty i {
     font-size: 32px;
-    color: #8065dc;
+    color: var(--brand);
 }
 
 .skills-empty h3 {
     margin: 12px 0 6px;
-    color: #302b40;
+    color: var(--text-primary);
     font-size: 17px;
 }
 
 .skills-empty p {
     margin: 0;
-    color: #898397;
+    color: var(--text-muted);
     font-size: 14px;
 }
 

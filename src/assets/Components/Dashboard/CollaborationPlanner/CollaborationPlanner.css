@@ -1,17 +1,17 @@
 .planner-page {
-  --planner-surface: #fff;
-  --planner-subtle: #faf9ff;
-  --planner-border: #e8e3f6;
-  --planner-text: #1f1b2d;
-  --planner-muted: #6b6677;
-  --planner-accent: #5138ee;
-  --planner-accent-soft: #f1efff;
+  --planner-surface: var(--surface);
+  --planner-subtle: var(--surface-alt);
+  --planner-border: var(--border);
+  --planner-text: var(--text-primary);
+  --planner-muted: var(--text-muted);
+  --planner-accent: var(--brand);
+  --planner-accent-soft: var(--brand-soft);
   width: 100%;
   min-width: 0;
   min-height: 100%;
   padding: 28px;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--app-bg);
   color: var(--planner-text);
 }
 
@@ -34,7 +34,7 @@
 
 .planner-header-row h1 {
   margin: 0;
-  color:rgb(125, 47, 125);
+  color: var(--text-primary);
   font-size: clamp(26px, 3vw, 34px);
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -924,5 +924,11 @@
 
   .modal-primary-actions > button {
     flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .planner-page {
+    padding: 16px 16px 88px 16px;
   }
 }

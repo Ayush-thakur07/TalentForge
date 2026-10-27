@@ -18,8 +18,8 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
     .profile-page {
-        padding: 16px;
+        padding: 16px 16px 88px 16px;
     }
 }

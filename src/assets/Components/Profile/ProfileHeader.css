@@ -198,7 +198,7 @@
     padding: 0 17px;
     border: none;
     border-radius: 9px;
-    background: #7658d7;
+    background: var(--brand);
     color: #ffffff;
     display: inline-flex;
     align-items: center;
@@ -214,9 +214,9 @@
 }
 
 .profile-action-button:hover {
-    background: #6748ca;
+    background: var(--brand-strong);
     transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(118, 88, 215, 0.25);
+    box-shadow: 0 5px 14px var(--shadow);
 }
 
 .profile-action-button i {
@@ -224,14 +224,15 @@
 }
 
 .profile-action-button.secondary {
-    background: #ffffff;
-    color: #6851b6;
-    border: 1px solid #dcd4f2;
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
 }
 
 .profile-action-button.secondary:hover {
-    background: #f8f6ff;
-    box-shadow: 0 4px 12px rgba(74, 58, 120, 0.08);
+    background: var(--surface-soft);
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 

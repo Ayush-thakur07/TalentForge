@@ -18,8 +18,7 @@
     --shadow: rgba(15, 23, 42, 0.12);
     --toggle-track: #dfe3ea;
     --toggle-thumb: #ffffff;
-    --toggle-thumb-shadow: rgba(15, 23, 42, 0.16);
-    --toggle-thumb-icon: #fbbf24;
+    --toggle-thumb-icon: #f59e0b;
 }
 
 html[data-theme="dark"] {
@@ -40,9 +39,8 @@ html[data-theme="dark"] {
     --brand-soft: rgba(139, 92, 246, 0.18);
     --brand-strong: #a78bfa;
     --shadow: rgba(2, 6, 23, 0.5);
-    --toggle-track: #2f4057;
-    --toggle-thumb: #e5e7eb;
-    --toggle-thumb-shadow: rgba(15, 23, 42, 0.45);
+    --toggle-track: #334155;
+    --toggle-thumb: #111827;
     --toggle-thumb-icon: #fbbf24;
 }
 
@@ -375,7 +373,7 @@ html[data-theme="dark"] .theme-toggle {
 }
 
 .theme-toggle i {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1;
 }
 html[data-theme="dark"] .theme-toggle-thumb {
@@ -1256,12 +1254,12 @@ html[data-theme="dark"] .theme-toggle:active .theme-toggle-thumb {
     gap: 5px;
     padding: 4px 12px;
     border-radius: 20px;
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    color: #92400e;
-    border: 1px solid #facc15;
+    background: rgba(245, 158, 11, 0.15);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.3);
     font-size: 13px;
     font-weight: 750;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+    box-shadow: 0 2px 8px var(--shadow);
     margin-left: 10px;
     vertical-align: middle;
 }
@@ -1269,4 +1267,14 @@ html[data-theme="dark"] .theme-toggle:active .theme-toggle-thumb {
 .hero-pro-watermark-pill i {
     color: #d97706;
     font-size: 13px;
+}
+
+html[data-theme="dark"] .hero-pro-watermark-pill {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+html[data-theme="dark"] .hero-pro-watermark-pill i {
+    color: #facc15;
 }
