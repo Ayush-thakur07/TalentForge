@@ -1,26 +1,24 @@
+console.log("Vite Auth Domain Check:", import.meta.env.VITE_FIREBASE_AUTH_DOMAIN);
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Your existing Firebase configuration
 const firebaseConfig = {
-  apiKey: "REMOVED_FIREBASE_API_KEY",
-  authDomain: "talentforge-7b691.firebaseapp.com",
-  projectId: "talentforge-7b691",
-  storageBucket: "talentforge-7b691.firebasestorage.app",
-  messagingSenderId: "668199496849",
-  appId: "1:668199496849:web:96039336e4ddacb0bfa330",
-  measurementId: "G-5EN86NB4GZ",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase once
 const app = initializeApp(firebaseConfig);
 
-// Existing authentication
+// Initialize Firebase services
 const auth = getAuth(app);
-
-// Shared database
 const db = getFirestore(app);
 
-export { auth, db };
+// Export everything safely for the rest of your app components
+export { app, auth, db };
