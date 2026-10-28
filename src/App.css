@@ -266,7 +266,7 @@ body {
   padding: 3px;
 
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: 20px;
   background: var(--toggle-track);
 
   box-shadow:
@@ -283,6 +283,10 @@ body {
     box-shadow 300ms ease;
 
   -webkit-tap-highlight-color: transparent;
+}
+
+.Headeractions .theme-toggle {
+  border-radius: 20px;
 }
 
 .theme-toggle:hover {
@@ -412,7 +416,7 @@ html[data-theme="dark"] .theme-toggle:active .theme-toggle-thumb {
     transition: none;
   }
 }
-.Headeractions > button:not(.profile-trigger) {
+.Headeractions > button:not(.profile-trigger):not(.theme-toggle) {
     position: relative;
 
     width: 40px;

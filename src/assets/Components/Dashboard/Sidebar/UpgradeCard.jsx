@@ -9,14 +9,11 @@ function UpgradeCard() {
     const navigate = useNavigate();
     const { isPro, openUpgradeModal } = useUser();
 
-    const renderAnimatedButton = (label) => (
+    const renderAnimatedButton = (label, onClick) => (
         <button
             type="button"
             className="upgrade-button"
-            onClick={() => {
-    console.log("Upgrade button clicked");
-    openUpgradeModal();
-}}
+            onClick={onClick}
         >
             <span
                 className="upgrade-button__spark"
@@ -88,7 +85,8 @@ function UpgradeCard() {
                     </p>
 
                     {renderAnimatedButton(
-                        t("nav.managePro", "Manage Pro")
+                        t("nav.managePro", "Manage Pro"),
+                        () => navigate("/manage-plan")
                     )}
                 </div>
             </div>
@@ -112,7 +110,8 @@ function UpgradeCard() {
                 </p>
 
                 {renderAnimatedButton(
-                    t("nav.upgradeNow", "Upgrade Now")
+                    t("nav.upgradeNow", "Upgrade Now"),
+                    () => openUpgradeModal()
                 )}
             </div>
         </div>
