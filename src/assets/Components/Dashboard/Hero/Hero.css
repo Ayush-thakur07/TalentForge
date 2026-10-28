@@ -638,3 +638,193 @@ html[data-theme="dark"] .hero_stat_card {
         transition: none;
     }
 }
+
+/* =========================================
+   TALENTFORGE HERO — DARK MODE POLISH
+   ========================================= */
+
+html[data-theme="dark"] .hero_part {
+    min-height: 360px;
+    padding: 32px;
+    align-items: center;
+    border: 1px solid rgba(139, 92, 246, 0.24);
+    border-radius: 22px;
+    background:
+        radial-gradient(
+            circle at 82% 20%,
+            rgba(124, 92, 252, 0.12),
+            transparent 38%
+        ),
+        linear-gradient(
+            120deg,
+            #111827 0%,
+            #15172b 55%,
+            #17152f 100%
+        );
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Greeting: strong contrast against the dark artwork */
+html[data-theme="dark"] .hero_part .greetings {
+    position: relative;
+    z-index: 4;
+    color: #F8FAFC;
+    font-size: clamp(30px, 2.5vw, 38px);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .hero_part .greeting-name {
+    color: #A78BFA;
+}
+
+/* Subtitle: readable, but visually secondary */
+html[data-theme="dark"] .hero_part .hero_text > p {
+    color: #CBD5E1;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+html[data-theme="dark"] .hero_part .hero_image {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 46%;
+    height: 100%;
+    max-height: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.75) 20%,
+        #000 42%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.75) 20%,
+        #000 42%
+    );
+}
+
+html[data-theme="dark"] .hero_part .hero_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+    mix-blend-mode: normal;
+    filter: none;
+    animation: none;
+}
+
+/* Stats: distinct cards with readable labels */
+html[data-theme="dark"] .hero_part .hero_stat_card {
+    background: rgba(17, 24, 39, 0.92);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(12px);
+}
+
+html[data-theme="dark"] .hero_part .hero_stat_card:hover {
+    border-color: rgba(167, 139, 250, 0.55);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .hero_part .hero_stat_info strong {
+    color: #F8FAFC;
+}
+
+html[data-theme="dark"] .hero_part .hero_stat_info span {
+    color: #CBD5E1;
+}
+
+/* Secondary action: clear separation from the background */
+html[data-theme="dark"] .hero_part .post_project {
+    background: #1B2235;
+    border-color: rgba(148, 163, 184, 0.25);
+    color: #F8FAFC;
+}
+
+html[data-theme="dark"] .hero_part .post_project:hover {
+    background: #252D45;
+    border-color: rgba(167, 139, 250, 0.6);
+    color: #C4B5FD;
+}
+
+/* PRO label: keep it legible */
+html[data-theme="dark"] .hero_part .hero-pro-watermark-pill {
+    color: #FDE68A;
+}
+
+/* Respect smaller screens */
+@media (max-width: 700px) {
+    html[data-theme="dark"] .hero_part {
+        min-height: 450px;
+        padding: 26px 22px;
+    }
+
+    html[data-theme="dark"] .hero_part .hero_image {
+        opacity: 0.15;
+    }
+
+    html[data-theme="dark"] .hero_part .greetings {
+        font-size: 27px;
+    }
+}
+
+/* Keep all four stats within the available text column */
+.hero_part .hero_stats {
+    width: 100%;
+    max-width: 610px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.hero_part .hero_stat_card {
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    gap: 8px;
+}
+
+.hero_part .hero_stat_info {
+    min-width: 0;
+    flex: 1;
+}
+
+.hero_part .hero_stat_info span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: 10px;
+    line-height: 1.3;
+}
+
+/* Two columns when the text area becomes narrower */
+@media (max-width: 1200px) {
+    .hero_part .hero_stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 440px;
+    }
+}
+
+html[data-theme="dark"] .hero_part .hero_text {
+    width: 57%;
+    max-width: 650px;
+    position: relative;
+    z-index: 3;
+    min-width: 0;
+}
+
+.hero_part .hero_actions {
+    flex-wrap: wrap;
+    gap: 10px;
+}
