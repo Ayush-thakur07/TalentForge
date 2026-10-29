@@ -145,7 +145,15 @@ function Login() {
             </div>
 
             <div className="login-box">
-                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+                <div className="mobile-brand-header">
+                    <div className="mobile-brand-logo">
+                        <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="TalentForge Logo" />
+                        <span>TalentForge</span>
+                    </div>
+                    <LanguageSelector />
+                </div>
+
+                <div className="desktop-lang-wrapper">
                     <LanguageSelector />
                 </div>
 
@@ -156,51 +164,60 @@ function Login() {
 
                 <div className="input">
                     <form className="form-sign" onSubmit={handleSubmit}>
-                        <label>{t("auth.emailLabel", "Email Address")}</label>
-                        <i className="bi bi-envelope"></i>
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder={t("auth.emailPlaceholder", "Enter your college email")}
-                            required
-                            pattern="[A-Za-z0-9._%+-]+@chitkara[.]edu[.]in"
-                        />
-
-                        <div>
-                            <label>{t("auth.passwordLabel", "Password")}</label>
-                            <i className="bi bi-lock"></i>
-                            <input
-                                name="password"
-                                type={show ? "text" : "password"}
-                                placeholder={t("auth.passwordPlaceholder", "Enter your password")}
-                                required
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setshow(!show)}
-                                aria-label={show ? "Hide password" : "Show password"}
-                            >
-                                <i className={show ? "bi bi-eye" : "bi bi-eye-slash"}></i>
-                            </button>
+                        <div className="form-group">
+                            <label htmlFor="login-email">{t("auth.emailLabel", "Email Address")}</label>
+                            <div className="input-wrapper">
+                                <i className="bi bi-envelope input-icon" aria-hidden="true"></i>
+                                <input
+                                    id="login-email"
+                                    name="email"
+                                    type="email"
+                                    placeholder={t("auth.emailPlaceholder", "Enter your college email")}
+                                    required
+                                    pattern="[A-Za-z0-9._%+-]+@chitkara[.]edu[.]in"
+                                />
+                            </div>
                         </div>
 
-                        <div>
-                            <label className="remember">
-                                {t("auth.rememberMe", "Remember me")}
+                        <div className="form-group">
+                            <label htmlFor="login-password">{t("auth.passwordLabel", "Password")}</label>
+                            <div className="input-wrapper">
+                                <i className="bi bi-lock input-icon" aria-hidden="true"></i>
+                                <input
+                                    id="login-password"
+                                    name="password"
+                                    type={show ? "text" : "password"}
+                                    placeholder={t("auth.passwordPlaceholder", "Enter your password")}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="toggle-password-btn"
+                                    onClick={() => setshow(!show)}
+                                    aria-label={show ? "Hide password" : "Show password"}
+                                >
+                                    <i className={show ? "bi bi-eye" : "bi bi-eye-slash"}></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="form-options-row">
+                            <label className="remember-label">
                                 <input
                                     type="checkbox"
-                                    className="checkbox"
+                                    className="checkbox-input"
                                     checked={check}
                                     onChange={() => setcheck(!check)}
                                 />
+                                <span>{t("auth.rememberMe", "Remember me")}</span>
                             </label>
+
+                            <button type="button" className="forgot-password-btn">
+                                {t("auth.forgotPassword", "Forgot Password?")}
+                            </button>
                         </div>
 
-                        <button type="button">
-                            {t("auth.forgotPassword", "Forgot Password?")}
-                        </button>
-
-                        <button type="submit" disabled={loading}>
+                        <button type="submit" className="btn-submit" disabled={loading}>
                             {loading ? t("auth.loggingIn", "Logging in...") : t("auth.loginButton", "Login")}
                         </button>
 

@@ -6,14 +6,16 @@ dist/
 .dist/
 .vite/
 
-# Testing & Playwright artifacts
+# Testing, Documentation & Automation
+docs/
+tests/
 test-results/
+scripts/
 playwright-report/
 blob-report/
 playwright/.cache/
 coverage/
 playwright.config.js
-
 # Environment variables
 .env
 .env.*

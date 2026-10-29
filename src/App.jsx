@@ -29,6 +29,7 @@ import CollaborationPlanner from './assets/Components/Dashboard/CollaborationPla
 import ResumeBuilder from './assets/Components/Dashboard/ResumeBuilder/ResumeBuilder';
 import ConnectionsPage from './assets/Components/Dashboard/Connections/ConnectionsPage';
 import MessagesPage from './assets/Components/Dashboard/Messages/MessagesPage';
+import NotFound from './pages/NotFound';
 
 import { UserProvider, useUser } from './context/UserContext';
 import { MessageProvider } from './context/MessageContext';
@@ -235,6 +236,12 @@ function AppRoutes() {
                 </DashboardLayout>
               </ProtectedRoute>
             }
+          />
+
+          {/* 404 Not Found Page */}
+          <Route
+            path="*"
+            element={<NotFound />}
           />
 
         </Routes>
